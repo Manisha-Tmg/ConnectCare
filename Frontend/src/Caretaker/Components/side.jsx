@@ -11,6 +11,7 @@ import Cookies from "js-cookie";
 import { API } from "../../env";
 import "../Css/side.css";
 import toast from "react-hot-toast";
+import Logo from "./Logo";
 
 const CaretakerSidebar = () => {
   const navigate = useNavigate();
@@ -96,6 +97,7 @@ const CaretakerSidebar = () => {
 
   return (
     <div className="sidebar">
+      <Logo />
       <div className="sidebar-header">
         <div className="header-content">
           <h2 className="user-name">{data.name}</h2>

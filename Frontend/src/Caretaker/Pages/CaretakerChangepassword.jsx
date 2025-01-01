@@ -56,7 +56,7 @@ const CaretakerChangepassword = () => {
         toast.error(data.detail || "Error changing password");
       }
     } catch (error) {
-      toast.error("Server error, please try again");
+      toast.error(error, "Server error, please try again");
     }
   }
   return (

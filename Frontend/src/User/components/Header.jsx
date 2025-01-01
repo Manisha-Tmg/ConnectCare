@@ -173,7 +173,6 @@ const Header = () => {
           </nav>
           {isLoggedIn ? (
             <div className="mobile-profile-section">
-              {/* <div className="mobile-avatar-container"></div> */}
               <div className="mobile-dropdown-links">
                 <Link to="/profile" className="mobile-dropdown-item">
                   My Profile
