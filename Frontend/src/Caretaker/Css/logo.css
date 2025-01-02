@@ -23,3 +23,11 @@
   margin-bottom: 1rem;
   width: 6rem;
 }
+
+@media screen and (max-width: 768px) {
+  .care-imge {
+    height: 3.5rem;
+
+    width: 3.5 rem;
+  }
+}
