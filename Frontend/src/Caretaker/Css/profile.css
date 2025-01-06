@@ -54,6 +54,9 @@ h2 {
   margin-top: 5px;
   font-style: italic;
 }
+.edit-button {
+  /* background-color: red; */
+}
 
 /* Profile Sections */
 .profile-section {
@@ -114,7 +117,13 @@ h2 {
 /* Responsive Design */
 @media (max-width: 768px) {
   .profile-container {
-    max-width: 90%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15rem;
+    margin-top: 0;
+    background: #f4f4f4;
   }
 
   .profile-pic {
