@@ -33,24 +33,6 @@ const UserDetails = () => {
     userdetail();
   }, []);
 
-  // Search functionality
-  const [searchTerm, setSearchTerm] = useState("");
-
-  // Filter functionality
-  const [filterRole, setFilterRole] = useState("");
-  const [filterStatus, setFilterStatus] = useState("");
-
-  // Filtered users
-  //   const filteredUsers = users.filter((user) => {
-  //     const matchesSearch =
-  //       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //       user.email.toLowerCase().includes(searchTerm.toLowerCase());
-  //     const matchesRole = filterRole === "" || user.role === filterRole;
-  //     const matchesStatus = filterStatus === "" || user.status === filterStatus;
-
-  //     return matchesSearch && matchesRole && matchesStatus;
-  //   });
-
   return (
     <div className="user-destails-page">
       <Sidebar />
