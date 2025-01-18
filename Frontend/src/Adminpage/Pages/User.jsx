@@ -89,9 +89,7 @@ const UserPanel = () => {
       console.error(error);
     }
   }
-  const filteredUsers = users.filter((ct) =>
-    ct.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+
   return (
     <div className="userContainer">
       <Sidebar />
@@ -102,14 +100,7 @@ const UserPanel = () => {
             <button className="add-user-btn">+ Add User</button>
           </Link>
         </div>
-        <div className="search-filter-container">
-          <input
-            type="text"
-            placeholder="Search users..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
+
         <div className="users-table-container">
           <table className="users-table">
             <thead>

@@ -6,22 +6,14 @@
   padding: 0;
 }
 
-body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: var(--text-color);
-  background-color: var(--light-bg);
-}
-
 .userContainer {
+  margin-top: 0;
   display: flex;
 }
 
 /* User Panel Container */
 .user-panel {
-  max-width: 1000px;
-  margin: auto;
-  margin-left: 70px;
-  margin-top: 20px;
+  max-width: 990px;
   padding: 20px;
   background-color: white;
   border-radius: 8px;
