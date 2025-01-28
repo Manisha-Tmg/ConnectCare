@@ -6,7 +6,6 @@ import { FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Sidebar from "../components/AdminSidebar";
-import { ShieldCheck } from "lucide-react";
 import toast from "react-hot-toast";
 
 const CaretakerPanel = () => {
@@ -104,15 +103,6 @@ const CaretakerPanel = () => {
           <Link to="/admin/Addcaretaker">
             <button className="add-caretaker-btn">+ Add Caretaker</button>
           </Link>
-        </div>
-
-        <div className="search-filter-container">
-          <input
-            type="text"
-            placeholder="Search caretakers..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
         </div>
 
         <div className="caretakers-table-container">
