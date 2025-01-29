@@ -100,9 +100,9 @@ const CaretakerPanel = () => {
         {/* <div className="caretaker-panel"> */}
         <div className="panel-header">
           <h1>Caretaker Management</h1>
-          <Link to="/admin/Addcaretaker">
+          {/* <Link to="/admin/Addcaretaker">
             <button className="add-caretaker-btn">+ Add Caretaker</button>
-          </Link>
+          </Link> */}
         </div>
 
         <div className="caretakers-table-container">

@@ -96,9 +96,9 @@ const UserPanel = () => {
       <div className="user-panel">
         <div className="panel-header">
           <h1>User Management</h1>
-          <Link to={"/admin/Adduser"}>
+          {/* <Link to={"/admin/Adduser"}>
             <button className="add-user-btn">+ Add User</button>
-          </Link>
+          </Link> */}
         </div>
 
         <div className="users-table-container">

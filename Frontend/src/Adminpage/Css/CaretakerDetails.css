@@ -27,12 +27,12 @@
 }
 
 .caretaker-panel {
-  max-width: 00px;
+  max-width: 1200px;
   margin: auto;
   margin-left: 250px;
   margin-top: 20px;
   padding: 24px;
-  background-color: rgb(94, 44, 44);
+  background-color: rgb(254, 254, 254);
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
