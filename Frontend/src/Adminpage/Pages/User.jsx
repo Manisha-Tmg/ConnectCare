@@ -12,6 +12,7 @@ const UserPanel = () => {
   const [users, setUsers] = useState([]);
   const [datas, setdata] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const role = Cookies.get("role");
 
   async function userdetail() {
     const token = Cookies.get("accessToken");
@@ -89,7 +90,7 @@ const UserPanel = () => {
       console.error(error);
     }
   }
-
+  const nonAdminUsers = users.filter((user) => user.role !== "admin");
   return (
     <div className="userContainer">
       <Sidebar />
@@ -114,7 +115,7 @@ const UserPanel = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
+              {nonAdminUsers.map((user) => (
                 <tr key={user.id}>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
