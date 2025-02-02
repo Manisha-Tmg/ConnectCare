@@ -196,7 +196,7 @@ def book_caretaker(request):
                 f"Phone: {number}\n"
                 f"Note: {note or 'N/A'}\n\n"
                 f"Please check your dashboard to accept or reject the booking.",
-        from_email=None,  
+        from_email=f'ConnectCare<{settings.DEFAULT_FROM_EMAIL}>',
         recipient_list=[caretaker.email],
         fail_silently=False
     )

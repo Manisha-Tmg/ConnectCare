@@ -706,6 +706,13 @@ h2 {
   color: #721c24;
 }
 
+.status-badge.rejected {
+  width: fit-content;
+
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
 /* Responsive tweaks */
 @media screen and (max-width: 768px) {
   .caretaker-panel {
