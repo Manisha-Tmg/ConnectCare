@@ -7,29 +7,52 @@ import Footer from "../components/Footer";
 
 const BookingPanel = () => {
   const [bookings, setBookings] = useState([]);
-  const [caretakers, setCaretakers] = useState([]);
+
+  const fetchBookings = async () => {
+    const token = Cookies.get("accessToken");
+
+    try {
+      const resBooking = await fetch(`${API}api/bookings/`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const bookingData = await resBooking.json();
+      setBookings(bookingData);
+    } catch (error) {
+      console.error("Error fetching booking data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const token = Cookies.get("accessToken");
-
-      try {
-        // Fetch Bookings
-        const resBooking = await fetch(`${API}api/bookings/`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const bookingData = await resBooking.json();
-        setBookings(bookingData);
-      } catch (error) {
-        console.error("Error fetching booking or caretaker data:", error);
-      }
-    };
-
-    fetchData();
+    fetchBookings();
   }, []);
+
+  const handleCancelBooking = async (booking_id) => {
+    const token = Cookies.get("accessToken");
+
+    const confirm = window.confirm(
+      "Are you sure you want to cancel this booking?"
+    );
+    if (!confirm) return;
+
+    try {
+      const res = await fetch(`${API}api/bookings/${booking_id}/cancel/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      alert(data.detail);
+      fetchBookings();
+    } catch (error) {
+      console.error("Error cancelling booking:", error);
+    }
+  };
 
   return (
     <div>
@@ -43,10 +66,12 @@ const BookingPanel = () => {
           <table className="caretakers-table">
             <thead>
               <tr>
-                <th>Date</th> <th>Number</th>
+                <th>Date</th>
+                <th>Number</th>
                 <th>Caretaker</th>
                 <th>Location</th>
                 <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -64,11 +89,23 @@ const BookingPanel = () => {
                         {booking.status}
                       </span>
                     </td>
+                    <td>
+                      {booking.status === "pending" ? (
+                        <button
+                          className="cancel-button"
+                          onClick={() => handleCancelBooking(booking.id)}
+                        >
+                          Cancel
+                        </button>
+                      ) : (
+                        "-"
+                      )}
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="5">No bookings found.</td>
+                  <td colSpan="6">No bookings found.</td>
                 </tr>
               )}
             </tbody>

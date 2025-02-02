@@ -125,6 +125,8 @@ class Booking(models.Model):
         ('pending', 'Pending'),
         ('accepted', 'Accepted'),
         ('rejected', 'Rejected'),
+        ('cancelled', 'Cancelled'),
+        
     ]
     
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)  # Link to User

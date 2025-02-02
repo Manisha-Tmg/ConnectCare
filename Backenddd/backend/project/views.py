@@ -226,6 +226,27 @@ def get_Booking(request, booking_id=None):
 
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def cancel_booking(request, booking_id):
+    try:
+        booking = Booking.objects.get(id=booking_id)
+    except Booking.DoesNotExist:
+        return Response({"detail": "Booking not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    # Only allow the user who made the booking to cancel
+    if booking.user != request.user:
+        return Response({"detail": "Not authorized to cancel this booking."}, status=status.HTTP_403_FORBIDDEN)
+
+    if booking.status in ['cancelled', 'rejected']:
+        return Response({"detail": "Booking is already cancelled or rejected."}, status=status.HTTP_400_BAD_REQUEST)
+
+    booking.status = 'cancelled'
+    booking.save()
+
+    return Response({"detail": "Booking cancelled successfully."}, status=status.HTTP_200_OK)
+
+
 
 # chnage password for user
 class ChangePasswordView(APIView):

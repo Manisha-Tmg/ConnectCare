@@ -15,6 +15,19 @@
 .icon-side {
   /* margin-top: 15px; */
 }
+.cancel-button {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background-color: #e60000;
+}
 
 .edit-button {
   position: absolute;
@@ -668,12 +681,15 @@ h2 {
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.85rem;
+  width: fit-content;
   font-weight: 500;
   text-transform: capitalize;
 }
 
 /* Status Colors */
 .status-badge.pending {
+  width: fit-content;
+
   background-color: #fff3cd;
   color: #856404;
 }
@@ -683,7 +699,9 @@ h2 {
   color: #155724;
 }
 
-.status-badge.rejected {
+.status-badge.cancelled {
+  width: fit-content;
+
   background-color: #f8d7da;
   color: #721c24;
 }

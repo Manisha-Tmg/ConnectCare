@@ -3,7 +3,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from project.views import UserViewSet, UserRegistrationView,LoginView,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,ReviewView,RequestPasswordResetView, ResetNewPassword,EditProfile
+from project.views import UserViewSet, UserRegistrationView,LoginView,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,ReviewView,RequestPasswordResetView, ResetNewPassword,EditProfile,cancel_booking
 from project.caretaker_views import  CareRegistrationView,CareLoginView,booking_action,get_CaretakerBooking,booking_count_api,CaretakerChangePasswordView,ProfileEdit,RequestResetPasswordView,NewPasswordReset
 from project.admin_views import  AdminLoginView,admin_dashboard,change_caretaker_status,change_user_status,delete_user,caretaker_delete,get_all_bookings
  
@@ -31,6 +31,8 @@ urlpatterns = [
     path('api/users/<int:user_id>',get_user,name='ger_user'),    
     
 
+    # cancel booking by user
+    path('api/bookings/<int:booking_id>/cancel/',cancel_booking,name='cancel_booking'),
 
 #    review
     path('caretakers/<int:caretaker_id>/reviews/', ReviewView.as_view(), name='create-review'),
