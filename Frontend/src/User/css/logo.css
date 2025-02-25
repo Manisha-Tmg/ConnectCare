@@ -16,12 +16,12 @@
   display: flex;
   align-items: center;
 
-  /* font-size: 3rem; */
   color: #ff5733;
 }
 .imge {
-  height: 4rem;
-  margin-top: 1rem;
+  height: 7.5rem;
+  margin-top: 3rem;
   margin-bottom: 1.9rem;
-  width: 4rem;
+  margin-left: 1.5rem;
+  width: 5rem;
 }
