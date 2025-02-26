@@ -35,6 +35,7 @@ import CaretakerForgotPassword from "./Caretaker/Components/CaretakerForgotPassw
 import CaretakerResetPasswordComponent from "./Caretaker/Components/CaretakerResetPasswordComponent.jsx";
 import EditProfile from "./User/Pages/EditProfile.jsx";
 import CaretakerEditProfile from "./Caretaker/Pages/EditProfile.jsx";
+import EmailVerification from "./User/components/EmailVerification.jsx";
 
 function App() {
   return (
@@ -43,6 +44,11 @@ function App() {
       <Routes>
         {/* User */}
         <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/verify-email/:uid/:token/"
+          element={<EmailVerification />}
+        />
+
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/aboutus" element={<AboutUs />} />

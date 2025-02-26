@@ -11,6 +11,8 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
 
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -59,8 +61,8 @@ const Signup = () => {
     formData.append("name", name);
     formData.append("gender", gender);
     formData.append("email", email);
-    // formData.append("phone", phone);
-    // formData.append("address", address);
+    formData.append("phone", phone);
+    formData.append("address", address);
     formData.append("username", username);
     formData.append("password", password);
     formData.append("profile_picture", profilePictureFile);
@@ -135,7 +137,7 @@ const Signup = () => {
               </select>
             </div>
 
-            {/* <div className="users-form-group">
+            <div className="users-form-group">
               <label>Phone:</label>
               <input
                 className="users-select"
@@ -146,7 +148,7 @@ const Signup = () => {
                 required
                 maxLength="10"
               />
-            </div> */}
+            </div>
             <div className="users-form-group">
               <label>Email:</label>
               <input
@@ -159,7 +161,7 @@ const Signup = () => {
               />
             </div>
           </div>
-          {/* <div className="users-form-group">
+          <div className="users-form-group">
             <label>Address:</label>
             <input
               name="address"
@@ -168,7 +170,7 @@ const Signup = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
-          </div> */}
+          </div>
           <div className="users-form-row">
             <div className="users-form-group">
               <label>Username:</label>

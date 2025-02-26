@@ -54,7 +54,7 @@ class UserRegistrationView(APIView):
                       "address"  :user.address,     
                       "phone"  :user.phone,    
                       "email": user.email,
-                    "role": user.role  # Send role in response to navigate to roles based home
+                      "role": user.role 
                 }
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
