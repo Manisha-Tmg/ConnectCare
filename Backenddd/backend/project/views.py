@@ -8,7 +8,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view,permission_classes
 from .models import Caretaker,Booking
 from django.contrib.auth import get_user_model
-from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer
+from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer
 
 # User ViewSet for CRUD operations
 class UserViewSet(viewsets.ModelViewSet):
@@ -65,7 +65,7 @@ class LoginView(APIView):
 
 
 @api_view(['GET'])
-@permission_classes([AllowAny])  # Allows anyone to access this view // to test the fetch data
+@permission_classes([IsAuthenticated])  # Allows anyone to access this view // to test the fetch data
 def get_caretakers(request):
     caretakers = Caretaker.objects.all()  # Fetch all caretakers
     serializer = CaretakerSerializer(caretakers, many=True)  # Serialize data
@@ -74,11 +74,11 @@ def get_caretakers(request):
 
 
 @api_view(['POST'])
-@permission_classes(AllowAny)
+@permission_classes(IsAuthenticated)
 def book_caretaker(request):
     if request.method == 'POST':
-        if not request.user.is_authenticated:
-            return Response ({"detail": "Authentication credentials are required"},status=status.HTTP_403_FORBIDDEN)
+        # if not request.user.is_authenticated:
+        #     return Response ({"detail": "Authentication credentials are required"},status=status.HTTP_403_FORBIDDEN)
         
         caretaker_id = request.data.get('caretaker')
         booking_date = request.data.get('booking_date')
@@ -94,3 +94,6 @@ def book_caretaker(request):
         booking_date = booking_date,
         status = "Pending" #default and it will be changed by  the admin
     )
+
+    serializer =  BookingSerializer(booking)
+    return Response(serializer.data,status=status.HTTP_201_CREATED)

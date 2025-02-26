@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from project.views import UserViewSet, UserRegistrationView,LoginView,get_caretakers
+from project.views import UserViewSet, UserRegistrationView,LoginView,get_caretakers,book_caretaker
 
 
 # Initialize the router
@@ -22,6 +22,9 @@ urlpatterns = [
 
     # Caretaker
     path('api/caretakers/', get_caretakers, name='get_caretakers'),
+
+    # Booking
+    path('api/book_caretaker/', book_caretaker, name='book_caretaker'),
 
     ]
 

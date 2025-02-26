@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Caretaker
 from django.contrib.auth import authenticate
-from .models import CustomUser
+from .models import CustomUser,Booking
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -62,3 +62,9 @@ class CaretakerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Caretaker
         fields = '__all__'
+
+
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = ['user','caretaker','booking_date',"status"]
