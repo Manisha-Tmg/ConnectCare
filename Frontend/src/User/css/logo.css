@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.main {
+  width: 15px;
+  height: 15px;
+}
+.left-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo1,
+.logo {
+  font-size: 1.5rem;
+  color: white;
+  font-weight: bold;
+}
+
+.logo1 {
+  color: #20b2aa;
+}
+
+.logo {
+  color: #b71550;
+}
+
+/*  */

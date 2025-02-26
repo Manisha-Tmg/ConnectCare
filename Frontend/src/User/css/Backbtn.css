@@ -1,0 +1,30 @@
+.back-button {
+  text-align: start;
+  display: flex;
+  color: rgb(0, 0, 0);
+  padding: 8px 15px;
+  font-size: 30px;
+  border: none;
+  border-radius: 5px;
+  gap: 0.2rem;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-right: 35rem;
+}
+
+.icon-back {
+  width: 45px;
+  height: 45px;
+}
+
+.back-button1 {
+  text-align: start;
+  display: flex;
+  color: rgb(0, 0, 0);
+  padding: 8px 15px;
+  font-size: 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}

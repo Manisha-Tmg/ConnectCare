@@ -1,0 +1,36 @@
+.footer {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 55px;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+  background-color: #20b2aa;
+  text-align: center;
+  z-index: 1000;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.footer p {
+  color: white;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .footer {
+    height: auto; /* Allows height to adjust dynamically */
+    padding: 0.5rem;
+    flex-direction: column; /* Stacks content vertically */
+  }
+
+  .footer p {
+    font-size: 0.8rem; /* Reduces font size for smaller screens */
+  }
+}

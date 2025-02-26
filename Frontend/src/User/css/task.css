@@ -1,0 +1,33 @@
+.tasks {
+  padding: 20px;
+  margin-top: 5%;
+  width: 800px;
+  background-color: #ffffff;
+}
+
+.tasks h2 {
+  display: flex;
+  text-align: start;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.tasks ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.tasks ul li {
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.dashboard-container {
+  background-color: #ffffff;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  border-radius: 5px;
+}
