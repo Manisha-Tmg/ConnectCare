@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from datetime import datetime
 from rest_framework.decorators import api_view,permission_classes
 from .models import Caretaker,Booking
 from django.contrib.auth import get_user_model
@@ -73,27 +74,35 @@ def get_caretakers(request):
 
 
 
+
 @api_view(['POST'])
-@permission_classes(IsAuthenticated)
+@permission_classes([IsAuthenticated])
 def book_caretaker(request):
     if request.method == 'POST':
-        # if not request.user.is_authenticated:
-        #     return Response ({"detail": "Authentication credentials are required"},status=status.HTTP_403_FORBIDDEN)
-        
+        # Get data from request
         caretaker_id = request.data.get('caretaker')
         booking_date = request.data.get('booking_date')
 
+        # Check if caretaker exists
         try:
             caretaker = Caretaker.objects.get(id=caretaker_id)
         except Caretaker.DoesNotExist:
-            return Response ({"Detail":"Caretaker doesnot found"},status=status.HTTP_403_FORBIDDEN)
+            return Response({"detail": "Caretaker does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
-    booking = Booking.object.create(
-        user = request.user,
-        caretaker = caretaker,
-        booking_date = booking_date,
-        status = "Pending" #default and it will be changed by  the admin
-    )
+        # Convert booking_date string to datetime object if needed
+        try:
+            booking_date = datetime.fromisoformat(booking_date)
+        except ValueError:
+            return Response({"detail": "Invalid booking date format"}, status=status.HTTP_400_BAD_REQUEST)
 
-    serializer =  BookingSerializer(booking)
-    return Response(serializer.data,status=status.HTTP_201_CREATED)
+        # Create booking
+        booking = Booking.objects.create(
+            user=request.user,
+            caretaker=caretaker,
+            booking_date=booking_date,
+            status="Pending"  # Default status
+        )
+
+        # Serialize and return the booking data
+        serializer = BookingSerializer(booking)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
