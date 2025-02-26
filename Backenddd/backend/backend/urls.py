@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from project.views import UserViewSet, UserRegistrationView,LoginView
+from project.views import UserViewSet, UserRegistrationView,LoginView,get_caretakers
 
 
 # Initialize the router
@@ -20,7 +20,9 @@ urlpatterns = [
     path('api/login/', LoginView.as_view(), name='user_login'),
 
 
-    # Booking
+    # Caretaker
+    path('api/caretakers/', get_caretakers, name='get_caretakers'),
+
     ]
 
 # Add router-generated URLs

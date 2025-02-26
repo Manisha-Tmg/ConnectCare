@@ -1,20 +1,18 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Group, Permission
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
+from django.contrib.auth import get_user_model
+
+
 
 class CustomUser(AbstractUser):
-    ROLE_CHOICES = [
-        ('user', 'User'),
-        ('caretaker', 'Caretaker'),
-    ]
-    
+       
     last_name=models.CharField(max_length=150)
     email = models.EmailField(unique=True)
     first_name=models.CharField(max_length=150)
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
-    groups = models.ManyToManyField(Group, related_name="customuser_groups", blank=True)
-    user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions", blank=True)
+    role = models.CharField(max_length=10,  default='user')
+    # s# user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions", blank=True)
 
    
     USERNAME_FIELD = 'username'  
@@ -25,19 +23,46 @@ class CustomUser(AbstractUser):
 
 
 
-User = get_user_model() 
-class CareTaker(models.Model):
-    name = models.CharField(max_length=100)
+# User = get_user_model() 
+# class CareTaker(models.Model):
+#     name = models.CharField(max_length=100)
+#     email = models.EmailField(unique=True)
+#     phone_number = models.CharField(max_length=15, unique=True, null=True, blank=True)
+#     experience = models.IntegerField()  # Years of experience
+#     is_available = models.BooleanField(default=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+#     role = models.CharField(max_length=20, default='caretaker')
+
+#     def __str__(self):
+#         return self.name
+
+
+
+class Caretaker(models.Model):
+    name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
-    username = models.CharField(max_length=150, unique=True)
-    phone_number = models.CharField(max_length=15, unique=True, null=True, blank=True)
-    experience = models.IntegerField()  # Years of experience
+    phone = models.CharField(max_length=15)
     hourly_rate = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    is_available = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    experience = models.IntegerField()  
+    specialty = models.CharField(max_length=255)  
+    is_available = models.BooleanField(default=True)    
+    created_at = models.DateTimeField(default=timezone.now)  
     updated_at = models.DateTimeField(auto_now=True)
     role = models.CharField(max_length=20, default='caretaker')
+    username = models.CharField(max_length=150, unique=True)
 
+
+   
     def __str__(self):
         return self.name
 
+
+class Booking(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)  # Link to User
+    caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE)  # Link to Caretaker
+    booking_date = models.DateTimeField()  # Date and time of booking
+    status = models.CharField(max_length=20, default='Pending')  # Status of booking (e.g., Pending, Confirmed, etc.)
+
+    def __str__(self):
+        return f"Booking by {self.user.username} for {self.caretaker.name} on {self.booking_date}"
