@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/BookCaretaker.css";
 import photo from "../../assets/Profile.jpg";
 import Maria from "../../assets/julia.jpg";
@@ -6,32 +6,43 @@ import joordan from "../../assets/joordan.jpg";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Previous from "../components/Previous";
-
-const caretakers = [
-  {
-    id: 1,
-    name: "Maria Johnson",
-    rating: 4.8,
-    image: Maria,
-  },
-  {
-    id: 2,
-    name: "Jordan Smith",
-    rating: 4.5,
-    image: joordan,
-  },
-  {
-    id: 3,
-    name: "Julia Smith",
-    rating: 4.5,
-    image: photo,
-  },
-];
+import { API } from "../../env";
 
 const BookCaretaker = () => {
   const [selectedCaretaker, setSelectedCaretaker] = useState(null);
   const [date, setDate] = useState(null);
+  const [caretakers, setCaretakers] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+
+  const hanglebooking = async () => {
+    try {
+      const response = await fetch(`${API}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: {},
+      });
+    } catch {}
+  };
+  useEffect(() => {
+    const handelCaretakerBooking = async () => {
+      try {
+        const res = await fetch(`${API}api/caretakers/`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await res.json();
+        setCaretakers(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    handelCaretakerBooking();
+  }, []);
 
   return (
     <div>
@@ -41,12 +52,6 @@ const BookCaretaker = () => {
           <Previous />
           Book a Caretaker
         </h1>
-        <input
-          type="text"
-          placeholder="Search caretakers..."
-          className="search-input"
-        />
-
         <div className="caretaker-grid">
           {caretakers.map((caretaker) => (
             <div
@@ -62,8 +67,21 @@ const BookCaretaker = () => {
                 alt={caretaker.name}
                 className="caretaker-image"
               />
-              <h2 className="caretaker-name">{caretaker.name}</h2>
-              <p className="caretaker-rating">⭐ {caretaker.rating} Rating</p>
+              <h2 className="caretaker-name">Name: {caretaker.name}</h2>
+              <p className="caretaker-text">
+                Hourly Rate: {caretaker.hourly_rate}
+              </p>
+              <p className="caretaker-text">
+                Experience:{caretaker.experience}
+              </p>
+              <p className="caretaker-text">
+                Speciality: {caretaker.specialty}
+              </p>
+              <p className="caretaker-text">
+                Status: {caretaker.is_available ? "Available" : "NOt Available"}
+              </p>
+              {/* <p className="caretaker-text"></p> */}
+              {/* <p className="caretaker-rating">⭐ {caretaker.rating} Rating</p> */}
             </div>
           ))}
         </div>

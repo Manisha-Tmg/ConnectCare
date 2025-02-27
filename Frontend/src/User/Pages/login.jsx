@@ -16,7 +16,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${API}api/login/`, {
+      const res = await fetch(`${API}auth/api/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,7 +29,6 @@ const Login = () => {
 
       if (data.access_token) {
         localStorage.setItem("accessToken", data.access_token);
-        // localStorage.setItem("role", data.role); // Default to "user" if role is missing
 
         // Retrieve role from localStorage before navigating
         const userRole = localStorage.getItem("role");
@@ -41,8 +40,6 @@ const Login = () => {
           navigate("/dashboard");
         } else if (userRole === "admin") {
           navigate("/admin-panel");
-        } else {
-          navigate("/"); // Default fallback
         }
       } else {
         console.log("Login failed:", data.error || "Invalid credentials");

@@ -54,11 +54,15 @@
 
 .caretaker-name {
   font-size: 20px;
+  justify-content: flex-start;
+  display: flex;
   margin-top: 12px;
   font-weight: bold;
 }
 
-.caretaker-rating {
+.caretaker-text {
+  justify-content: flex-start;
+  display: flex;
   color: #777;
   font-size: 16px;
 }

@@ -1,6 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.db import models
+from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 
@@ -12,30 +11,17 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     first_name=models.CharField(max_length=150)
     role = models.CharField(max_length=10,  default='user')
-    # s# user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions", blank=True)
+    groups = models.ManyToManyField(Group, related_name="customuser_groups")
+    user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions")
 
    
     USERNAME_FIELD = 'username'  
-    REQUIRED_FIELDS = ['email']  
+    REQUIRED_FIELDS = ['username']  
 
     def __str__(self):
         return self.username
 
 
-
-# User = get_user_model() 
-# class CareTaker(models.Model):
-#     name = models.CharField(max_length=100)
-#     email = models.EmailField(unique=True)
-#     phone_number = models.CharField(max_length=15, unique=True, null=True, blank=True)
-#     experience = models.IntegerField()  # Years of experience
-#     is_available = models.BooleanField(default=True)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     role = models.CharField(max_length=20, default='caretaker')
-
-#     def __str__(self):
-#         return self.name
 
 
 

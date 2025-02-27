@@ -6,10 +6,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from datetime import datetime
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view,permission_classes
-from .models import Caretaker,Booking
+from .models import Caretaker,Booking,CustomUser
 from django.contrib.auth import get_user_model
-from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer
+from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer
 
 # User ViewSet for CRUD operations
 class UserViewSet(viewsets.ModelViewSet):
@@ -64,14 +65,33 @@ class LoginView(APIView):
 
 
 
-
+# API of caretaker list
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])  # Allows anyone to access this view // to test the fetch data
-def get_caretakers(request):
-    caretakers = Caretaker.objects.all()  # Fetch all caretakers
-    serializer = CaretakerSerializer(caretakers, many=True)  # Serialize data
-    return Response(serializer.data)  # Return serialized data as response
+@permission_classes([AllowAny])  # Allows anyone to access this view // to test the fetch data
+def get_caretakers(request,caretaker_id=None):
+    if caretaker_id:
+        caretakers = get_object_or_404(Caretaker,id=caretaker_id)
+        serializer = CaretakerSerializer(caretakers)
+        return Response(serializer.data)  # Return serialized data as response
 
+    else:
+        caretakers = Caretaker.objects.all()  # Fetch all caretakers
+        serializer = CaretakerSerializer(caretakers, many=True)  # Serialize data
+        return Response(serializer.data)  # Return serialized data as response
+
+# API of User list
+@api_view(['GET'])
+@permission_classes([AllowAny])# so that anyone see the list of user
+def get_user(request,user_id=None):
+    if user_id:
+        users = get_object_or_404(CustomUser,id=user_id)
+        serializer = CustomUserSerializer(users)
+        return Response(serializer.data)  # Return serialized data as response
+
+    else:
+        users = CustomUser.objects.all() #to fetch all user
+        serializer = CustomUserSerializer(users,many=True)
+        return Response(serializer.data)
 
 
 
