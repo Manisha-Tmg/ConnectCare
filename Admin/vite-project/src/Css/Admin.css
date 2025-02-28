@@ -1,0 +1,101 @@
+.admin-dashboard {
+  display: flex;
+  height: 100vh;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 20px;
+  background: #f7f7f7;
+}
+
+h2,
+h3 {
+  color: #333;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-caretaker {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.add-caretaker input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-btn {
+  background: green;
+  color: white;
+}
+
+.delete-btn {
+  background: red;
+  color: white;
+}
+
+.caretaker-list,
+.booking-list {
+  list-style: none;
+  padding: 0;
+}
+
+.caretaker-list li,
+.booking-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.sidebar {
+  background: #1a202c;
+  color: white;
+  width: 250px;
+  padding: 20px;
+  height: 100vh;
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.sidebar li span {
+  margin-left: 10px;
+}
+
+.logout {
+  color: red;
+}

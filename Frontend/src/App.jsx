@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import Home from "./User/Pages/HomePage";
 import AboutUs from "./User/Pages/Aboutus";
 import Bookings from "./User/Pages/Booking";
