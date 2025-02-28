@@ -59,7 +59,8 @@ REST_FRAMEWORK = {
     ],
 }
 
-# AUTH_USER_MODEL = 'project.CustomUser'
+AUTH_USER_MODEL = 'project.CustomUser'
+# AUTH_USER_MODEL = 'project.Caretaker'
 
 
 

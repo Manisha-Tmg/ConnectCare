@@ -79,9 +79,10 @@ def get_caretakers(request,caretaker_id=None):
         serializer = CaretakerSerializer(caretakers, many=True)  # Serialize data
         return Response(serializer.data)  # Return serialized data as response
 
+
 # API of User list
 @api_view(['GET'])
-@permission_classes([AllowAny])# so that anyone see the list of user
+@permission_classes([IsAuthenticated])# so that anyone see the list of user
 def get_user(request,user_id=None):
     if user_id:
         users = get_object_or_404(CustomUser,id=user_id)
@@ -96,10 +97,10 @@ def get_user(request,user_id=None):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def book_caretaker(request):
     if request.method == 'POST':
-        # Get data from request
+        
         caretaker_id = request.data.get('caretaker')
         booking_date = request.data.get('booking_date')
 

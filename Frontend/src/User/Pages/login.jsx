@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import "../css/login.css";
-import { FaEnvelope, FaLock } from "react-icons/fa";
-
 import { Link, useNavigate } from "react-router-dom";
-
 import Header from "../components/Header";
 import { API } from "../../env";
 import InputField from "../components/Input";
 import Footer from "../components/Footer";
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -29,10 +27,11 @@ const Login = () => {
 
       if (data.access_token) {
         localStorage.setItem("accessToken", data.access_token);
+        localStorage.setItem("role", data.role); // Default to "user" if role is missing
 
         // Retrieve role from localStorage before navigating
         const userRole = localStorage.getItem("role");
-
+        console.log(userRole);
         // Navigate based on role
         if (userRole === "user") {
           navigate("/");
@@ -40,6 +39,8 @@ const Login = () => {
           navigate("/dashboard");
         } else if (userRole === "admin") {
           navigate("/admin-panel");
+        } else {
+          navigate("/dashboard");
         }
       } else {
         console.log("Login failed:", data.error || "Invalid credentials");

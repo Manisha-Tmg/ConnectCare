@@ -11,19 +11,34 @@ import { API } from "../../env";
 const BookCaretaker = () => {
   const [selectedCaretaker, setSelectedCaretaker] = useState(null);
   const [date, setDate] = useState(null);
+
+  const [booking, setBooking] = useState([]);
   const [caretakers, setCaretakers] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
   const hanglebooking = async () => {
     try {
-      const response = await fetch(`${API}`, {
+      const Token = localStorage.setItem("accessToken", data.access_token);
+      const response = await fetch(`${API}api/book_caretaker/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${Token}`,
         },
-        body: {},
+        body: {
+          user_id: user_id,
+          caretaker_id: selectedCaretaker.id,
+          booking_date: new Date(date).toISOString(),
+          status: "Pending",
+        },
       });
-    } catch {}
+
+      const data = await response.json();
+      alert("Booking confirmed");
+      isOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     const handelCaretakerBooking = async () => {
@@ -62,11 +77,11 @@ const BookCaretaker = () => {
                 setIsOpen(true);
               }}
             >
-              <img
+              {/* <img
                 src={caretaker.image}
                 alt={caretaker.name}
                 className="caretaker-image"
-              />
+              /> */}
               <h2 className="caretaker-name">Name: {caretaker.name}</h2>
               <p className="caretaker-text">
                 Hourly Rate: {caretaker.hourly_rate}
@@ -78,7 +93,7 @@ const BookCaretaker = () => {
                 Speciality: {caretaker.specialty}
               </p>
               <p className="caretaker-text">
-                Status: {caretaker.is_available ? "Available" : "NOt Available"}
+                Status: {caretaker.is_available ? "Available" : "Not Available"}
               </p>
               {/* <p className="caretaker-text"></p> */}
               {/* <p className="caretaker-rating">⭐ {caretaker.rating} Rating</p> */}

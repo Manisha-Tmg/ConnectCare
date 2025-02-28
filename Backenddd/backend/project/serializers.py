@@ -38,6 +38,28 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
         return user
 
+# class LoginSerializer(serializers.Serializer):
+#     username = serializers.CharField()
+#     password = serializers.CharField(write_only=True)
+
+#     def validate(self, data):
+#         username = data.get('username')
+#         password = data.get('password')
+
+#         user = authenticate(username=username, password=password)
+
+#         if user is None:
+#             raise serializers.ValidationError("Invalid credentials.")
+#         if not user.is_active:
+#             raise serializers.ValidationError("User account is inactive.")
+
+#         return {"user": user}  # Ensure 'user' is returned
+
+
+from django.contrib.auth import authenticate
+from rest_framework import serializers
+from .models import CustomUser, Caretaker
+
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
@@ -46,16 +68,25 @@ class LoginSerializer(serializers.Serializer):
         username = data.get('username')
         password = data.get('password')
 
+        # Try authenticating as CustomUser first
         user = authenticate(username=username, password=password)
 
         if user is None:
-            raise serializers.ValidationError("Invalid credentials.")
-        if not user.is_active:
+            # If user not found, try authenticating as Caretaker
+            try:
+                caretaker = Caretaker.objects.get(username=username)
+                # Assuming caretakers have their password stored in a hashed format, similar to the user
+                if caretaker.password != password:  # This is a basic check, improve password validation here
+                    raise serializers.ValidationError("Invalid credentials.")
+            except Caretaker.DoesNotExist:
+                raise serializers.ValidationError("Invalid credentials.")
+            # If a caretaker is found and credentials match, return a caretaker object
+            return {"caretaker": caretaker}
+
+        # If user is found, return user object
+        if user and not user.is_active:
             raise serializers.ValidationError("User account is inactive.")
-
-        return {"user": user}  # Ensure 'user' is returned
-
-
+        return {"user": user}  # Ensure 'user' is returned for CustomUser
 
 
 class CaretakerSerializer(serializers.ModelSerializer):

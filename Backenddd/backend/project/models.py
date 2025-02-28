@@ -2,7 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.utils import timezone
 from django.contrib.auth import get_user_model
-
+from django.db.models.signals import post_migrate
+from django.dispatch import receiver
+from django.contrib.auth import get_user_model
 
 
 class CustomUser(AbstractUser):
@@ -16,7 +18,7 @@ class CustomUser(AbstractUser):
 
    
     USERNAME_FIELD = 'username'  
-    REQUIRED_FIELDS = ['username']  
+    REQUIRED_FIELDS = []  
 
     def __str__(self):
         return self.username
@@ -26,12 +28,14 @@ class CustomUser(AbstractUser):
 
 
 class Caretaker(models.Model):
+
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=15)
     hourly_rate = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     experience = models.IntegerField()  
     specialty = models.CharField(max_length=255)  
+    password = models.CharField(max_length=255)  
     is_available = models.BooleanField(default=True)    
     created_at = models.DateTimeField(default=timezone.now)  
     updated_at = models.DateTimeField(auto_now=True)
@@ -52,3 +56,5 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"Booking by {self.user.id} for {self.caretaker.name} on {self.booking_date}"
+
+
