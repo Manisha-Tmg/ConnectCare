@@ -49,7 +49,6 @@ const ChangePassword = () => {
 
       if (res.ok) {
         toast.success("Password changed successfully");
-        // Cookies.remove("AccessToken");
         Cookies.remove("accessToken");
         Cookies.remove("role");
         Cookies.remove("user_id");

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   FaCalendarAlt,
   FaUser,
-  FaBell,
   FaCog,
   FaSignOutAlt,
   FaHome,

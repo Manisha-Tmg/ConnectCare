@@ -7,7 +7,7 @@ const Forgotpassword = () => {
     <>
       <CaretakerSidebar />
       <CaretakerForgotPassword />
-      <CaretakerFor />
+      {/* <CaretakerFor /> */}
     </>
   );
 };
