@@ -1,17 +1,30 @@
 import React, { useEffect, useState } from "react";
 import "../css/Header.css";
 import Logo from "./Logo";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const [login, setLogin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      setLogin(true);
+    // Check if authentication cookie exists
+    const cookies = document.cookie.split("; ");
+    const authCookie = cookies.find((cookie) =>
+      cookie.startsWith("accessToken=")
+    );
+
+    if (authCookie) {
+      setIsLoggedIn(true);
     }
-  });
+  }, []);
+
+  const handleLogout = () => {
+    document.cookie =
+      "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    setIsLoggedIn(false);
+    navigate("/");
+  };
 
   return (
     <header className="header">
@@ -27,7 +40,7 @@ const Header = () => {
           </li>
           <li>
             <Link to="/aboutus" className="nav-link">
-              AboutUs
+              About Us
             </Link>
           </li>
           <li>
@@ -35,17 +48,19 @@ const Header = () => {
               Blog
             </Link>
           </li>
-          <li></li>
         </ul>
       </nav>
 
       <div className="profile-section">
-        {/* <Link to="/profile">
-          <button className="btn-profile">My Profile</button>
-        </Link> */}
-        <Link to="/login">
-          <button className="btn-login">Log In</button>
-        </Link>
+        {isLoggedIn ? (
+          <button className="btn-login" onClick={handleLogout}>
+            Log Out
+          </button>
+        ) : (
+          <Link to="/login">
+            <button className="btn-login">Log In</button>
+          </Link>
+        )}
       </div>
     </header>
   );

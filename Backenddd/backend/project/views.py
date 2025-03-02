@@ -54,6 +54,7 @@ class LoginView(APIView):
 
             refresh = RefreshToken.for_user(user)  # Generate JWT tokens
             return Response({
+                'user_id': user.id,
                 'refresh': str(refresh),
                 'access_token': str(refresh.access_token),
                 'username': user.username,
@@ -127,3 +128,9 @@ def book_caretaker(request):
         # Serialize and return the booking data
         serializer = BookingSerializer(booking)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+
+# @api_view(["POST"])
+# @permission_classes([AllowAny])
+# def 

@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import { API } from "../../env";
 import InputField from "../components/Input";
 import Footer from "../components/Footer";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -26,21 +27,24 @@ const Login = () => {
       console.log("API Response:", data);
 
       if (data.access_token) {
-        localStorage.setItem("accessToken", data.access_token);
-        localStorage.setItem("role", data.role); // Default to "user" if role is missing
+        // Store token and user info in cookies
+        Cookies.set("accessToken", data.access_token, {
+          expires: 7,
+          secure: true,
+        });
+        Cookies.set("user_id", data.user_id, { expires: 7, secure: true });
+        Cookies.set("role", data.role || "user", { expires: 7, secure: true });
 
-        // Retrieve role from localStorage before navigating
-        const userRole = localStorage.getItem("role");
-        console.log(userRole);
-        // Navigate based on role
+        // Navigate based on user role
+        const userRole = Cookies.get("role");
+        console.log("User Role:", userRole);
+
         if (userRole === "user") {
           navigate("/");
         } else if (userRole === "caretaker") {
           navigate("/dashboard");
         } else if (userRole === "admin") {
           navigate("/admin-panel");
-        } else {
-          navigate("/dashboard");
         }
       } else {
         console.log("Login failed:", data.error || "Invalid credentials");

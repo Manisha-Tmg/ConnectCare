@@ -1,47 +1,71 @@
 import React, { useEffect, useState } from "react";
 import "../css/BookCaretaker.css";
-import photo from "../../assets/Profile.jpg";
-import Maria from "../../assets/julia.jpg";
-import joordan from "../../assets/joordan.jpg";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Previous from "../components/Previous";
 import { API } from "../../env";
+import Cookies from "js-cookie";
 
 const BookCaretaker = () => {
   const [selectedCaretaker, setSelectedCaretaker] = useState(null);
-  const [date, setDate] = useState(null);
-
-  const [booking, setBooking] = useState([]);
+  const [date, setDate] = useState("");
   const [caretakers, setCaretakers] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const hanglebooking = async () => {
+  const handleBooking = async () => {
     try {
-      const Token = localStorage.setItem("accessToken", data.access_token);
+      const token = Cookies.get("accessToken");
+      const userId = Cookies.get("user_id");
+
+      if (!token) {
+        alert("Session expired. Please log in again.");
+        return;
+      }
+
+      if (!userId) {
+        alert("User not found. Please log in again.");
+        return;
+      }
+
+      console.log("Sending Access Token:", token);
+
       const response = await fetch(`${API}api/book_caretaker/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Token}`,
+          Authorization: `Bearer ${token}`,
         },
-        body: {
-          user_id: user_id,
+        body: JSON.stringify({
+          user_id: userId,
           caretaker_id: selectedCaretaker.id,
           booking_date: new Date(date).toISOString(),
           status: "Pending",
-        },
+        }),
+      });
+
+      console.log("Booking Request Data:", {
+        user_id: userId,
+        caretaker_id: selectedCaretaker.id,
+        booking_date: new Date(date).toISOString(),
+        status: "Pending",
       });
 
       const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail || "Booking failed");
+      }
+
       alert("Booking confirmed");
-      isOpen(false);
+      setIsOpen(false);
     } catch (error) {
-      console.log(error);
+      console.error("Booking error:", error);
+      alert("Error: " + error.message);
     }
   };
+
   useEffect(() => {
-    const handelCaretakerBooking = async () => {
+    const fetchCaretakers = async () => {
       try {
         const res = await fetch(`${API}api/caretakers/`, {
           method: "GET",
@@ -56,7 +80,7 @@ const BookCaretaker = () => {
         console.log(error);
       }
     };
-    handelCaretakerBooking();
+    fetchCaretakers();
   }, []);
 
   return (
@@ -77,17 +101,12 @@ const BookCaretaker = () => {
                 setIsOpen(true);
               }}
             >
-              {/* <img
-                src={caretaker.image}
-                alt={caretaker.name}
-                className="caretaker-image"
-              /> */}
               <h2 className="caretaker-name">Name: {caretaker.name}</h2>
               <p className="caretaker-text">
                 Hourly Rate: {caretaker.hourly_rate}
               </p>
               <p className="caretaker-text">
-                Experience:{caretaker.experience}
+                Experience: {caretaker.experience}
               </p>
               <p className="caretaker-text">
                 Speciality: {caretaker.specialty}
@@ -95,8 +114,6 @@ const BookCaretaker = () => {
               <p className="caretaker-text">
                 Status: {caretaker.is_available ? "Available" : "Not Available"}
               </p>
-              {/* <p className="caretaker-text"></p> */}
-              {/* <p className="caretaker-rating">⭐ {caretaker.rating} Rating</p> */}
             </div>
           ))}
         </div>
@@ -111,10 +128,7 @@ const BookCaretaker = () => {
                 onChange={(e) => setDate(e.target.value)}
                 className="date-picker"
               />
-              <button
-                className="confirm-button"
-                onClick={() => alert("Booking Confirmed!")}
-              >
+              <button className="confirm-button" onClick={handleBooking}>
                 Confirm Booking
               </button>
               <button className="close-button" onClick={() => setIsOpen(false)}>
