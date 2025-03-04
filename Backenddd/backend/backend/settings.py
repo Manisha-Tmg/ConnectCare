@@ -61,6 +61,12 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'project.CustomUser'
 # AUTH_USER_MODEL = 'project.Caretaker'
+# SIMPLE_JWT = {
+#     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+#     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+#     'ROTATE_REFRESH_TOKENS': True,
+#     'BLACKLIST_AFTER_ROTATION': True,
+# }
 
 
 
@@ -102,7 +108,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'CaretakerBooking',  # Replace with your actual database name
+        'NAME': 'postgres',  # Replace with your actual database name
         'USER': 'postgres',  # Default PostgreSQL username
         'PASSWORD': 'Manisha',  # Replace with your actual database password
         'HOST': 'localhost',

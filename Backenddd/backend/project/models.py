@@ -52,6 +52,8 @@ class Booking(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)  # Link to User
     caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE)  # Link to Caretaker
     booking_date = models.DateTimeField()  # Date and time of booking
+    number = models.BigIntegerField(null=True, blank=True) 
+    location = models.CharField(max_length=20, null=True, blank=True)
     status = models.CharField(max_length=20, default='Pending')  # Status of booking (e.g., Pending, Confirmed, etc.)
 
     def __str__(self):

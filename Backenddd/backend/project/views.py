@@ -97,40 +97,74 @@ def get_user(request,user_id=None):
 
 
 
+
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])  # Ensure user is logged in
 def book_caretaker(request):
-    if request.method == 'POST':
-        
-        caretaker_id = request.data.get('caretaker')
-        booking_date = request.data.get('booking_date')
+    caretaker_id = request.data.get('caretaker_id')
+    booking_date = request.data.get('booking_date') 
+    location = request.data.get('location')  # New Field
+    number = request.data.get('number')
 
-        # Check if caretaker exists
-        try:
-            caretaker = Caretaker.objects.get(id=caretaker_id)
-        except Caretaker.DoesNotExist:
-            return Response({"detail": "Caretaker does not exist"}, status=status.HTTP_404_NOT_FOUND)
+    # Validate caretaker exists
+    try:
+        caretaker = Caretaker.objects.get(id=caretaker_id)
+    except Caretaker.DoesNotExist:
+        return Response({"detail": "Caretaker does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
-        # Convert booking_date string to datetime object if needed
-        try:
-            booking_date = datetime.fromisoformat(booking_date)
-        except ValueError:
-            return Response({"detail": "Invalid booking date format"}, status=status.HTTP_400_BAD_REQUEST)
+    # Validate and convert booking date (only date part)
+    try:
+        booking_date = datetime.strptime(booking_date, "%Y-%m-%d")  # Parse date
+        booking_date = booking_date.replace(hour=0, minute=0, second=0, microsecond=0)  # Set time to midnight
+    except ValueError:
+        return Response({"detail": "Invalid date format. Use YYYY-MM-DD."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Create booking
-        booking = Booking.objects.create(
-            user=request.user,
-            caretaker=caretaker,
-            booking_date=booking_date,
-            status="Pending"  # Default status
-        )
+    # Create and save booking
+    booking = Booking(user=request.user, caretaker=caretaker, booking_date=booking_date, status="Pending",location=location,  # Save location
+        number=number )
+    booking.save()
 
-        # Serialize and return the booking data
-        serializer = BookingSerializer(booking)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    # Check if saved
+    if not Booking.objects.filter(id=booking.id).exists():
+        return Response({"detail": "Booking not saved due to unknown error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
+    return Response(BookingSerializer(booking).data, status=status.HTTP_201_CREATED)
 
 # @api_view(["POST"])
 # @permission_classes([AllowAny])
 # def 
+
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])  # Ensure user is logged in
+# def book_caretaker(request):
+#     caretaker_id = request.data.get('caretaker_id')
+#     booking_date = request.data.get('booking_date')
+#     location = request.data.get('location')  # New Field
+#     number = request.data.get('number')  # New Field
+
+#     if not location or not number:
+#         return Response({"detail": "Location and number are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+#     # Validate caretaker exists
+#     try:
+#         caretaker = Caretaker.objects.get(id=caretaker_id)
+#     except Caretaker.DoesNotExist:
+#         return Response({"detail": "Caretaker does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+#     # Validate and convert booking date (only date part)
+#     try:
+#         booking_date = datetime.strptime(booking_date, "%Y-%m-%d")  # Parse date
+#     except ValueError:
+#         return Response({"detail": "Invalid date format. Use YYYY-MM-DD."}, status=status.HTTP_400_BAD_REQUEST)
+
+#     # Save booking with location and number
+#     booking = Booking(
+#         user=request.user,
+#         caretaker=caretaker,
+#         booking_date=booking_date,
+#         status="Pending",
+#          # Save number
+#     )
+#     booking.save()
+
+#     return Response(BookingSerializer(booking).data, status=status.HTTP_201_CREATED)

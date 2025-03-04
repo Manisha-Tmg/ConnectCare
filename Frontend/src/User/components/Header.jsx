@@ -7,23 +7,33 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Check if authentication cookie exists
+  // Function to get a cookie by name
+  const getCookie = (name) => {
     const cookies = document.cookie.split("; ");
-    const authCookie = cookies.find((cookie) =>
-      cookie.startsWith("accessToken=")
-    );
+    const cookie = cookies.find((cookie) => cookie.startsWith(`${name}=`));
+    return cookie ? cookie.split("=")[1] : null;
+  };
 
-    if (authCookie) {
+  useEffect(() => {
+    if (getCookie("accessToken")) {
       setIsLoggedIn(true);
     }
   }, []);
 
-  const handleLogout = () => {
-    document.cookie =
-      "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    setIsLoggedIn(false);
-    navigate("/");
+  const handleLogout = async () => {
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      // Remove accessToken cookie
+      document.cookie =
+        "accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+      document.cookie = "role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+      document.cookie =
+        "user_id=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+
+      // Update state
+      setIsLoggedIn(false);
+      navigate("/"); // Redirect to home
+    }
   };
 
   return (

@@ -9,25 +9,40 @@ import Cookies from "js-cookie";
 const BookCaretaker = () => {
   const [selectedCaretaker, setSelectedCaretaker] = useState(null);
   const [date, setDate] = useState("");
+  const [number, setNumber] = useState("");
+  const [location, setLocation] = useState("");
   const [caretakers, setCaretakers] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleBooking = async () => {
     try {
       const token = Cookies.get("accessToken");
-      const userId = Cookies.get("user_id");
 
       if (!token) {
         alert("Session expired. Please log in again.");
         return;
       }
 
-      if (!userId) {
-        alert("User not found. Please log in again.");
+      if (!selectedCaretaker) {
+        alert("Please select a caretaker before booking.");
         return;
       }
 
-      console.log("Sending Access Token:", token);
+      // Convert date format to YYYY-MM-DD (Backend expects this)
+      const dateObj = new Date(date);
+      const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${dateObj.getDate().toString().padStart(2, "0")}`;
+
+      const requestBody = {
+        location: location,
+        number: number,
+        caretaker_id: selectedCaretaker.id,
+        booking_date: formattedDate,
+        status: "Pending",
+      };
+
+      console.log("Booking Request Data:", requestBody);
 
       const response = await fetch(`${API}api/book_caretaker/`, {
         method: "POST",
@@ -35,19 +50,7 @@ const BookCaretaker = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          user_id: userId,
-          caretaker_id: selectedCaretaker.id,
-          booking_date: new Date(date).toISOString(),
-          status: "Pending",
-        }),
-      });
-
-      console.log("Booking Request Data:", {
-        user_id: userId,
-        caretaker_id: selectedCaretaker.id,
-        booking_date: new Date(date).toISOString(),
-        status: "Pending",
+        body: JSON.stringify(requestBody),
       });
 
       const data = await response.json();
@@ -56,7 +59,7 @@ const BookCaretaker = () => {
         throw new Error(data.detail || "Booking failed");
       }
 
-      alert("Booking confirmed");
+      alert("Booking confirmed!");
       setIsOpen(false);
     } catch (error) {
       console.error("Booking error:", error);
@@ -126,6 +129,20 @@ const BookCaretaker = () => {
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
+                className="date-picker"
+              />
+              <input
+                placeholder="Number"
+                type="number"
+                value={number}
+                onChange={(e) => setNumber(e.target.value)}
+                className="date-picker"
+              />
+              <input
+                placeholder="Location"
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
                 className="date-picker"
               />
               <button className="confirm-button" onClick={handleBooking}>

@@ -27,7 +27,6 @@ const Login = () => {
       console.log("API Response:", data);
 
       if (data.access_token) {
-        // Store token and user info in cookies
         Cookies.set("accessToken", data.access_token, {
           expires: 7,
           secure: true,
