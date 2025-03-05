@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from project.views import UserViewSet, UserRegistrationView,LoginView,get_caretakers,book_caretaker,get_user
+from project.views import UserViewSet, UserRegistrationView,LoginView,CaretakerLoginView,get_caretakers,book_caretaker,get_user
 
 
 # Initialize the router
@@ -21,6 +21,8 @@ urlpatterns = [
 
 
     # Caretaker list and id
+    path('auth/api/login/caretaker', CaretakerLoginView.as_view(), name='caretaker_login'),
+
     path('api/caretakers/', get_caretakers, name='get_caretakers'),
     path('api/caretakers/<int:caretaker_id>', get_caretakers, name='get_caretakers'),
 

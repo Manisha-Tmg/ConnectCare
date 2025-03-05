@@ -2,17 +2,17 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./User/Pages/HomePage";
 import AboutUs from "./User/Pages/Aboutus";
-import Bookings from "./User/Pages/Booking";
 import Tasks from "./User/Pages/task";
 import BookCaretaker from "./User/Pages/BookCaretaker";
 import Blogmain from "./User/Pages/Blogmain";
 import SettingsPage from "./User/Pages/Setting";
 import Signup from "./User/Pages/Signup";
-import Login from "./User/Pages/Login";
 import BlogDetail from "./User/Pages/BlogDetails";
 import Dashboard from "./User/Pages/Dashboard";
 import Notifiation from "./User/Pages/Notification";
 import CaretakerBookingPortal from "./User/Pages/Booking";
+import CaretakerLogin from "./User/Pages/CaretakerLogin";
+import Login from "./User/Pages/login";
 
 function App() {
   return (
@@ -28,6 +28,8 @@ function App() {
         <Route path="/setting" element={<SettingsPage />} />
         {/*  */}
         {/* Caretaker */}
+        <Route path="/login/caretaker" element={<CaretakerLogin />} />
+
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/task" element={<Tasks />} />
         <Route path="/booking" element={<CaretakerBookingPortal />} />
