@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../css/Body.css";
 import Body from "./Body";
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const handleFindCaretaker = () => {
+    const token = Cookies.get("accessToken");
+
+    if (!token) {
+      alert("Please login first");
+      navigate("/login");
+    } else {
+      navigate("/bookcaretaker");
+    }
+  };
+
   return (
     <div>
       <section className="hero-section">
@@ -15,9 +28,9 @@ const HomePage = () => {
             with ease.
           </p>
           <div className="hero-form">
-            <Link to={"/bookcaretaker"}>
-              <button className="get-started">Find a Caretaker</button>
-            </Link>
+            <button className="get-started" onClick={handleFindCaretaker}>
+              Find a Caretaker
+            </button>
           </div>
         </div>
       </section>

@@ -17,6 +17,7 @@ const BookCaretaker = () => {
   const handleBooking = async () => {
     try {
       const token = Cookies.get("accessToken");
+      console.log(token);
 
       if (!token) {
         alert("Session expired. Please log in again.");
@@ -49,6 +50,7 @@ const BookCaretaker = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
+          // credentials: "include",
         },
         body: JSON.stringify(requestBody),
       });

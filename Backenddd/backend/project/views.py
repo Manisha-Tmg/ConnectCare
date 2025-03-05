@@ -99,6 +99,7 @@ def get_user(request,user_id=None):
 
 
 @api_view(['POST'])
+# @allowc
 @permission_classes([IsAuthenticated])  # Ensure user is logged in
 def book_caretaker(request):
     caretaker_id = request.data.get('caretaker_id')
