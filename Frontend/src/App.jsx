@@ -13,11 +13,13 @@ import Notifiation from "./User/Pages/Notification";
 import CaretakerBookingPortal from "./User/Pages/Booking";
 import CaretakerLogin from "./User/Pages/CaretakerLogin";
 import Login from "./User/Pages/login";
+import AdminLogin from "./User/Pages/AdminLogin";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* User */}
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
@@ -26,14 +28,16 @@ function App() {
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/bookcaretaker" element={<BookCaretaker />} />
         <Route path="/setting" element={<SettingsPage />} />
-        {/*  */}
+
         {/* Caretaker */}
         <Route path="/login/caretaker" element={<CaretakerLogin />} />
-
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/task" element={<Tasks />} />
         <Route path="/booking" element={<CaretakerBookingPortal />} />
         <Route path="/notification" element={<Notifiation />} />
+
+        {/* Admin */}
+        <Route path="/login/admin" element={<AdminLogin />} />
       </Routes>
     </BrowserRouter>
   );

@@ -7,7 +7,7 @@ import InputField from "../components/Input";
 import Footer from "../components/Footer";
 import Cookies from "js-cookie";
 
-const CaretakerLogin = () => {
+const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const CaretakerLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${API}auth/api/login/caretaker`, {
+      const res = await fetch(`${API}auth/api/login/admin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,8 +31,8 @@ const CaretakerLogin = () => {
           expires: 7,
           secure: true,
         });
-        Cookies.set("caretaker_id", data.user_id, { expires: 7, secure: true });
-        Cookies.set("role", data.role || "caretaker", {
+
+        Cookies.set("role", data.role || "admin", {
           expires: 7,
           secure: true,
         });
@@ -97,4 +97,4 @@ const CaretakerLogin = () => {
   );
 };
 
-export default CaretakerLogin;
+export default AdminLogin;

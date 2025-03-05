@@ -64,7 +64,7 @@ class LoginView(APIView):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+# api for caretakerlogin
 class CaretakerLoginView(APIView):
     permission_classes = [AllowAny]
 
@@ -72,7 +72,8 @@ class CaretakerLoginView(APIView):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             Caretaker = serializer.validated_data.get('caretaker')  
-
+             
+         
             refresh = RefreshToken.for_user(Caretaker)  # Generate JWT tokens
             return Response({
                 'caretaker_id': Caretaker.id,
@@ -85,7 +86,21 @@ class CaretakerLoginView(APIView):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+class AdminLoginView(APIView):
+    permission_classes = (AllowAny)
+    
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            Admin = serializer.validated_data['admin']
+            refresh = RefreshToken.for_user(Admin)  
+            return Response({
+                'refresh': str(refresh),
+                'access_token': str(refresh.access_token),
+                'username': Admin.username,
+            }, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # API of caretaker list
 @api_view(['GET'])

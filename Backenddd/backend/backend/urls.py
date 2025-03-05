@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from project.views import UserViewSet, UserRegistrationView,LoginView,CaretakerLoginView,get_caretakers,book_caretaker,get_user
+from project.views import UserViewSet, UserRegistrationView,LoginView,AdminLoginView,CaretakerLoginView,get_caretakers,book_caretaker,get_user
 
 
 # Initialize the router
@@ -34,6 +34,10 @@ urlpatterns = [
 
     # Booking
     path('api/book_caretaker/', book_caretaker, name='book_caretaker'),
+
+    # Admin
+    path('auth/api/login/admin', AdminLoginView.as_view(), name='Admin_login'),
+
 
     ]
 
