@@ -12,17 +12,19 @@
 .hero-section {
   margin-top: 3.7rem;
   background-color: #856363;
-  background: url(../../assets/Background.jpg);
+  /* background: url(../../assets/Background.jpg);
+   */
+  background: url(../../assets/4136673.jpg);
   background-size: contain;
   background-position: right;
   background-repeat: no-repeat;
 
   /* color: rgb(86, 45, 45); */
-  padding: 5rem 2rem;
+  padding: 4rem 1rem;
   text-align: center;
 }
 .main-image {
-  width: 60%;
+  width: 100%;
   display: flex;
   padding: 5px 5px 5px 5px;
   height: 350px;
@@ -36,7 +38,7 @@
 .highlight {
   font-family: "Sacramento", cursive;
 
-  margin: 20px 0px 10px 100px; /*top,right,bottom.left*/
+  margin: 20px 0px 10px 80px; /*top,right,bottom.left*/
   font-size: 2.94rem;
   color: #000000;
   gap: 5px;
@@ -51,7 +53,7 @@
   align-items: center;
 }
 .text {
-  margin: 1rem 35rem 2rem 6.5rem; /*top,right,bottom.left*/
+  margin: 1rem 45rem 2rem 5rem; /*top,right,bottom.left*/
   width: 100% vw;
   text-align: justify;
   position: relative;
@@ -82,8 +84,8 @@
   color: #ffffff;
   border-radius: 5px;
   padding: 15px 15px 15px 15px;
-  border: 2px solid #1abc9c;
-  background-color: #1abc9c;
+  border: 2px solid #008080;
+  background-color: #008080;
   /* border: 2px solid #3b5b63;
   background-color: #3b5b63; */
   font-size: 1rem;
@@ -93,8 +95,8 @@
 }
 
 .get-started:hover {
-  background-color: #008080;
-  border: 2px solid #008080;
+  background-color: #016b6b;
+  border: 2px solid #016b6b;
 }
 
 .about-section {

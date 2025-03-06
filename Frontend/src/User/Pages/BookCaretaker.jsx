@@ -119,7 +119,7 @@ const BookCaretaker = () => {
               <p className="caretaker-text">
                 Status: {caretaker.is_available ? "Available" : "Not Available"}
               </p>
-              <button className="confirm-button">Book Now</button>
+              <button className="book-button">Book Now</button>
             </div>
           ))}
         </div>

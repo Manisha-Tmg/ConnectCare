@@ -38,11 +38,6 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: transform 0.2s ease-in-out;
-}
-
-.caretaker-card:hover {
-  transform: translateY(-5px);
 }
 
 .caretaker-image {
@@ -108,7 +103,22 @@
   width: 100%;
   margin-top: 15px;
 }
+.book-button {
+  border: 2px solid #008080;
+  background-color: #008080;
 
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  margin-top: 15px;
+}
+.book-button:hover {
+  background-color: #016b6b;
+}
 .confirm-button:hover {
   background: #218838;
 }
