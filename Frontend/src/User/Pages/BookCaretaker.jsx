@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Previous from "../components/Previous";
 import { API } from "../../env";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const BookCaretaker = () => {
   const [selectedCaretaker, setSelectedCaretaker] = useState(null);
@@ -13,7 +14,17 @@ const BookCaretaker = () => {
   const [location, setLocation] = useState("");
   const [caretakers, setCaretakers] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
+  const bookLogin = () => {
+    const token = Cookies.get("accessToken");
+    if (!token) {
+      alert("please login");
+      navigate("/login");
+    } else {
+      navigate("/bookcaretaker");
+    }
+  };
   const handleBooking = async () => {
     try {
       const token = Cookies.get("accessToken");
@@ -119,12 +130,14 @@ const BookCaretaker = () => {
               <p className="caretaker-text">
                 Status: {caretaker.is_available ? "Available" : "Not Available"}
               </p>
-              <button className="book-button">Book Now</button>
+              <button className="book-button" onClick={bookLogin}>
+                Book Now
+              </button>
             </div>
           ))}
         </div>
         {isOpen && (
-          <div className="modal">
+          <div className="modal" onClick={bookLogin}>
             <div className="modal-content">
               <h2>Book {selectedCaretaker?.name}</h2>
               <input

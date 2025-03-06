@@ -6,7 +6,6 @@ import Tasks from "./User/Pages/task";
 import BookCaretaker from "./User/Pages/BookCaretaker";
 import Blogmain from "./User/Pages/Blogmain";
 import SettingsPage from "./User/Pages/Setting";
-import Signup from "./User/Pages/Signup";
 import BlogDetail from "./User/Pages/BlogDetails";
 import Dashboard from "./User/Pages/Dashboard";
 import Notifiation from "./User/Pages/Notification";
@@ -14,6 +13,7 @@ import CaretakerBookingPortal from "./User/Pages/Booking";
 import CaretakerLogin from "./User/Pages/CaretakerLogin";
 import Login from "./User/Pages/login";
 import AdminLogin from "./User/Pages/AdminLogin";
+import Signup from "./User/Pages/signup";
 
 function App() {
   return (

@@ -1,6 +1,4 @@
-/* InputField.css */
 .input-field {
-  /* margin-top: px; */
   display: flex;
   align-items: center;
   background: #ffffff;
@@ -8,13 +6,14 @@
 }
 
 .input-box {
-  border: none;
-  outline: none;
+  /* border: none;
+  outline: none; */
+  border: 1.5px solid #008080;
+
   flex: 1;
   font-size: 1rem;
   width: 100%;
   padding: 10px;
-  border: 1px solid #624949;
   border-radius: 5px;
   font-size: 14px;
 }

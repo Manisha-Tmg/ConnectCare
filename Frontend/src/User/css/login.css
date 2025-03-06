@@ -50,6 +50,7 @@ input {
   margin-top: 10px;
   border: 2px solid #008080;
   background-color: #008080;
+
   color: white;
   border: none;
   border-radius: 5px;
@@ -81,15 +82,22 @@ input {
 }
 .auth-image {
   flex: 1;
-  max-width: 50%;
-  height: 67.5%;
+  max-width: 30%;
+  height: 67%;
+  background-size: cover;
+  background-position: center;
+}
+
+.auth-img {
+  flex: 1;
+  max-width: 30%;
+  height: 60%;
   background-size: cover;
   background-position: center;
 }
 
 .login-imagee {
   background-image: url("../../assets/login.jpg");
-  /* background-image: url("../../assets/Background.jpg"); */
 }
 
 @media (max-width: 768px) {
