@@ -1,11 +1,10 @@
 .blog-container {
   font-family: "Arial", sans-serif;
-  margin: 5px auto;
+  margin: 80px auto;
   padding: 2rem;
-  margin-top: 2rem;
-  margin-bottom: 3rem;
+
   max-width: 1200px;
-  background-color: #fefcfc;
+  background-color: #f5f3f3;
 }
 
 .blog-header {
@@ -80,10 +79,13 @@
 .blog-button {
   display: block;
   width: 100%;
+  font-weight: bold;
   padding: 10px;
-  border: none;
-  background-color: #b71550;
-  color: white;
+  border: 2px solid #1abc9c;
+  background-color: #1abc9c;
+  /* background-color: #f5b7b1; */
+  color: #ffffff;
+
   cursor: pointer;
   text-align: center;
   font-size: 14px;
@@ -91,7 +93,9 @@
 }
 
 .blog-button:hover {
-  background-color: #9d1044;
+  background-color: #fa745b;
+  border-bottom: 2px solid #fa745b;
+  color: #ffffff;
 }
 
 /* Responsive Design */

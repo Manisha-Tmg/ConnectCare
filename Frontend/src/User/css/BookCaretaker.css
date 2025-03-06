@@ -1,7 +1,7 @@
 /* BookCaretaker.css */
 .container {
   max-width: 1200px;
-  margin: 50px auto;
+  margin: 85px auto;
   padding: 20px;
   text-align: center;
 }
@@ -68,6 +68,7 @@
 }
 
 .modal {
+  margin-top: 2rem;
   position: fixed;
   top: 0;
   left: 0;

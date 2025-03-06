@@ -119,10 +119,10 @@ const BookCaretaker = () => {
               <p className="caretaker-text">
                 Status: {caretaker.is_available ? "Available" : "Not Available"}
               </p>
+              <button className="confirm-button">Book Now</button>
             </div>
           ))}
         </div>
-
         {isOpen && (
           <div className="modal">
             <div className="modal-content">
