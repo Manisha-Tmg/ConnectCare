@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "../css/Body.css";
 import Body from "./Body";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+// import Background from "../../assets/Background.jpg";
+import Background from "../../assets/4136673.jpg";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -19,19 +21,25 @@ const HomePage = () => {
   };
 
   return (
-    <div>
+    <div className="mannn">
       <section className="hero-section">
         <div className="hero-content">
-          <h1>Find Trusted Caretakers Effortlessly</h1>
-          <p>
-            Your loved ones deserve the best care. Book experienced caretakers
-            with ease.
+          <h1 className="highlight">
+            Find Trusted<br></br> Caretakers Effortlessly
+          </h1>
+          <p className="text">
+            Welcome to ConnectCare! Find trusted and compassionate caretakers
+            for your loved ones with ease. Book professional caregivers tailored
+            to your needs and ensure the best care at your convenience.
           </p>
-          <div className="hero-form">
-            <button className="get-started" onClick={handleFindCaretaker}>
-              Find a Caretaker
-            </button>
-          </div>
+          {/* <div className="main-image">
+            <img src={Background} alt="image" />
+          </div>{" "} */}
+        </div>
+        <div className="hero-form">
+          <button className="get-started" onClick={handleFindCaretaker}>
+            Find a Caretaker
+          </button>
         </div>
       </section>
       <Body />

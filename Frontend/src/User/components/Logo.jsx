@@ -1,12 +1,16 @@
 import React from "react";
 import "../css/logo.css";
+import logo from "../../assets/Tm.png";
 
 const Logo = () => {
   return (
-    <div>
+    <div className="main">
       <div className="left-container">
-        <div className="logo1">Connect</div>
-        <div className="logo">Care</div>
+        <img className="imge" src={logo}></img>
+        <div className="logos">
+          {/* <div className="logo1">Connect</div>
+          <div className="logo">Care</div> */}
+        </div>
       </div>
     </div>
   );

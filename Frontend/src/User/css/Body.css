@@ -1,14 +1,61 @@
+* {
+  /* background-color: #ffffff; */
+  /* #fa745b */
+  /* #3b5b63 */
+  /* #243b44 */
+}
+.mannn {
+  background-color: #ffffff;
+  /*  */
+}
+
 .hero-section {
   margin-top: 3.7rem;
-  background: url(../../assets/Image.jpg);
-  color: white;
+  background-color: #856363;
+  background: url(../../assets/Background.jpg);
+  background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
+
+  /* color: rgb(86, 45, 45); */
   padding: 5rem 2rem;
   text-align: center;
 }
-
+.main-image {
+  width: 60%;
+  display: flex;
+  padding: 5px 5px 5px 5px;
+  height: 350px;
+  /* margin-left: 25rem; */
+  /* position: relative; */
+}
 .hero-content {
-  max-width: 600px;
-  margin: 0 auto;
+  /* max-width: 600px;
+  margin: 0 auto; */
+}
+.highlight {
+  font-family: "Sacramento", cursive;
+
+  margin: 20px 0px 10px 100px; /*top,right,bottom.left*/
+  font-size: 2.94rem;
+  color: #000000;
+  gap: 5px;
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  text-align: justify;
+  justify-items: flex-start;
+  /* font-style: italic; */
+  justify-content: flex-start;
+  color: #000000;
+  align-items: center;
+}
+.text {
+  margin: 1rem 35rem 2rem 6.5rem; /*top,right,bottom.left*/
+  width: 100% vw;
+  text-align: justify;
+  position: relative;
+  line-height: 22px;
 }
 
 .hero-content h1 {
@@ -30,16 +77,20 @@
 }
 
 .get-started {
-  margin-top: 15px;
-  border: 2px solid #20b2aa;
-  background-color: #20b2aa;
+  /* margin: 0.5rem 35rem 2rem 6rem; top,right,bottom.left */
+  margin: 1rem 58rem 2rem 6.5rem; /*top,right,bottom.left*/
+
   color: #ffffff;
-  padding: 0.75rem 1.5rem;
-  /* border: none; */
   border-radius: 5px;
-  font-size: rem;
-  font-weight: bold;
+  padding: 15px 15px 15px 15px;
+  border: 2px solid #609878;
+  background-color: #609878;
+  /* border: 2px solid #3b5b63;
+  background-color: #3b5b63; */
+  font-size: 1rem;
   cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
 .get-started:hover {

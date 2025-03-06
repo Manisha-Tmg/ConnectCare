@@ -87,19 +87,23 @@ class CaretakerLoginView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AdminLoginView(APIView):
-    permission_classes = (AllowAny)
-    
+    permission_classes = [AllowAny]  # Corrected
+
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
-            Admin = serializer.validated_data['admin']
-            refresh = RefreshToken.for_user(Admin)  
+            user = serializer.validated_data.get('user')  # Get user object
+
+            if not user.is_staff:  # Ensure only admin users can log in
+                return Response({"error": "You are not authorized as an admin"}, status=status.HTTP_403_FORBIDDEN)
+
+            refresh = RefreshToken.for_user(user)  # Generate JWT tokens
             return Response({
                 'refresh': str(refresh),
                 'access_token': str(refresh.access_token),
-                'username': Admin.username,
+                'username': user.username,
             }, status=status.HTTP_200_OK)
-        
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # API of caretaker list

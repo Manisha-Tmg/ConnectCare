@@ -83,12 +83,6 @@ const CaretakerLogin = () => {
           <button className="auth-button" onClick={handleLogin}>
             Log In
           </button>
-          <p>
-            Don't have an account?{" "}
-            <Link to="/signup" className="create-account">
-              Create an account
-            </Link>
-          </p>
         </div>
         <div className="auth-image login-image"></div>
       </div>
