@@ -26,7 +26,6 @@ class CustomUser(AbstractUser):
 
 
 
-
 class Caretaker(models.Model):
 
     name = models.CharField(max_length=255)

@@ -14,10 +14,12 @@ import CaretakerLogin from "./User/Pages/CaretakerLogin";
 import Login from "./User/Pages/login";
 import AdminLogin from "./User/Pages/AdminLogin";
 import Signup from "./User/Pages/signup";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <BrowserRouter>
+      <Toaster />
       <Routes>
         {/* User */}
         <Route path="/signup" element={<Signup />} />

@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/dashboard.css";
-import Previous from "../components/Previous";
-import CaretakerSidebar from "../components/side";
+import Previous from "../../components/Previous";
+import CaretakerSidebar from "../../components/side";
 
 const Dashboard = () => {
   return (

@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import AllowAny,IsAuthenticated
+from rest_framework.permissions import AllowAny,IsAuthenticated,IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -123,7 +123,7 @@ def get_caretakers(request,caretaker_id=None):
 
 # API of User list
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])# so that anyone see the list of user
+@permission_classes([IsAdminUser])# admin can only  see the list of user
 def get_user(request,user_id=None):
     if user_id:
         users = get_object_or_404(CustomUser,id=user_id)
@@ -139,12 +139,11 @@ def get_user(request,user_id=None):
 
 
 @api_view(['POST'])
-# @allowc
 @permission_classes([IsAuthenticated])  # Ensure user is logged in
 def book_caretaker(request):
     caretaker_id = request.data.get('caretaker_id')
     booking_date = request.data.get('booking_date') 
-    location = request.data.get('location')  # New Field
+    location = request.data.get('location')  
     number = request.data.get('number')
 
     # Validate caretaker exists
@@ -171,41 +170,33 @@ def book_caretaker(request):
 
     return Response(BookingSerializer(booking).data, status=status.HTTP_201_CREATED)
 
-# @api_view(["POST"])
-# @permission_classes([AllowAny])
-# def 
 
-# @api_view(['POST'])
-# @permission_classes([IsAuthenticated])  # Ensure user is logged in
-# def book_caretaker(request):
-#     caretaker_id = request.data.get('caretaker_id')
-#     booking_date = request.data.get('booking_date')
-#     location = request.data.get('location')  # New Field
-#     number = request.data.get('number')  # New Field
 
-#     if not location or not number:
-#         return Response({"detail": "Location and number are required"}, status=status.HTTP_400_BAD_REQUEST)
 
-#     # Validate caretaker exists
-#     try:
-#         caretaker = Caretaker.objects.get(id=caretaker_id)
-#     except Caretaker.DoesNotExist:
-#         return Response({"detail": "Caretaker does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
-#     # Validate and convert booking date (only date part)
-#     try:
-#         booking_date = datetime.strptime(booking_date, "%Y-%m-%d")  # Parse date
-#     except ValueError:
-#         return Response({"detail": "Invalid date format. Use YYYY-MM-DD."}, status=status.HTTP_400_BAD_REQUEST)
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_Booking(request,booking_id=None):
+    if booking_id:
+        booking = get_object_or_404(Booking,id=booking_id)
+        serializer = Booking(booking)
+        return Response(serializer.data)  # Return serialized data as response
 
-#     # Save booking with location and number
-#     booking = Booking(
-#         user=request.user,
-#         caretaker=caretaker,
-#         booking_date=booking_date,
-#         status="Pending",
-#          # Save number
-#     )
-#     booking.save()
+    else:
+        booking = Booking.objects.all() #to fetch all user
+        serializer = BookingSerializer(booking,many=True)
+        return Response(serializer.data)
 
-#     return Response(BookingSerializer(booking).data, status=status.HTTP_201_CREATED)
+
+
+# class CaretakerViewSet(viewsets.ModelViewSet):
+#     queryset = Caretaker.objects.all()
+#     serializer_class = CaretakerSerializer
+
+# class CustomUserViewSet(viewsets.ModelViewSet):
+#     queryset = CustomUser.objects.all()
+#     serializer_class = CustomUserSerializer
+
+# class BookingViewSet(viewsets.ModelViewSet):
+#     queryset = Booking.objects.all()
+#     serializer_class = BookingSerializer

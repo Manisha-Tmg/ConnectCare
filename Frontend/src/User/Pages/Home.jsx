@@ -3,8 +3,7 @@ import "../css/Body.css";
 import Body from "./Body";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-// import Background from "../../assets/Background.jpg";
-import Background from "../../assets/4136673.jpg";
+import { toast } from "react-hot-toast";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -13,7 +12,9 @@ const HomePage = () => {
     const token = Cookies.get("accessToken");
 
     if (!token) {
-      alert("Please login first");
+      // alert("Please login first");
+      toast.error("Please Login First");
+
       navigate("/login");
     } else {
       navigate("/bookcaretaker");

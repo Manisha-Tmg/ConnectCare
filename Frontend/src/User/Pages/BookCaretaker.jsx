@@ -6,6 +6,7 @@ import Previous from "../components/Previous";
 import { API } from "../../env";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const BookCaretaker = () => {
   const [selectedCaretaker, setSelectedCaretaker] = useState(null);
@@ -19,7 +20,7 @@ const BookCaretaker = () => {
   const bookLogin = () => {
     const token = Cookies.get("accessToken");
     if (!token) {
-      alert("please login");
+      toast.error("Please Login First");
       navigate("/login");
     } else {
       navigate("/bookcaretaker");
@@ -28,15 +29,15 @@ const BookCaretaker = () => {
   const handleBooking = async () => {
     try {
       const token = Cookies.get("accessToken");
-      console.log(token);
 
       if (!token) {
-        alert("Session expired. Please log in again.");
+        toast.error("Session expired. Please log in again.");
         return;
       }
 
       if (!selectedCaretaker) {
-        alert("Please select a caretaker before booking.");
+        toast.error("Please select a caretaker before booking.");
+
         return;
       }
 
@@ -54,14 +55,11 @@ const BookCaretaker = () => {
         status: "Pending",
       };
 
-      console.log("Booking Request Data:", requestBody);
-
       const response = await fetch(`${API}api/book_caretaker/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
-          // credentials: "include",
         },
         body: JSON.stringify(requestBody),
       });
@@ -72,10 +70,9 @@ const BookCaretaker = () => {
         throw new Error(data.detail || "Booking failed");
       }
 
-      alert("Booking confirmed!");
+      toast.success("Booking confirmed!");
       setIsOpen(false);
     } catch (error) {
-      console.error("Booking error:", error);
       alert("Error: " + error.message);
     }
   };
@@ -92,9 +89,7 @@ const BookCaretaker = () => {
 
         const data = await res.json();
         setCaretakers(data);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     };
     fetchCaretakers();
   }, []);

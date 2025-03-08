@@ -25,10 +25,10 @@ const Header = () => {
     if (confirmLogout) {
       // Remove accessToken cookie
       document.cookie =
-        "accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        "accessToken=; path=/; expires=Thu, 01 Jan 2970 00:00:00 UTC;";
       document.cookie = "role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
       document.cookie =
-        "user_id=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        "user_id=; path=/; expires=Thu, 01 Jan 2970 00:00:00 UTC;";
 
       // Update state
       setIsLoggedIn(false);

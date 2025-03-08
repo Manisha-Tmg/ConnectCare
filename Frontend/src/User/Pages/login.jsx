@@ -6,6 +6,7 @@ import { API } from "../../env";
 import InputField from "../components/Input";
 import Footer from "../components/Footer";
 import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -24,9 +25,9 @@ const Login = () => {
       });
 
       const data = await res.json();
-      console.log("API Response:", data);
 
       if (data.access_token) {
+        toast.success("Login Successful");
         Cookies.set("accessToken", data.access_token, {
           expires: 7,
           secure: true,
@@ -36,7 +37,6 @@ const Login = () => {
 
         // Navigate based on user role
         const userRole = Cookies.get("role");
-        console.log("User Role:", userRole);
 
         if (userRole === "user") {
           navigate("/");
@@ -46,12 +46,10 @@ const Login = () => {
           navigate("/admin-panel");
         }
       } else {
-        console.log("Login failed:", data.error || "Invalid credentials");
-        alert(data.error || "Invalid credentials");
+        toast.error(data.error || "Invalid credentials");
       }
     } catch (error) {
-      console.error("Error logging in:", error);
-      alert("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     }
   };
 

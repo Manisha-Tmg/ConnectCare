@@ -2,8 +2,10 @@ from rest_framework import serializers
 from .models import Caretaker
 from django.contrib.auth import authenticate
 from .models import CustomUser,Booking
+from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
+
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,27 +40,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
         return user
 
-# class LoginSerializer(serializers.Serializer):
-#     username = serializers.CharField()
-#     password = serializers.CharField(write_only=True)
-
-#     def validate(self, data):
-#         username = data.get('username')
-#         password = data.get('password')
-
-#         user = authenticate(username=username, password=password)
-
-#         if user is None:
-#             raise serializers.ValidationError("Invalid credentials.")
-#         if not user.is_active:
-#             raise serializers.ValidationError("User account is inactive.")
-
-#         return {"user": user}  # Ensure 'user' is returned
 
 
-from django.contrib.auth import authenticate
-from rest_framework import serializers
-from .models import CustomUser, Caretaker
+
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()

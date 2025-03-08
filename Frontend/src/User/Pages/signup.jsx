@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { API } from "../../env";
 import InputField from "../components/Input";
 import Footer from "../components/Footer";
+import toast from "react-hot-toast";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -34,15 +35,12 @@ const Signup = () => {
 
       const data = await res.json();
       if (res.ok) {
-        // localStorage.setItem("role", role);
-
         navigate("/login");
       } else {
-        alert(`Error: ${data.message || "User registration failed."}`);
+        toast.error(`Error: ${data.message || "User registration failed."}`);
       }
     } catch (error) {
-      console.error("Error during signup:", error);
-      alert("An error occurred. Please try again.");
+      toast.error("An error occurred. Please try again.");
     }
   };
   return (
