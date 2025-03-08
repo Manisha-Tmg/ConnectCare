@@ -1,20 +1,25 @@
 import React from "react";
+
+import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./User/Pages/HomePage";
 import AboutUs from "./User/Pages/Aboutus";
-import Tasks from "./User/Pages/task";
 import BookCaretaker from "./User/Pages/BookCaretaker";
 import Blogmain from "./User/Pages/Blogmain";
 import SettingsPage from "./User/Pages/Setting";
 import BlogDetail from "./User/Pages/BlogDetails";
-import Dashboard from "./User/Pages/Dashboard";
-import Notifiation from "./User/Pages/Notification";
-import CaretakerBookingPortal from "./User/Pages/Booking";
-import CaretakerLogin from "./User/Pages/CaretakerLogin";
 import Login from "./User/Pages/login";
-import AdminLogin from "./User/Pages/AdminLogin";
 import Signup from "./User/Pages/signup";
 import { Toaster } from "react-hot-toast";
+import CaretakerLogin from "./User/Pages/Caretaker/CaretakerLogin";
+import CaretakerBookingPortal from "./User/Pages/Caretaker/Booking";
+import Dashboard from "./User/Pages/Caretaker/Dashboard";
+import Tasks from "./User/Pages/Caretaker/task";
+import Notifiation from "./User/Pages/Caretaker/Notification";
+import AdminLogin from "./User/Pages/Admin/AdminLogin";
+import Profile from "./User/Pages/profile";
+import ChangePassword from "./User/Pages/Changepassword";
+import BookingDetails from "./User/Pages/MyBookings";
 
 function App() {
   return (
@@ -30,6 +35,9 @@ function App() {
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/bookcaretaker" element={<BookCaretaker />} />
         <Route path="/setting" element={<SettingsPage />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="/booking-details" element={<BookingDetails />} />
 
         {/* Caretaker */}
         <Route path="/login/caretaker" element={<CaretakerLogin />} />

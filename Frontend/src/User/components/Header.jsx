@@ -63,6 +63,11 @@ const Header = () => {
               Blog
             </Link>
           </li>
+          <li>
+            <Link to="/profile" className="nav-link">
+              Setting
+            </Link>
+          </li>
         </ul>
       </nav>
 

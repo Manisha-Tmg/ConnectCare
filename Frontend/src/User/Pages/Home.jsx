@@ -12,7 +12,6 @@ const HomePage = () => {
     const token = Cookies.get("accessToken");
 
     if (!token) {
-      // alert("Please login first");
       toast.error("Please Login First");
 
       navigate("/login");
@@ -33,9 +32,6 @@ const HomePage = () => {
             for your loved ones with ease. Book professional caregivers tailored
             to your needs and ensure the best care at your convenience.
           </p>
-          {/* <div className="main-image">
-            <img src={Background} alt="image" />
-          </div>{" "} */}
         </div>
         <div className="hero-form">
           <button className="get-started" onClick={handleFindCaretaker}>

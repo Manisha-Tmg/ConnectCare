@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/task.css";
+import "../../css/task.css";
 import CaretakerSidebar from "../../components/side";
 import Previous from "../../components/Previous";
 

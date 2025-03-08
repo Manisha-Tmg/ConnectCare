@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/dashboard.css";
+import "../../css/dashboard.css";
 import Previous from "../../components/Previous";
 import CaretakerSidebar from "../../components/side";
 

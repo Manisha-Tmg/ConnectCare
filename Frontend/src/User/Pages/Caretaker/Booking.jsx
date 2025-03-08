@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../css/Booking.css";
+import "../../css/Booking.css";
 import Previous from "../../components/Previous";
 import CaretakerSidebar from "../../components/side";
 const CaretakerBookingPortal = () => {

@@ -1,37 +1,26 @@
-import React from "react";
-import "../css/Changepassword.css";
-import Maria from "../../assets/julia.jpg";
-import { LuLogOut } from "react-icons/lu";
+import { Link } from "react-router-dom";
+import { User, Lock, Calendar } from "lucide-react";
+import "../css/setting.css";
 
-const Sidebaruser = () => {
+const Sidebar = () => {
   return (
-    <div>
-      <div className="container-password">
-        <div className="sidebar-password">
-          <img src={Maria} alt="Profile" className="profile-image" />
-          <h2>Manisha Tamang</h2>
-          <nav>
-            <a className="nav-link-password">
-              <i className="mr-2">👤</i>Your Profile
-            </a>
-            <a className="nav-link-password">
-              <i className="mr-2">🔒</i>Change Password
-            </a>
-            <a className="nav-link-password">
-              <i className="mr-2">⚙️</i>Booking Details
-            </a>
-          </nav>
-          <button className="logout-btn-password">
-            <i className="icon">
-              <LuLogOut />
-            </i>
-            Logout
-          </button>
-        </div>
-      </div>
-      ;
+    <div className="sidebar">
+      <ul>
+        <li>
+          <User size={18} />
+          <Link to="/profile">Profile</Link>
+        </li>
+        <li>
+          <Lock size={18} />
+          <Link to="/change-password">Change Password</Link>
+        </li>
+        <li>
+          <Calendar size={18} />
+          <Link to="/booking-details">Booking Details</Link>
+        </li>
+      </ul>
     </div>
   );
 };
 
-export default Sidebaruser;
+export default Sidebar;

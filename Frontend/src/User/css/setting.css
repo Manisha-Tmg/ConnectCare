@@ -1,0 +1,131 @@
+/* Sidebar css */
+
+.sidebar {
+  width: 260px;
+  background: #dedede;
+  padding: 20px;
+  height: 100vh;
+  margin-top: 6rem;
+  z-index: 1000;
+  box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar ul {
+  margin-top: 70px;
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sidebar li:hover {
+  background: #e2e6ea;
+  border-radius: 5px;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* profile css */
+.profile-container {
+  padding: 30px;
+  /* max-width: 700px; */
+  margin: auto 27rem;
+  margin-top: 7rem;
+  background: #fff;
+  border-radius: 8px;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+/* change passwod css */
+.change-password-container {
+  padding: 30px;
+  max-width: 500px;
+  margin: auto 27rem;
+  margin-top: 7rem;
+  background: #fff;
+  border-radius: 8px;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #218838;
+}
+
+/* booking css */
+.booking-container {
+  padding: 30px;
+  max-width: 500px;
+  margin: auto 27rem;
+  margin-top: 7rem;
+  background: #fff;
+  border-radius: 8px;
+  text-align: center;
+}
+
+h2 {
+  color: #dc3545;
+}
+
+p {
+  font-size: 16px;
+  color: #666;
+}
