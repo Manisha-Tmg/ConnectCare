@@ -33,6 +33,7 @@ function App() {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/blog" element={<Blogmain />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="/user/:id" element={<Profile />} />
         <Route path="/bookcaretaker" element={<BookCaretaker />} />
         <Route path="/setting" element={<SettingsPage />} />
         <Route path="/profile" element={<Profile />} />

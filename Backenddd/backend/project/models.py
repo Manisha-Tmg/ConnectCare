@@ -59,3 +59,22 @@ class Booking(models.Model):
         return f"Booking by {self.user.id} for {self.caretaker.name} on {self.booking_date}"
 
 
+
+
+from django.db import models
+from django.conf import settings  
+
+class Booking(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
+    ]
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_bookings')  
+    caretaker = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='caretaker_bookings')  
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Booking {self.id} - {self.status}"
