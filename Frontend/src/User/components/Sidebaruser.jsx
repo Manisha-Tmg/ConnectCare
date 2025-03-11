@@ -1,13 +1,18 @@
 import { Link } from "react-router-dom";
 import { User, Lock, Calendar } from "lucide-react";
 import "../css/setting.css";
+import { IoIosArrowBack } from "react-icons/io";
 
 const Sidebar = () => {
   return (
     <div className="sidebar">
+      <p className="setting">
+        <IoIosArrowBack size={40} className="icon-side" />
+        Setting
+      </p>
       <ul>
         <li>
-          <User size={18} />
+          <User />
           <Link to="/profile">Profile</Link>
         </li>
         <li>

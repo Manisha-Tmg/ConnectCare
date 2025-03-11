@@ -1,9 +1,8 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.utils import timezone
 from django.contrib.auth import get_user_model
-from django.db.models.signals import post_migrate
-from django.dispatch import receiver
+from django.db import models
+from django.conf import settings  
 from django.contrib.auth import get_user_model
 
 
@@ -61,8 +60,6 @@ class Booking(models.Model):
 
 
 
-from django.db import models
-from django.conf import settings  
 
 class Booking(models.Model):
     STATUS_CHOICES = [

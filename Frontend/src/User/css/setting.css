@@ -10,6 +10,13 @@
   box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
+.setting {
+  margin: 5px;
+  font-size: 3rem;
+}
+.icon-side {
+  /* margin-top: 15px; */
+}
 .sidebar ul {
   margin-top: 70px;
   list-style: none;
@@ -37,16 +44,19 @@
 }
 
 /* profile css */
+.profile-container-main {
+}
 .profile-container {
   padding: 30px;
-  /* max-width: 700px; */
+  color: #000;
   margin: auto 27rem;
   margin-top: 7rem;
-  background: #fff;
+  background: #ffffff;
   border-radius: 8px;
 }
 
 label {
+  color: #333;
   display: block;
   margin: 10px 0 5px;
   font-weight: bold;
@@ -58,19 +68,6 @@ input {
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
-}
-
-button {
-  padding: 10px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #0056b3;
 }
 
 /* change passwod css */

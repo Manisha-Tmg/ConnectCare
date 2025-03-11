@@ -125,7 +125,7 @@ def get_caretakers(request,caretaker_id=None):
 
 # API of User list
 @api_view(['GET'])
-@permission_classes([IsAdminUser])# admin can only  see the list of user
+@permission_classes([AllowAny])# admin can only  see the list of user
 def get_user(request,user_id=None):
     if user_id:
         users = get_object_or_404(CustomUser,id=user_id)
