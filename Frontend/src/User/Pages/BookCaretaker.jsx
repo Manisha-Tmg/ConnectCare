@@ -18,7 +18,7 @@ const BookCaretaker = () => {
   const navigate = useNavigate();
 
   const bookLogin = () => {
-    const token = Cook.get("accessToken");
+    const token = Cookies.get("accessToken");
     if (!token) {
       toast.error("Please Login First");
       navigate("/login");

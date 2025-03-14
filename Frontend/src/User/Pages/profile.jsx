@@ -6,7 +6,7 @@ import { API } from "../../env";
 import Cookies from "js-cookie";
 
 const Profile = () => {
-  const [data, setData] = useState(null); // ✅ Use null initially
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     async function fetchProfile() {
@@ -59,7 +59,7 @@ const Profile = () => {
           <input type="text" value={data.last_name || "NA"} disabled />
 
           <label>Email</label>
-          <input type="email" value={data.email} />
+          <input type="email" value={data.email || "NA"} disabled />
 
           <label>Phone Number</label>
           <input type="text" value={data.phone_number || "NA"} disabled />

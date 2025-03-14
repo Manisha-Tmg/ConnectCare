@@ -1,9 +1,12 @@
+from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.utils import timezone
 from django.contrib.auth import get_user_model
-from django.db import models
-from django.conf import settings  
+from django.db.models.signals import post_migrate
+from django.dispatch import receiver
 from django.contrib.auth import get_user_model
+from django.conf import settings  
+
 
 
 class CustomUser(AbstractUser):
@@ -61,7 +64,7 @@ class Booking(models.Model):
 
 
 
-class Booking(models.Model):
+class CaretakerBooking(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
         ('accepted', 'Accepted'),

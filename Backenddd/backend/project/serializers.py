@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Caretaker
 from django.contrib.auth import authenticate
-from .models import CustomUser,Booking
+from .models import CustomUser,Booking,CaretakerBooking
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -84,6 +84,11 @@ class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
         fields = ['user','caretaker','booking_date',"status","location","number"]
+        
+class BookingCaretakerSerializer(serializers.ModelSerializer):
+       class Meta:
+        model = CaretakerBooking
+        fields = ['status','caretaker_id','user_id']
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -93,14 +98,19 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 
+
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True, write_only=True)
     new_password = serializers.CharField(required=True, write_only=True)
+    confirm_password = serializers.CharField(required=True, write_only=True)
 
-    def validate_new_password(self, value):
-        validate_password(value)  
-        
-        return value
+    def validate(self, data):
+        """Check if new passwords match"""
+        if data['new_password'] != data['confirm_password']:
+            raise serializers.ValidationError({"confirm_password": "New passwords do not match."})
 
+        # Validate new password strength
+        validate_password(data['new_password'])
 
+        return data
 
