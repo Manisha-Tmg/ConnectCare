@@ -16,7 +16,8 @@ const ChangePassword = () => {
   async function passwordChange(e) {
     e.preventDefault();
 
-    const token = Cookies.get("AccessToken");
+    const token = Cookies.get("accessToken");
+    console.log("Token being sent:", token); // Debugging
 
     if (!token) {
       toast.error("Please login! Your token has expired");
@@ -38,7 +39,11 @@ const ChangePassword = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ old_password, new_password: new_Password }),
+        body: JSON.stringify({
+          old_password: old_password,
+          new_password: new_Password,
+          confirm_password: confirm_Password,
+        }),
       });
 
       const data = await res.json();

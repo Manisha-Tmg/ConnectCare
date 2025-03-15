@@ -5,9 +5,8 @@ from rest_framework.permissions import AllowAny,IsAuthenticated,IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.response import Response
 from rest_framework import status, permissions
-from .models import CaretakerBooking
+# from .models import CaretakerBooking
 from datetime import datetime
 from django.contrib.auth.models import update_last_login
 from .serializers import ChangePasswordSerializer
@@ -235,12 +234,15 @@ class ChangePasswordView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def booking_action(request, booking_id):
     try:
-        booking = CaretakerBooking.objects.get(id=booking_id, caretaker=request.user)
-    except CaretakerBooking.DoesNotExist:
+
+        booking = Booking.objects.get(id=booking_id, caretaker_id=request.user.id)
+    except Booking.DoesNotExist:
         return Response({"error": "Booking not found or unauthorized"}, status=status.HTTP_404_NOT_FOUND)
 
     action = request.data.get("action") 
@@ -253,4 +255,5 @@ def booking_action(request, booking_id):
         return Response({"error": "Invalid action"}, status=status.HTTP_400_BAD_REQUEST)
 
     booking.save()
+
     return Response({"message": f"Booking {booking.status} successfully"}, status=status.HTTP_200_OK)

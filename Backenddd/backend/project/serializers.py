@@ -1,10 +1,12 @@
 from rest_framework import serializers
 from .models import Caretaker
 from django.contrib.auth import authenticate
-from .models import CustomUser,Booking,CaretakerBooking
+from .models import CustomUser,Booking
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import serializers
+from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 
 
@@ -74,10 +76,12 @@ class LoginSerializer(serializers.Serializer):
         return {"user": user}  # Ensure 'user' is returned for CustomUser
 
 
+
 class CaretakerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Caretaker
         fields = '__all__'
+
 
 
 class BookingSerializer(serializers.ModelSerializer):
@@ -85,10 +89,12 @@ class BookingSerializer(serializers.ModelSerializer):
         model = Booking
         fields = ['user','caretaker','booking_date',"status","location","number"]
         
-class BookingCaretakerSerializer(serializers.ModelSerializer):
-       class Meta:
-        model = CaretakerBooking
-        fields = ['status','caretaker_id','user_id']
+
+# class BookingCaretakerSerializer(serializers.ModelSerializer):
+#        class Meta:
+#         model = CaretakerBooking
+#         fields = ['status','caretaker_id','user_id']
+
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -98,19 +104,18 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 
-
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True, write_only=True)
     new_password = serializers.CharField(required=True, write_only=True)
     confirm_password = serializers.CharField(required=True, write_only=True)
 
     def validate(self, data):
-        """Check if new passwords match"""
         if data['new_password'] != data['confirm_password']:
             raise serializers.ValidationError({"confirm_password": "New passwords do not match."})
 
-        # Validate new password strength
         validate_password(data['new_password'])
 
         return data
+
+
 

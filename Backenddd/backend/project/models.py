@@ -29,7 +29,7 @@ class CustomUser(AbstractUser):
 
 
 class Caretaker(models.Model):
-
+    # user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='caretaker')
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=15)
@@ -50,31 +50,20 @@ class Caretaker(models.Model):
 
 
 class Booking(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)  # Link to User
-    caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE)  # Link to Caretaker
-    booking_date = models.DateTimeField()  # Date and time of booking
-    number = models.BigIntegerField(null=True, blank=True) 
-    location = models.CharField(max_length=20, null=True, blank=True)
-    status = models.CharField(max_length=20, default='Pending')  # Status of booking (e.g., Pending, Confirmed, etc.)
-
-    def __str__(self):
-        return f"Booking by {self.user.id} for {self.caretaker.name} on {self.booking_date}"
-
-
-
-
-
-class CaretakerBooking(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
         ('accepted', 'Accepted'),
         ('rejected', 'Rejected'),
     ]
-
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_bookings')  
-    caretaker = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='caretaker_bookings')  
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
-    created_at = models.DateTimeField(auto_now_add=True)
+     
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)  # Link to User
+    caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE)  # Link to Caretaker
+    booking_date = models.DateTimeField()  # Date and time of booking
+    number = models.BigIntegerField(null=True, blank=True) 
+    location = models.CharField(max_length=20, null=True, blank=True)
+    status = models.CharField(max_length=20, default='Pending') 
 
     def __str__(self):
-        return f"Booking {self.id} - {self.status}"
+        return f"Booking by {self.user.id} for {self.caretaker.name} on {self.booking_date}"
+
+

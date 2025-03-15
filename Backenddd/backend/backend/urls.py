@@ -21,7 +21,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/api/login/', LoginView.as_view(), name='user_login'),
-    path('api/changepassword', ChangePasswordView.as_view(), name='changepassword'),
+    path('api/changepassword/', ChangePasswordView.as_view(), name='changepassword'),
 
 
     # Caretaker list and id
