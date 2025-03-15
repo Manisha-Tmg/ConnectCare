@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
-import "../css/setting.css";
-import Header from "../components/Header";
-import Sidebar from "../components/Sidebaruser";
-import { API } from "../../env";
+import "../../css/setting.css";
 import Cookies from "js-cookie";
+import { API } from "../../../env";
 
-const Profile = () => {
+const CaretakerProfile = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     async function fetchProfile() {
       const token = Cookies.get("accessToken");
-      const id = Cookies.get("user_id");
+      const id = Cookies.get("caretaker_id");
 
       if (!token || !id) {
         console.error("Missing authentication details");
@@ -19,7 +17,7 @@ const Profile = () => {
       }
 
       try {
-        const res = await fetch(`${API}api/users/${id}`, {
+        const res = await fetch(`${API}api/caretakers/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -44,34 +42,43 @@ const Profile = () => {
   if (!data) {
     return (
       <p>
-        <Header />
-        <Sidebar />
+        <CaretakerSidebar />
+        <Previous />
       </p>
     );
   }
 
   return (
     <div>
-      <Header />
-      <Sidebar />
+      <CaretakerSidebar />
+      <Previous />
       <div className="profile-container-main">
         <h2>Profile</h2>
         <div className="profile-container">
-          <label>First Name</label>
-          <input type="text" value={data.first_name || "NA"} disabled />
+          <label>Full Name</label>
+          <input type="text" value={data.name || "NA"} disabled />
 
-          <label>Last Name</label>
-          <input type="text" value={data.last_name || "NA"} disabled />
+          <label>Username</label>
+          <input type="email" value={data.username || "NA"} disabled />
 
           <label>Email</label>
           <input type="email" value={data.email || "NA"} disabled />
 
+          <label>Speciality</label>
+          <input type="text" value={data.speciality || "NA"} disabled />
+
+          <label>Hourly Rate</label>
+          <input type="text" value={data.hourly_rate || "NA"} disabled />
+
+          <label>Experience</label>
+          <input type="text" value={data.experience || "NA"} disabled />
+
           <label>Phone Number</label>
-          <input type="text" value={data.phone_number || "NA"} disabled />
+          <input type="text" value={data.phone || "NA"} disabled />
         </div>
       </div>
     </div>
   );
 };
 
-export default Profile;
+export default CaretakerProfile;

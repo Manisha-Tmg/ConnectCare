@@ -12,7 +12,6 @@ import Login from "./User/Pages/login";
 import Signup from "./User/Pages/signup";
 import { Toaster } from "react-hot-toast";
 import CaretakerLogin from "./User/Pages/Caretaker/CaretakerLogin";
-import CaretakerBookingPortal from "./User/Pages/Caretaker/Booking";
 import Dashboard from "./User/Pages/Caretaker/Dashboard";
 import Tasks from "./User/Pages/Caretaker/task";
 import Notifiation from "./User/Pages/Caretaker/Notification";
@@ -20,6 +19,8 @@ import AdminLogin from "./User/Pages/Admin/AdminLogin";
 import Profile from "./User/Pages/profile";
 import ChangePassword from "./User/Pages/Changepassword";
 import BookingDetails from "./User/Pages/MyBookings";
+import CaretakerProfile from "./User/Pages/Caretaker/CaretakerProfile";
+import CaretakerBookingPortal from "./User/Pages/Caretaker/Caretakermybooking";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         <Route path="/task" element={<Tasks />} />
         <Route path="/booking" element={<CaretakerBookingPortal />} />
         <Route path="/notification" element={<Notifiation />} />
+        <Route path="/caretaker/profile" element={<CaretakerProfile />} />
 
         {/* Admin */}
         <Route path="/login/admin" element={<AdminLogin />} />

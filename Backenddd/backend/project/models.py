@@ -10,9 +10,8 @@ from django.conf import settings
 
 
 class CustomUser(AbstractUser):
-       
-    last_name=models.CharField(max_length=150)
     email = models.EmailField(unique=True)
+    last_name=models.CharField(max_length=150)
     first_name=models.CharField(max_length=150)
     role = models.CharField(max_length=10,  default='user')
     groups = models.ManyToManyField(Group, related_name="customuser_groups")
@@ -62,7 +61,8 @@ class Booking(models.Model):
     number = models.BigIntegerField(null=True, blank=True) 
     location = models.CharField(max_length=20, null=True, blank=True)
     status = models.CharField(max_length=20, default='Pending') 
-
+    last_name=models.CharField(max_length=150)
+    first_name=models.CharField(max_length=150)
     def __str__(self):
         return f"Booking by {self.user.id} for {self.caretaker.name} on {self.booking_date}"
 
