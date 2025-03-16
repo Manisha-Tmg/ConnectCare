@@ -13,6 +13,22 @@ import Logo from "../components/Logo";
 import { Link } from "react-router-dom";
 
 const CaretakerSidebar = () => {
+  const handleLogout = async () => {
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      // Remove accessToken cookie
+      document.cookie =
+        "accessToken=; path=/; expires=Thu, 01 Jan 2970 00:00:00 UTC;";
+      document.cookie = "role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+      document.cookie =
+        "caretaker_id=; path=/; expires=Thu, 01 Jan 2970 00:00:00 UTC;";
+
+      // Update state
+      setIsLoggedIn(false);
+      navigate("/"); // Redirect to home
+    }
+  };
+
   return (
     <div className="caretaker-sidebar">
       <Logo />
@@ -53,16 +69,18 @@ const CaretakerSidebar = () => {
           <FaStar className="icon" />
           <span className="sidebar-menu2">Reviews</span>
         </li> */}
-        <li>
-          <FaCog className="icon" />
-          <span className="sidebar-menu2">Settings</span>
-        </li>
-        <Link to={"/login"}>
+        <Link to={"/caretaker/profile"}>
           <li>
-            <FaSignOutAlt className="icon" />
-            <span className="sidebar-menu2">Logout</span>
+            <FaCog className="icon" />
+            <span className="sidebar-menu2">Settings</span>
           </li>
         </Link>
+        <li>
+          <FaSignOutAlt className="icon" />
+          <span className="sidebar-menu2" onClick={handleLogout}>
+            Logout
+          </span>
+        </li>
       </ul>
     </div>
   );

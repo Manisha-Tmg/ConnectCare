@@ -83,10 +83,6 @@ class CaretakerSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ['id', 'first_name', 'last_name', 'number', 'location']
 
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
@@ -94,13 +90,20 @@ class BookingSerializer(serializers.ModelSerializer):
         fields = ['user','caretaker','booking_date',"status","location","number"]
         
 
+# class BookingCaretakerSerializer(serializers.ModelSerializer):
+#        class Meta:
+#         model = CaretakerBooking
+#         fields = ['status','caretaker_id','user_id']
+
+
+
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = '__all__'
 
 
-# user changepassword
+
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True, write_only=True)
     new_password = serializers.CharField(required=True, write_only=True)
@@ -116,3 +119,20 @@ class ChangePasswordSerializer(serializers.Serializer):
 
 
 
+
+
+# User = get_user_model()
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ['id', 'first_name', 'last_name', 'number','location'] 
+
+
+
+# class CaretakerBookingSerializer(serializers.ModelSerializer):
+#     user = UserSerializer(read_only=True)  
+#     caretaker = serializers.PrimaryKeyRelatedField(read_only=True) 
+
+#     class Meta:
+#         model = CaretakerBooking
+#         fields = ['status','caretaker_id','user_id']

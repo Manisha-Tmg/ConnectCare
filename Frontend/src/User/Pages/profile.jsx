@@ -43,10 +43,10 @@ const Profile = () => {
 
   if (!data) {
     return (
-      <p>
+      <div>
         <Header />
         <Sidebar />
-      </p>
+      </div>
     );
   }
 

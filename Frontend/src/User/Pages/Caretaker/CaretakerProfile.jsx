@@ -2,16 +2,18 @@ import { useEffect, useState } from "react";
 import "../../css/setting.css";
 import Cookies from "js-cookie";
 import { API } from "../../../env";
+import CaretakerSidebar from "../../components/side";
+import Previous from "../../components/Previous";
 
 const CaretakerProfile = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    async function fetchProfile() {
-      const token = Cookies.get("accessToken");
+    async function fetchCaretakerProfile() {
+      const Token = Cookies.get("accessToken");
       const id = Cookies.get("caretaker_id");
 
-      if (!token || !id) {
+      if (!Token || !id) {
         console.error("Missing authentication details");
         return;
       }
@@ -21,7 +23,7 @@ const CaretakerProfile = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${Token}`,
           },
         });
 
@@ -36,15 +38,15 @@ const CaretakerProfile = () => {
       }
     }
 
-    fetchProfile();
+    fetchCaretakerProfile();
   }, []);
 
   if (!data) {
     return (
-      <p>
+      <div>
         <CaretakerSidebar />
         <Previous />
-      </p>
+      </div>
     );
   }
 

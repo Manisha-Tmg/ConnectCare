@@ -74,19 +74,24 @@ class CaretakerLoginView(APIView):
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
-            Caretaker = serializer.validated_data.get('caretaker')  
-             
-         
-            refresh = RefreshToken.for_user(Caretaker)  # Generate JWT tokens
-            return Response({
-                'caretaker_id': Caretaker.id,
-                'refresh': str(refresh),
-                'access_token': str(refresh.access_token),
-                'username': Caretaker.username,
-                'email': Caretaker.email,
-                'role': Caretaker.role  # Include role in response
-            }, status=status.HTTP_200_OK)
-        
+            user = serializer.validated_data.get('caretaker')  # Use 'user' for both CustomUser and Caretaker
+
+            if not user:
+                return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
+
+            if isinstance(user, Caretaker):  # Ensure it's a Caretaker
+                refresh = RefreshToken.for_user(user)  # Generate JWT tokens
+                return Response({
+                    'caretaker_id': user.id,
+                    'refresh': str(refresh),
+                    'access_token': str(refresh.access_token),
+                    'username': user.username,
+                    'email': user.email,
+                    'role': "caretaker"  # Explicitly return role
+                }, status=status.HTTP_200_OK)
+
+            return Response({"error": "Unauthorized role"}, status=status.HTTP_403_FORBIDDEN)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AdminLoginView(APIView):

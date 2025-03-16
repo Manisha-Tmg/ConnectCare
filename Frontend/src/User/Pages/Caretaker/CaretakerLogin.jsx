@@ -31,7 +31,10 @@ const CaretakerLogin = () => {
           expires: 7,
           secure: true,
         });
-        Cookies.set("caretaker_id", data.user_id, { expires: 7, secure: true });
+        Cookies.set("caretaker_id", data.caretaker_id, {
+          expires: 7,
+          secure: true,
+        });
         Cookies.set("role", data.role || "caretaker", {
           expires: 7,
           secure: true,
