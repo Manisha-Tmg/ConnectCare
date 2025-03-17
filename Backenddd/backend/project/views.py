@@ -236,7 +236,7 @@ def get_Booking(request, booking_id=None):
         return Response(serializer.data, status=200)
 
 
-# chnage pass for user
+# chnage password for user
 class ChangePasswordView(APIView):
     permission_classes = [IsAuthenticated]
 
