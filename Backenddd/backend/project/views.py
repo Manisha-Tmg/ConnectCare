@@ -215,7 +215,28 @@ def get_Booking(request, booking_id=None):
         return Response(serializer.data, status=200)
 
 
+# Caretaker list side
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])  # Ensure only authenticated users can access
+def get_Booking(request, booking_id=None):
+    Caretaker = request.caretaker  # Get the logged-in user
+
+    if booking_id:
+        try:
+            booking = Booking.objects.get(id=booking_id, user=Caretaker)  # Filter by user
+            serializer = BookingSerializer(booking)  
+            return Response(serializer.data, status=200)
+        except Booking.DoesNotExist:
+            return Response({"error": "Booking not found or unauthorized"}, status=404)
+
+    else:
+        bookings = Booking.objects.filter(user=Caretaker)  # Fetch all bookings for the logged-in user
+        serializer = BookingSerializer(bookings, many=True)
+        return Response(serializer.data, status=200)
+
+
+# chnage pass for user
 class ChangePasswordView(APIView):
     permission_classes = [IsAuthenticated]
 
