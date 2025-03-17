@@ -176,38 +176,44 @@ def book_caretaker(request):
     if not Booking.objects.filter(id=booking.id).exists():
         return Response({"detail": "Booking not saved due to unknown error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    return Response(BookingSerializer(booking).data, status=status.HTTP_201_CREATED)
+    return Response({"booking_id": booking.id, **BookingSerializer(booking).data}, status=status.HTTP_201_CREATED)
 
 
 
+# @api_view(['GET'])
+# @permission_classes([AllowAny])
+# def get_Booking(request, booking_id=None):
+#     if booking_id:
+#         try:
+#             booking = Booking.objects.get(id=booking_id)
+#             serializer = BookingSerializer(booking)  
+#             return Response(serializer.data, status=200)
+#         except Booking.DoesNotExist:
+#             return Response({"error": "Booking not found"}, status=404) 
 
+#     else:
+#         bookings = Booking.objects.all()
+#         serializer = BookingSerializer(bookings, many=True)
+#         return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def get_Booking(request,booking_id=None):
+@permission_classes([IsAuthenticated])  # Ensure only authenticated users can access
+def get_Booking(request, booking_id=None):
+    user = request.user  # Get the logged-in user
+
     if booking_id:
-        booking = get_object_or_404(Booking,id=booking_id)
-        serializer = Booking(booking)
-        return Response(serializer.data)  # Return serialized data as response
+        try:
+            booking = Booking.objects.get(id=booking_id, user=user)  # Filter by user
+            serializer = BookingSerializer(booking)  
+            return Response(serializer.data, status=200)
+        except Booking.DoesNotExist:
+            return Response({"error": "Booking not found or unauthorized"}, status=404)
 
     else:
-        booking = Booking.objects.all() #to fetch all user
-        serializer = BookingSerializer(booking,many=True)
-        return Response(serializer.data)
+        bookings = Booking.objects.filter(user=user)  # Fetch all bookings for the logged-in user
+        serializer = BookingSerializer(bookings, many=True)
+        return Response(serializer.data, status=200)
 
-
-
-# class CaretakerViewSet(viewsets.ModelViewSet):
-#     queryset = Caretaker.objects.all()
-#     serializer_class = CaretakerSerializer
-
-# class CustomUserViewSet(viewsets.ModelViewSet):
-#     queryset = CustomUser.objects.all()
-#     serializer_class = CustomUserSerializer
-
-# class BookingViewSet(viewsets.ModelViewSet):
-#     queryset = Booking.objects.all()
-#     serializer_class = BookingSerializer
 
 
 class ChangePasswordView(APIView):

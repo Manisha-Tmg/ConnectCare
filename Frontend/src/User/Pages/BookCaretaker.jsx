@@ -65,6 +65,7 @@ const BookCaretaker = () => {
       });
 
       const data = await response.json();
+      Cookies.set("booking_id", data.booking_id);
 
       if (!response.ok) {
         throw new Error(data.detail || "Booking failed");

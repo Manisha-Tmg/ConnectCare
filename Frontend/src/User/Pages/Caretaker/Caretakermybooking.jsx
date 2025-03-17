@@ -6,16 +6,20 @@ import { API } from "../../../env";
 
 const CaretakerBookingPortal = () => {
   const [bookings, setBookings] = useState([]);
+  const { booking_id } = useParams();
 
   useEffect(() => {
     const fetchBookingstatus = async () => {
-      const res = await fetch(`${API}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(),
-      });
+      const res = await fetch(
+        `${API}caretaker/bookings/${booking_id}/action/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(),
+        }
+      );
     };
     fetchBookingstatus();
   }, []);

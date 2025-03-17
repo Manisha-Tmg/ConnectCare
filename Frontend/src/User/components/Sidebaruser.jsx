@@ -21,7 +21,7 @@ const Sidebar = () => {
         </li>
         <li>
           <Calendar size={18} />
-          <Link to="/booking-details">Booking Details</Link>
+          <Link to="/booking-details/:booking_id">Booking Details</Link>
         </li>
       </ul>
     </div>

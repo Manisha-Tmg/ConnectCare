@@ -17,7 +17,6 @@ const ChangePassword = () => {
     e.preventDefault();
 
     const token = Cookies.get("accessToken");
-    console.log("Token being sent:", token); // Debugging
 
     if (!token) {
       toast.error("Please login! Your token has expired");

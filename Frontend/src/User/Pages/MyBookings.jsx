@@ -3,24 +3,22 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebaruser";
 import "../css/setting.css";
 import Cookies from "js-cookie";
-import { useParams } from "react-router-dom";
 import { API } from "../../env";
 
 const BookingDetails = () => {
-  const [data, setData] = useState(null);
-  const id = useParams("booking_id");
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     async function fetchBooking() {
       const token = Cookies.get("accessToken");
 
-      if (!token || !id) {
+      if (!token) {
         console.error("Missing authentication details");
         return;
       }
 
       try {
-        const res = await fetch(`${API}api/bookings/${id}`, {
+        const res = await fetch(`${API}api/bookings/`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -48,7 +46,32 @@ const BookingDetails = () => {
       <Sidebar />
       <div className="booking-container">
         <h2>Booking Details</h2>
-        <p>No bookings found.</p>
+        {data ? (
+          <table className="booking-table">
+            <thead>
+              <tr>
+                <th>Caretaker name</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Number</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((booking) => (
+                <tr key={booking.name}>
+                  <td>{booking.id}</td>
+                  <td>{booking.booking_date}</td>
+                  <td>{booking.location}</td>
+                  <td>{booking.number}</td>
+                  <td>{booking.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>Loading booking details...</p>
+        )}
       </div>
     </div>
   );

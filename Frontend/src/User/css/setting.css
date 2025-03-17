@@ -107,7 +107,7 @@ button:hover {
   background: #218838;
 }
 
-/* booking css */
+/* Booking css */
 .booking-container {
   padding: 30px;
   max-width: 500px;
@@ -125,4 +125,26 @@ h2 {
 p {
   font-size: 16px;
   color: #666;
+}
+
+.booking-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.booking-table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+.booking-table th,
+.booking-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.booking-table th {
+  background-color: #f4f4f4;
 }

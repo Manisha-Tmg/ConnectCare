@@ -43,7 +43,7 @@ urlpatterns = [
 
     # Booking list and id
     path('api/bookings/', get_Booking, name='book_caretaker'),
-    path('api/bookings/<int:booking_id>', get_Booking, name='get_book_caretaker'),
+    # path('api/bookings/<int:booking_id>', get_Booking, name='get_book_caretaker'),
 
 
 

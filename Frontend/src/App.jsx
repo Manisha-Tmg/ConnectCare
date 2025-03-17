@@ -39,15 +39,22 @@ function App() {
         <Route path="/setting" element={<SettingsPage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/change-password" element={<ChangePassword />} />
-        <Route path="/booking-details" element={<BookingDetails />} />
+        <Route
+          path="/booking-details/:booking_id"
+          element={<BookingDetails />}
+        />
 
         {/* Caretaker */}
         <Route path="/login/caretaker" element={<CaretakerLogin />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/task" element={<Tasks />} />
-        <Route path="/booking" element={<CaretakerBookingPortal />} />
+        <Route
+          path="/booking/: booking_id/action/"
+          element={<CaretakerBookingPortal />}
+        />
         <Route path="/notification" element={<Notifiation />} />
         <Route path="/caretaker/profile" element={<CaretakerProfile />} />
+        {/* <Route path="/caretaker/mybooking/:id" element={<BookingDetails />} /> */}
 
         {/* Admin */}
         <Route path="/login/admin" element={<AdminLogin />} />

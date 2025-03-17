@@ -24,11 +24,10 @@ const Header = () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (confirmLogout) {
       // Remove accessToken cookie
-      document.cookie =
-        "accessToken=; path=/; expires=Thu, 01 Jan 2970 00:00:00 UTC;";
-      document.cookie = "role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-      document.cookie =
-        "user_id=; path=/; expires=Thu, 01 Jan 2970 00:00:00 UTC;";
+      document.cookie = "accessToken=; path=/;";
+      document.cookie = "role=; ";
+      document.cookie = "user_id=;";
+      document.cookie = "booking_id=;";
 
       // Update state
       setIsLoggedIn(false);
