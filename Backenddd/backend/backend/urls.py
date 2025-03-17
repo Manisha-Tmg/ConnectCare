@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from project.views import UserViewSet, UserRegistrationView,LoginView,AdminLoginView,CaretakerLoginView,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,booking_action
+from project.views import UserViewSet, UserRegistrationView,LoginView,AdminLoginView,CaretakerLoginView,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,booking_action,get_CaretakerBooking
 
 # Initialize the router
 router = DefaultRouter()
@@ -42,7 +42,8 @@ urlpatterns = [
 
 
     # Booking list and id
-    path('api/bookings/', get_Booking, name='book_caretaker'),
+    path('api/bookings/', get_Booking, name='book_caretakerlist'),
+    path('api/caretaker/bookings/', get_CaretakerBooking, name='listofbook_caretaker'),
     # path('api/bookings/<int:booking_id>', get_Booking, name='get_book_caretaker'),
 
 
