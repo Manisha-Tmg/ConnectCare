@@ -37,19 +37,20 @@ const CaretakerBookingPortal = () => {
     const token = Cookies.get("accessToken");
 
     try {
-      const res = await fetch(`${API}api/caretaker/bookings/${id}/action/`, {
+      const res = await fetch(`${API}caretaker/bookings/${id}/action/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ status: action }),
+        body: JSON.stringify({ action: action }),
       });
 
       if (res.ok) {
         setBookings((prevBookings) =>
-          prevBookings.map((booking) =>
-            booking.id === id ? { ...booking, status: action } : booking
+          prevBookings.map(
+            (booking) =>
+              booking.id === id ? { ...booking, status: action } : booking //unchanged in booking doesnt match
           )
         );
       } else {
@@ -62,38 +63,53 @@ const CaretakerBookingPortal = () => {
 
   return (
     <div>
-      {" "}
       <CaretakerSidebar />
       <div className="caretake-container">
         <div className="caretake-header">
-          <div className="caretake-header-cell">NAME</div>
-          <div className="caretake-header-cell right">ACTIONS</div>
+          <div className="caretake-header-cell">Request</div>
         </div>
 
         {bookings.map((request) => (
           <div key={request.id} className="caretake-request-row">
             <div className="caretake-profile">
+              <div className="caretaker-info">
+                <div className="profile-icon">
+                  {request.first_name[0]}
+                  {request.last_name[0]}
+                </div>
+              </div>
               <div className="caretake-user-info">
                 <div className="name">
                   {request.first_name} {request.last_name}
                 </div>
                 <div className="email">{request.location}</div>
+                <div className="number">{request.number}</div>
               </div>
             </div>
 
             <div className="caretake-actions">
-              <button
-                className="caretake-btn caretake-btn-accept"
-                onClick={() => fetchBookingstatus(request.id, "accepted")}
-              >
-                Accept
-              </button>
-              <button
-                className="caretake-btn caretake-btn-reject"
-                onClick={() => fetchBookingstatus(request.id, "rejected")}
-              >
-                Reject
-              </button>
+              {/* Show Accept/Reject buttons only if status is Pending */}
+              {request.status === "Pending" ? (
+                <>
+                  <button
+                    className="caretake-btn  caretake-btn-accept"
+                    onClick={() => fetchBookingstatus(request.id, "accept")}
+                  >
+                    Accept
+                  </button>
+                  <button
+                    className="caretake-btn caretake-btn-reject"
+                    onClick={() => fetchBookingstatus(request.id, "reject")}
+                  >
+                    Reject
+                  </button>
+                </>
+              ) : (
+                // If status is Accepted or Rejected, show the respective status
+                <span className={`status-${request.status}`}>
+                  {request.status}
+                </span>
+              )}
             </div>
           </div>
         ))}
