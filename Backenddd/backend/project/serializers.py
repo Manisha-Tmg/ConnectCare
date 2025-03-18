@@ -87,7 +87,7 @@ class CaretakerSerializer(serializers.ModelSerializer):
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields = ['id','user','caretaker','booking_date',"status",'location','number']
+        fields = ['id','user','caretaker','booking_date',"status",'location','number','first_name', 'last_name']
         
 
 # class BookingCaretakerSerializer(serializers.ModelSerializer):
