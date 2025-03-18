@@ -61,39 +61,43 @@ const CaretakerBookingPortal = () => {
   };
 
   return (
-    <div className="caretake-container">
-      <div className="caretake-header">
-        <div className="caretake-header-cell">NAME</div>
-        <div className="caretake-header-cell right">ACTIONS</div>
-      </div>
+    <div>
+      {" "}
+      <CaretakerSidebar />
+      <div className="caretake-container">
+        <div className="caretake-header">
+          <div className="caretake-header-cell">NAME</div>
+          <div className="caretake-header-cell right">ACTIONS</div>
+        </div>
 
-      {bookings.map((request) => (
-        <div key={request.id} className="caretake-request-row">
-          <div className="caretake-profile">
-            <div className="caretake-user-info">
-              <div className="name">
-                {request.first_name} {request.last_name}
+        {bookings.map((request) => (
+          <div key={request.id} className="caretake-request-row">
+            <div className="caretake-profile">
+              <div className="caretake-user-info">
+                <div className="name">
+                  {request.first_name} {request.last_name}
+                </div>
+                <div className="email">{request.location}</div>
               </div>
-              <div className="email">{request.location}</div>
+            </div>
+
+            <div className="caretake-actions">
+              <button
+                className="caretake-btn caretake-btn-accept"
+                onClick={() => fetchBookingstatus(request.id, "accepted")}
+              >
+                Accept
+              </button>
+              <button
+                className="caretake-btn caretake-btn-reject"
+                onClick={() => fetchBookingstatus(request.id, "rejected")}
+              >
+                Reject
+              </button>
             </div>
           </div>
-
-          <div className="caretake-actions">
-            <button
-              className="caretake-btn btn-accept"
-              onClick={() => fetchBookingstatus(request.id, "accepted")}
-            >
-              Accept
-            </button>
-            <button
-              className="caretake-btn btn-reject"
-              onClick={() => fetchBookingstatus(request.id, "rejected")}
-            >
-              Reject
-            </button>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
