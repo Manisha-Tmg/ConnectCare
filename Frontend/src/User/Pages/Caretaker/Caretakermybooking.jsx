@@ -3,34 +3,39 @@ import "../../css/Booking.css";
 import Previous from "../../components/Previous";
 import CaretakerSidebar from "../../components/side";
 import { API } from "../../../env";
+import { useParams } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const CaretakerBookingPortal = () => {
   const [bookings, setBookings] = useState([]);
-  const { booking_id } = useParams();
 
   useEffect(() => {
-    const fetchBookingstatus = async () => {
-      const res = await fetch(
-        `${API}caretaker/bookings/${booking_id}/action/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(),
-        }
-      );
+    const token = Cookies.get("accessToken");
+    const fetchBooking = async () => {
+      const res = await fetch(`${API}api/caretaker/bookings/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
     };
-    fetchBookingstatus();
+
+    fetchBooking();
   }, []);
 
-  // const updateBookingStatus = (id, status) => {
-  //   setBookings(
-  //     bookings.map((booking) =>
-  //       booking.id === id ? { ...booking, status } : booking
-  //     )
-  //   );
-  // };
+  const fetchBookingstatus = async () => {
+    const id = Cookies.get("booking_id");
+
+    const res = await fetch(`${API}caretaker/bookings/${id}/action/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(),
+    });
+  };
 
   return (
     <div className="caretaker-booking-portal">
@@ -39,41 +44,6 @@ const CaretakerBookingPortal = () => {
         <Previous />
         Request
       </h2>
-      <ul className="booking-list">
-        {bookings.map((booking) => (
-          <li key={booking.id} className="booking-card">
-            <h3>{booking.task}</h3>
-            <p>
-              <strong>Booked By:</strong> {booking.user}
-            </p>
-            <p>
-              <strong>Location:</strong> {booking.location}
-            </p>
-
-            <p>
-              <strong>Status:</strong> {booking.status}
-            </p>
-            <div className="booking-actions">
-              {booking.status === "Pending" && (
-                <>
-                  <button
-                    onClick={() => updateBookingStatus(booking.id, "Confirmed")}
-                    className="accept-btn"
-                  >
-                    Accept
-                  </button>
-                  <button
-                    onClick={() => updateBookingStatus(booking.id, "Declined")}
-                    className="decline-btn"
-                  >
-                    Decline
-                  </button>
-                </>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };

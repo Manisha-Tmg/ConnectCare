@@ -41,6 +41,21 @@
   margin-right: 55px;
 }
 
+.btn-login1 {
+  padding: 1px 2px;
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  border-radius: 50%;
+  height: 45px;
+  border: 2px solid #008080;
+  background-color: #008080;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 55px;
+}
+
 .btn-login:hover {
   background-color: #016b6b;
   /* border: 1px solid #008080; */

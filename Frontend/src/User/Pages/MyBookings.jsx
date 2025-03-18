@@ -59,8 +59,8 @@ const BookingDetails = () => {
             </thead>
             <tbody>
               {data.map((booking) => (
-                <tr key={booking.name}>
-                  <td>{booking.id}</td>
+                <tr key={booking.id}>
+                  <td>{booking.name}</td>
                   <td>{booking.booking_date}</td>
                   <td>{booking.location}</td>
                   <td>{booking.number}</td>

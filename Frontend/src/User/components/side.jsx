@@ -75,12 +75,14 @@ const CaretakerSidebar = () => {
             <span className="sidebar-menu2">Settings</span>
           </li>
         </Link>
-        <li>
-          <FaSignOutAlt className="icon" />
-          <span className="sidebar-menu2" onClick={handleLogout}>
-            Logout
-          </span>
-        </li>
+        <Link to={"/login/caretaker"}>
+          <li>
+            <FaSignOutAlt className="icon" />
+            <span className="sidebar-menu2" onClick={handleLogout}>
+              Logout
+            </span>
+          </li>
+        </Link>
       </ul>
     </div>
   );

@@ -48,10 +48,7 @@ function App() {
         <Route path="/login/caretaker" element={<CaretakerLogin />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/task" element={<Tasks />} />
-        <Route
-          path="/booking/: booking_id/action/"
-          element={<CaretakerBookingPortal />}
-        />
+        <Route path="/booking/" element={<CaretakerBookingPortal />} />
         <Route path="/notification" element={<Notifiation />} />
         <Route path="/caretaker/profile" element={<CaretakerProfile />} />
         {/* <Route path="/caretaker/mybooking/:id" element={<BookingDetails />} /> */}
