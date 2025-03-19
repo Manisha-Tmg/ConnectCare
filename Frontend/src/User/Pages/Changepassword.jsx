@@ -62,7 +62,7 @@ const ChangePassword = () => {
   return (
     <div>
       <Header />
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div className="change-password-container">
         <h2>Change Password</h2>
         <form onSubmit={passwordChange}>

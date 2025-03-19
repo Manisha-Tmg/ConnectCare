@@ -43,7 +43,7 @@ const BookingDetails = () => {
   return (
     <div>
       <Header />
-      <Sidebar />
+
       <div className="booking-container">
         <h2>Booking Details</h2>
         {data ? (

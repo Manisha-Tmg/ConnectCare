@@ -52,6 +52,8 @@ const BookCaretaker = () => {
       const requestBody = {
         location: location,
         number: number,
+        first_name: first_name,
+        last_name: last_name,
         caretaker_id: selectedCaretaker.id,
         booking_date: formattedDate,
         status: "Pending",
@@ -67,7 +69,7 @@ const BookCaretaker = () => {
       });
 
       const data = await response.json();
-      Cookies.set("booking_id", data.booking_id);
+      // Cookies.set("booking_id", data.booking_id);
 
       if (!response.ok) {
         throw new Error(data.detail || "Booking failed");
