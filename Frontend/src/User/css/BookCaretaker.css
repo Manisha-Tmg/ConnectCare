@@ -1,7 +1,8 @@
 /* BookCaretaker.css */
+
 .user-container {
   max-width: 1200px;
-  margin: 85px auto;
+  margin: 95px auto;
   padding: 20px;
   text-align: center;
 }
@@ -9,19 +10,8 @@
 .user-title {
   text-align: start;
   display: flex;
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: bold;
-  margin-bottom: 30px;
-}
-
-.user-search-input {
-  text-align: start;
-  display: flex;
-  width: 50%;
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   margin-bottom: 30px;
 }
 
@@ -33,7 +23,7 @@
 }
 
 .user-caretaker-card {
-  background: #f9f9f9;
+  background: #ffffff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -48,6 +38,7 @@
 }
 
 .user-caretaker-name {
+  text-transform: capitalize;
   font-size: 20px;
   justify-content: flex-start;
   display: flex;
@@ -84,9 +75,12 @@
 }
 
 .date-picker {
-  width: 80%;
+  /* width: 100%; */
+  width: 90%;
   padding: 10px;
-  margin: 15px 0;
+  margin: 10px 0;
+  text-transform: capitalize;
+
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -100,13 +94,12 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 100%;
-  margin-top: 15px;
+  width: 90%;
+  margin-top: 10px;
 }
 .user-book-button {
   border: 2px solid #008080;
   background-color: #008080;
-
   color: white;
   padding: 12px 20px;
   font-size: 16px;
@@ -131,7 +124,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 100%;
+  width: 90%;
   margin-top: 10px;
 }
 

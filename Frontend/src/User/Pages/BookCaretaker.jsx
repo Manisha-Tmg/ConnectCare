@@ -139,14 +139,13 @@ const BookCaretaker = () => {
         {isOpen && (
           <div className="user-modal" onClick={bookLogin}>
             <div className="user-modal-content">
-              <h2>Book {selectedCaretaker?.name}</h2>
+              <h2 className="title">Book a Caretaker</h2>
               <input
-                placeholder="Caretaker Name"
                 type="text"
                 value={selectedCaretaker?.name}
                 className="date-picker"
               />
-              <input
+              {/* <input
                 placeholder="First Name"
                 type="text"
                 value={first_name}
@@ -159,7 +158,7 @@ const BookCaretaker = () => {
                 value={last_name}
                 onChange={(e) => setlast_name(e.target.value)}
                 className="date-picker"
-              />
+              /> */}
               <input
                 type="date"
                 value={date}

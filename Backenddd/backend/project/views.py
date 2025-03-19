@@ -153,7 +153,7 @@ def book_caretaker(request):
     booking_date = request.data.get('booking_date') 
     location = request.data.get('location')  
     number = request.data.get('number')
-
+    
     # Validate caretaker exists
     try:
         caretaker = Caretaker.objects.get(id=caretaker_id)
