@@ -46,6 +46,19 @@ const Header = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  // Close dropdown when clicking outside
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+  //       setIsDropdownOpen(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
+
   return (
     <header className="header">
       <div className="logo">
@@ -91,27 +104,14 @@ const Header = () => {
             </div>
 
             {/* Dropdown Menu */}
-
             {isDropdownOpen && (
               <div className="dropdown-menu">
                 <p className="dropdown-header">
                   Signed in as <br /> <strong>{username}</strong>
                 </p>
-                <Link to="/profile" className="dropdown-item logout">
-                  My Profile
+                <Link to="/profile" className="nav-link">
+                  Setting
                 </Link>
-
-                <Link to="/change-password" className="dropdown-item logout">
-                  Change Password
-                </Link>
-
-                <Link
-                  to="/booking-details/:booking_id"
-                  className="dropdown-item logout"
-                >
-                  Booking Details
-                </Link>
-
                 <p onClick={handleLogout} className="dropdown-item logout">
                   Log Out
                 </p>

@@ -13,7 +13,6 @@ import Signup from "./User/Pages/signup";
 import { Toaster } from "react-hot-toast";
 import CaretakerLogin from "./User/Pages/Caretaker/CaretakerLogin";
 import Dashboard from "./User/Pages/Caretaker/Dashboard";
-import Tasks from "./User/Pages/Caretaker/task";
 import Notifiation from "./User/Pages/Caretaker/Notification";
 import AdminLogin from "./User/Pages/Admin/AdminLogin";
 import Profile from "./User/Pages/profile";
@@ -47,7 +46,7 @@ function App() {
         {/* Caretaker */}
         <Route path="/login/caretaker" element={<CaretakerLogin />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/task" element={<Tasks />} />
+        {/* <Route path="/task" element={<Tasks />} /> */}
         <Route path="/booking/" element={<CaretakerBookingPortal />} />
         <Route path="/notification" element={<Notifiation />} />
         <Route path="/caretaker/profile" element={<CaretakerProfile />} />

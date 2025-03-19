@@ -1,12 +1,12 @@
 /* BookCaretaker.css */
-.container {
+.user-container {
   max-width: 1200px;
   margin: 85px auto;
   padding: 20px;
   text-align: center;
 }
 
-.title {
+.user-title {
   text-align: start;
   display: flex;
   font-size: 2.5rem;
@@ -14,7 +14,7 @@
   margin-bottom: 30px;
 }
 
-.search-input {
+.user-search-input {
   text-align: start;
   display: flex;
   width: 50%;
@@ -25,14 +25,14 @@
   margin-bottom: 30px;
 }
 
-.caretaker-grid {
+.user-caretaker-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   justify-content: center;
 }
 
-.caretaker-card {
+.user-caretaker-card {
   background: #f9f9f9;
   padding: 20px;
   border-radius: 8px;
@@ -40,14 +40,14 @@
   cursor: pointer;
 }
 
-.caretaker-image {
+.user-caretaker-image {
   width: 100%;
   height: 220px;
   object-fit: cover;
   border-radius: 8px;
 }
 
-.caretaker-name {
+.user-caretaker-name {
   font-size: 20px;
   justify-content: flex-start;
   display: flex;
@@ -55,14 +55,14 @@
   font-weight: bold;
 }
 
-.caretaker-text {
+.user-caretaker-text {
   justify-content: flex-start;
   display: flex;
   color: #777;
   font-size: 16px;
 }
-
-.modal {
+/* 
+.user-modal {
   margin-top: 2rem;
   position: fixed;
   top: 0;
@@ -75,7 +75,7 @@
   justify-content: center;
 }
 
-.modal-content {
+.user-modal-content {
   background: white;
   padding: 25px;
   border-radius: 8px;
@@ -92,7 +92,7 @@
   border-radius: 5px;
 }
 
-.confirm-button {
+.user-confirm-button {
   background: #28a745;
   color: white;
   padding: 12px 20px;
@@ -103,7 +103,7 @@
   width: 100%;
   margin-top: 15px;
 }
-.book-button {
+.user-book-button {
   border: 2px solid #008080;
   background-color: #008080;
 
@@ -116,14 +116,14 @@
   font-weight: bold;
   margin-top: 15px;
 }
-.book-button:hover {
+.user-book-button:hover {
   background-color: #016b6b;
 }
-.confirm-button:hover {
+.user-confirm-button:hover {
   background: #218838;
 }
 
-.close-button {
+.user-close-button {
   background: #dc3545;
   color: white;
   padding: 12px 20px;
@@ -135,6 +135,6 @@
   margin-top: 10px;
 }
 
-.close-button:hover {
+.user-close-button:hover {
   background: #c82333;
-}
+} */

@@ -13,6 +13,8 @@ const BookCaretaker = () => {
   const [date, setDate] = useState("");
   const [number, setNumber] = useState("");
   const [location, setLocation] = useState("");
+  const [first_name, setfirst_name] = useState("");
+  const [last_name, setlast_name] = useState("");
   const [caretakers, setCaretakers] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -98,44 +100,64 @@ const BookCaretaker = () => {
   return (
     <div>
       <Header />
-      <div className="container">
-        <h1 className="title">
+      <div className="user-container">
+        <h1 className="user-title">
           <Previous />
           Book a Caretaker
         </h1>
-        <div className="caretaker-grid">
+        <div className="user-caretaker-grid">
           {caretakers.map((caretaker) => (
             <div
               key={caretaker.id}
-              className="caretaker-card"
+              className="user-caretaker-card"
               onClick={() => {
                 setSelectedCaretaker(caretaker);
                 setIsOpen(true);
               }}
             >
-              <h2 className="caretaker-name">Name: {caretaker.name}</h2>
-              <p className="caretaker-text">
+              <h2 className="user-caretaker-name">Name: {caretaker.name}</h2>
+              <p className="user-caretaker-text">
                 Hourly Rate: {caretaker.hourly_rate}
               </p>
-              <p className="caretaker-text">
+              <p className="user-caretaker-text">
                 Experience: {caretaker.experience}
               </p>
-              <p className="caretaker-text">
+              <p className="user-caretaker-text">
                 Speciality: {caretaker.specialty}
               </p>
-              <p className="caretaker-text">
+              <p className="user-caretaker-text">
                 Status: {caretaker.is_available ? "Available" : "Not Available"}
               </p>
-              <button className="book-button" onClick={bookLogin}>
+              <button className="user-book-button" onClick={bookLogin}>
                 Book Now
               </button>
             </div>
           ))}
         </div>
         {isOpen && (
-          <div className="modal" onClick={bookLogin}>
-            <div className="modal-content">
+          <div className="user-modal" onClick={bookLogin}>
+            <div className="user-modal-content">
               <h2>Book {selectedCaretaker?.name}</h2>
+              <input
+                placeholder="Caretaker Name"
+                type="text"
+                value={selectedCaretaker?.name}
+                className="date-picker"
+              />
+              <input
+                placeholder="First Name"
+                type="text"
+                value={first_name}
+                onChange={(e) => setfirst_name(e.target.value)}
+                className="date-picker"
+              />
+              <input
+                placeholder="Last Name"
+                type="text"
+                value={last_name}
+                onChange={(e) => setlast_name(e.target.value)}
+                className="date-picker"
+              />
               <input
                 type="date"
                 value={date}
@@ -156,10 +178,14 @@ const BookCaretaker = () => {
                 onChange={(e) => setLocation(e.target.value)}
                 className="date-picker"
               />
-              <button className="confirm-button" onClick={handleBooking}>
+
+              <button className="user-confirm-button" onClick={handleBooking}>
                 Confirm Booking
               </button>
-              <button className="close-button" onClick={() => setIsOpen(false)}>
+              <button
+                className="user-close-button"
+                onClick={() => setIsOpen(false)}
+              >
                 Close
               </button>
             </div>

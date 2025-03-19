@@ -34,6 +34,7 @@ const Login = () => {
         });
         Cookies.set("user_id", data.user_id);
         Cookies.set("role", data.role);
+        Cookies.set("username", data.username);
 
         // Navigate based on user role
         const userRole = Cookies.get("role");

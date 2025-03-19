@@ -60,11 +60,21 @@ const BookingDetails = () => {
             <tbody>
               {data.map((booking) => (
                 <tr key={booking.id}>
-                  <td>{booking.name}</td>
-                  <td>{booking.booking_date}</td>
-                  <td>{booking.location}</td>
+                  <td className="rowww">{booking.name}</td>
+                  <td>
+                    {new Date(booking.booking_date).toLocaleDateString(
+                      "en-US",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      }
+                    )}
+                  </td>
+
+                  <td className="rowww">{booking.location}</td>
                   <td>{booking.number}</td>
-                  <td>{booking.status}</td>
+                  <td className="rowww">{booking.status}</td>
                 </tr>
               ))}
             </tbody>

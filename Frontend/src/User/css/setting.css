@@ -148,3 +148,6 @@ p {
 .booking-table th {
   background-color: #f4f4f4;
 }
+.rowww {
+  text-transform: capitalize;
+}

@@ -45,7 +45,7 @@ const Profile = () => {
     return (
       <div>
         <Header />
-        <Sidebar />
+        {/* <Sidebar /> */}
       </div>
     );
   }
@@ -53,7 +53,7 @@ const Profile = () => {
   return (
     <div>
       <Header />
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div className="profile-container-main">
         <h2>Profile</h2>
         <div className="profile-container">
