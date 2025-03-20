@@ -43,14 +43,13 @@ const BookingDetails = () => {
   return (
     <div>
       <Header />
-
       <div className="booking-container">
         <h2>Booking Details</h2>
         {data ? (
           <table className="booking-table">
             <thead>
               <tr>
-                <th>Caretaker name</th>
+                {/* <th>Caretaker name</th> */}
                 <th>Date</th>
                 <th>Location</th>
                 <th>Number</th>
@@ -60,7 +59,6 @@ const BookingDetails = () => {
             <tbody>
               {data.map((booking) => (
                 <tr key={booking.id}>
-                  <td className="rowww">{booking.name}</td>
                   <td>
                     {new Date(booking.booking_date).toLocaleDateString(
                       "en-US",

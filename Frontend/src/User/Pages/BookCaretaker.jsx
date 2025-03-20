@@ -13,8 +13,8 @@ const BookCaretaker = () => {
   const [date, setDate] = useState("");
   const [number, setNumber] = useState("");
   const [location, setLocation] = useState("");
-  const [first_name, setfirst_name] = useState("");
-  const [last_name, setlast_name] = useState("");
+  // const [first_name, setfirst_name] = useState("");
+  // const [last_name, setlast_name] = useState("");
   const [caretakers, setCaretakers] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -52,8 +52,8 @@ const BookCaretaker = () => {
       const requestBody = {
         location: location,
         number: number,
-        first_name: first_name,
-        last_name: last_name,
+        // first_name: first_name,
+        // last_name: last_name,
         caretaker_id: selectedCaretaker.id,
         booking_date: formattedDate,
         status: "Pending",

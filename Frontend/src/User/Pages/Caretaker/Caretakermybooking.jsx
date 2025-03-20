@@ -9,6 +9,7 @@ const CaretakerBookingPortal = () => {
 
   useEffect(() => {
     const token = Cookies.get("accessToken");
+    const storedUsername = Cookies.get("username");
 
     const fetchBooking = async () => {
       try {

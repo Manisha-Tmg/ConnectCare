@@ -63,7 +63,7 @@ const CaretakerLogin = () => {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className="auth-container">
         <div className="auth-box">
           <h2>Welcome Back</h2>

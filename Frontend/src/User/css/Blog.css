@@ -93,8 +93,8 @@
 }
 
 .blog-button:hover {
-  background-color: #fa745b;
-  border-bottom: 2px solid #fa745b;
+  border: 2px solid #0c5847;
+  background-color: #0c5847;
   color: #ffffff;
 }
 

@@ -37,6 +37,7 @@ class UserRegistrationView(APIView):
                 "message": "User registered successfully!",
                 "user": {
                     "username": user.username,
+
                     "email": user.email,
                     "role": user.role  # Send role in response to navigate to roles based home
                 }
@@ -61,6 +62,9 @@ class LoginView(APIView):
                 'refresh': str(refresh),
                 'access_token': str(refresh.access_token),
                 'username': user.username,
+                'first_name':user.first_name,
+                # 'first_name':user.first_name,
+
                 'email': user.email,
                 'role': user.role  # Include role in response
             }, status=status.HTTP_200_OK)
@@ -113,6 +117,7 @@ class AdminLoginView(APIView):
             }, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
 # API of caretaker list
 @api_view(['GET'])

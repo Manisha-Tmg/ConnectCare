@@ -7,7 +7,7 @@
 
 .auth-container-signup {
   display: flex;
-  margin-top: 4rem;
+  margin-top: 6rem;
   margin-bottom: 3rem;
   height: 100vh;
   justify-content: center;
@@ -16,6 +16,7 @@
 }
 
 .auth-box-signup {
+  height: 105vh;
   width: 400px;
   background: white;
   padding: 30px;

@@ -8,14 +8,13 @@
 .input-box {
   /* border: none;
   outline: none; */
-  border: 1.5px solid #008080;
-
+  border: 2px solid #008080;
+  /* outline: 1.5px solid #008080; */
   flex: 1;
   font-size: 1rem;
   width: 100%;
   padding: 10px;
   border-radius: 5px;
-  font-size: 14px;
 }
 .input-icon {
   color: var(--iconcolor--);

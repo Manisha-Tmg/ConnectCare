@@ -14,6 +14,9 @@ const Signup = () => {
   const [username, setName] = useState("");
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [number, setNumber] = useState("");
+
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
@@ -72,6 +75,18 @@ const Signup = () => {
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             placeholder="Email"
+          />
+          <InputField
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            type="email"
+            placeholder="Address"
+          />
+          <InputField
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            type="email"
+            placeholder="Number"
           />
           <InputField
             value={password}

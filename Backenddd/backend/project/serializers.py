@@ -13,12 +13,14 @@ from django.contrib.auth.password_validation import validate_password
 class UserRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password', 'first_name', 'last_name', 'role']
+        fields = ['username', 'email', 'password', 'first_name', 'last_name','number' ,'address','role']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         first_name = validated_data.pop('first_name', None)
         last_name = validated_data.pop('last_name', None)
+        address= validated_data.pop('address', None)
+        number= validated_data.pop('number', None)
 
         username = validated_data.get('username')
         email = validated_data.get('email')
@@ -36,6 +38,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             user.first_name = first_name
         if last_name:
             user.last_name = last_name
+
+        if address:
+            user.first_name = address
+        if address:
+            user.last_name = address
 
         user.is_active = True
         user.role = 'user'  # Default role as 'user'
@@ -62,8 +69,8 @@ class LoginSerializer(serializers.Serializer):
             # If user not found, try authenticating as Caretaker
             try:
                 caretaker = Caretaker.objects.get(username=username)
-                # Assuming caretakers have their password stored in a hashed format, similar to the user
-                if caretaker.password != password:  # This is a basic check, improve password validation here
+                # Assuming caretakers have their password stored in a hashed format,ie. similar to the user
+                if caretaker.password != password:  #checking password, improve password validation here
                     raise serializers.ValidationError("Invalid credentials.")
             except Caretaker.DoesNotExist:
                 raise serializers.ValidationError("Invalid credentials.")

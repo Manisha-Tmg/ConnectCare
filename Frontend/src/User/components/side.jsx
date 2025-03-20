@@ -11,17 +11,22 @@ import {
 import "../css/side.css";
 import Logo from "../components/Logo";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const CaretakerSidebar = () => {
   const handleLogout = async () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (confirmLogout) {
       // Remove accessToken cookie
-      document.cookie =
-        "accessToken=; path=/; expires=Thu, 01 Jan 2970 00:00:00 UTC;";
-      document.cookie = "role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-      document.cookie =
-        "caretaker_id=; path=/; expires=Thu, 01 Jan 2970 00:00:00 UTC;";
+      // document.cookie =
+      //   "accessToken=; path=/; expires=Thu, 01 Jan 2970 00:00:00 UTC;";
+      // document.cookie = "role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+      // document.cookie =
+      //   "caretaker_id=; path=/; expires=Thu, 01 Jan 2970 00:00:00 UTC;";
+
+      Cookies.remove("accessToken", { path: "/" });
+      Cookies.remove("role");
+      Cookies.remove("caretaker_id");
 
       // Update state
       setIsLoggedIn(false);
@@ -39,12 +44,12 @@ const CaretakerSidebar = () => {
             <span className="sidebar-menu2">Dashboard</span>
           </li>
         </Link>
-        <Link to={"/task"}>
+        {/* <Link to={"/task"}>
           <li>
             <FaTasks className="icon" />
             <span className="sidebar-menu2">Tasks</span>
           </li>
-        </Link>
+        </Link> */}
         {/* <li>
           <FaCalendarAlt className="icon" />
           <span className="sidebar-menu2">Calendar</span>

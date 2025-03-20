@@ -1,0 +1,30 @@
+.profile-container-main {
+  /* margin-top: ; */
+}
+
+.profile-container {
+  padding: 30px;
+  color: #000;
+  margin: auto 29rem;
+  background: #ffffff;
+  border-radius: 8px;
+}
+.h22 {
+  font-size: 2rem;
+  margin-bottom: 3rem;
+  margin-top: 0;
+}
+label {
+  color: #333;
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
