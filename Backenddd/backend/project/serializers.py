@@ -40,9 +40,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             user.last_name = last_name
 
         if address:
-            user.first_name = address
+            user.address = address
         if address:
-            user.last_name = address
+            user.number = number
 
         user.is_active = True
         user.role = 'user'  # Default role as 'user'

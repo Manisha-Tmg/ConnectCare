@@ -10,6 +10,8 @@ from django.conf import settings
 
 
 class CustomUser(AbstractUser):
+    address = models.CharField(max_length=150)
+    number = models.IntegerField(null=True, blank=True) 
     email = models.EmailField(unique=True)
     last_name=models.CharField(max_length=150)
     first_name=models.CharField(max_length=150)

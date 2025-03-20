@@ -33,6 +33,8 @@ const Signup = () => {
           last_name,
           username,
           password,
+          address,
+          number,
         }),
       });
 

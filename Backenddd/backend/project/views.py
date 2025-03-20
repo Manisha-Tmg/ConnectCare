@@ -37,7 +37,6 @@ class UserRegistrationView(APIView):
                 "message": "User registered successfully!",
                 "user": {
                     "username": user.username,
-
                     "email": user.email,
                     "role": user.role  # Send role in response to navigate to roles based home
                 }
