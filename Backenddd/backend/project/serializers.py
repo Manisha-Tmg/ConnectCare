@@ -41,7 +41,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
         if address:
             user.address = address
-        if address:
+        if number:
             user.number = number
 
         user.is_active = True

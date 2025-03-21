@@ -29,11 +29,15 @@ const Login = () => {
       if (data.access_token) {
         toast.success("Login Successful");
         Cookies.set("accessToken", data.access_token, {
-          expires: 7,
+          expires: 300,
           secure: true,
         });
         Cookies.set("user_id", data.user_id);
         Cookies.set("role", data.role);
+        Cookies.set("address", data.address);
+        Cookies.set("first_name", data.first_name);
+        Cookies.set("last_name", data.last_name);
+        Cookies.set("number", data.number);
         Cookies.set("username", data.username);
 
         // Navigate based on user role
@@ -80,7 +84,7 @@ const Login = () => {
             Log In
           </button>
           <p>
-            Don't have an account?{" "}
+            Don't have an account?
             <Link to="/signup" className="create-account">
               Create an account
             </Link>

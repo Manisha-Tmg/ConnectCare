@@ -5,10 +5,10 @@ import Header from "../components/Header";
 import Previous from "../components/Previous";
 import { API } from "../../env";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-const BookCaretaker = () => {
+const BookCaretakerViewDetails = () => {
   const [selectedCaretaker, setSelectedCaretaker] = useState(null);
   const [date, setDate] = useState("");
   const [number, setNumber] = useState("");
@@ -130,72 +130,18 @@ const BookCaretaker = () => {
               <p className="user-caretaker-text">
                 Status: {caretaker.is_available ? "Available" : "Not Available"}
               </p>
-              <button className="user-book-button" onClick={bookLogin}>
-                View Details
-              </button>
+              <Link to={"/viewDetails"}>
+                <button className="user-book-button" onClick={bookLogin}>
+                  View Details
+                </button>
+              </Link>
             </div>
           ))}
         </div>
-        {isOpen && (
-          <div className="user-modal" onClick={bookLogin}>
-            <div className="user-modal-content">
-              <h2 className="title">Book a Caretaker</h2>
-              <input
-                type="text"
-                value={selectedCaretaker?.name}
-                className="date-picker"
-              />
-              {/* <input
-                placeholder="First Name"
-                type="text"
-                value={first_name}
-                onChange={(e) => setfirst_name(e.target.value)}
-                className="date-picker"
-              />
-              <input
-                placeholder="Last Name"
-                type="text"
-                value={last_name}
-                onChange={(e) => setlast_name(e.target.value)}
-                className="date-picker"
-              /> */}
-              <input
-                type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                className="date-picker"
-              />
-              <input
-                placeholder="Number"
-                type="number"
-                value={number}
-                onChange={(e) => setNumber(e.target.value)}
-                className="date-picker"
-              />
-              <input
-                placeholder="Location"
-                type="text"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                className="date-picker"
-              />
-
-              <button className="user-confirm-button" onClick={handleBooking}>
-                Confirm Booking
-              </button>
-              <button
-                className="user-close-button"
-                onClick={() => setIsOpen(false)}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        )}
       </div>
       <Footer />
     </div>
   );
 };
 
-export default BookCaretaker;
+export default BookCaretakerViewDetails;

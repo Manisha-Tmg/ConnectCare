@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./User/Pages/HomePage";
@@ -20,6 +19,8 @@ import ChangePassword from "./User/Pages/Changepassword";
 import BookingDetails from "./User/Pages/MyBookings";
 import CaretakerProfile from "./User/Pages/Caretaker/CaretakerProfile";
 import CaretakerBookingPortal from "./User/Pages/Caretaker/Caretakermybooking";
+import BookCaretakerViewDetails from "./User/Pages/BookCaretakerViewDetails";
+import Contact from "./User/Pages/Contact";
 
 function App() {
   return (
@@ -37,21 +38,21 @@ function App() {
         <Route path="/bookcaretaker" element={<BookCaretaker />} />
         <Route path="/setting" element={<SettingsPage />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/Caretakerview" element={<BookCaretakerViewDetails />} />
+        <Route path="/viewDetails" element={<Contact />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route
           path="/booking-details/:booking_id"
           element={<BookingDetails />}
         />
-
         {/* Caretaker */}
         <Route path="/login/caretaker" element={<CaretakerLogin />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        {/* <Route path="/task" element={<Tasks />} /> */}
+        <Route path="/viewDetails" element={<BookCaretakerViewDetails />} />
         <Route path="/booking/" element={<CaretakerBookingPortal />} />
         <Route path="/notification" element={<Notifiation />} />
         <Route path="/caretaker/profile" element={<CaretakerProfile />} />
         {/* <Route path="/caretaker/mybooking/:id" element={<BookingDetails />} /> */}
-
         {/* Admin */}
         <Route path="/login/admin" element={<AdminLogin />} />
       </Routes>

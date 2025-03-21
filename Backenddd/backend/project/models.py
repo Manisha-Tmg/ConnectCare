@@ -5,13 +5,22 @@ from django.contrib.auth import get_user_model
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
-from django.conf import settings  
+# from django.conf import settings  
+from django.core.validators import RegexValidator
 
 
 
 class CustomUser(AbstractUser):
     address = models.CharField(max_length=150)
-    number = models.IntegerField(null=True, blank=True) 
+    number = models.CharField(
+        max_length=10,
+        validators=[
+             RegexValidator(
+                regex=r'^\d{10}$',
+                message="Enter exactly 10 digits." 
+                )#validating the number
+            ]
+            ) 
     email = models.EmailField(unique=True)
     last_name=models.CharField(max_length=150)
     first_name=models.CharField(max_length=150)
@@ -63,8 +72,10 @@ class Booking(models.Model):
     number = models.BigIntegerField(null=True, blank=True) 
     location = models.CharField(max_length=20, null=True, blank=True)
     status = models.CharField(max_length=20, default='Pending') 
+    payment = models.CharField(max_length=150)
     last_name=models.CharField(max_length=150)
     first_name=models.CharField(max_length=150)
+    note =  models.CharField(max_length=250)
     def __str__(self):
         return f"Booking by {self.user.id} for {self.caretaker.name} on {self.booking_date}"
 
