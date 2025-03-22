@@ -157,8 +157,8 @@ def get_user(request,user_id=None):
 def book_caretaker(request):
     caretaker_id = request.data.get('caretaker_id')
     booking_date = request.data.get('booking_date') 
-    location = request.data.get('location')  
-    number = request.data.get('number')
+    # location = request.data.get('location')  
+    # number = request.data.get('number')
     
     # Validate caretaker exists
     try:
