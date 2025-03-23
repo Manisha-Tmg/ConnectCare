@@ -39,20 +39,28 @@ class CustomUser(AbstractUser):
 
 
 class Caretaker(models.Model):
-    # user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='caretaker')
+    # user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='caretaker')  # optional, if needed
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=15)
+    phone = models.CharField(
+        max_length=10,
+        validators=[
+             RegexValidator(
+                regex=r'^\d{10}$',
+                message="Enter exactly 10 digits." 
+                )#validating the number
+            ]
+            ) 
     hourly_rate = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     experience = models.IntegerField()  
     specialty = models.CharField(max_length=255)  
-    password = models.CharField(max_length=255)  
+    password = models.CharField(max_length=255)  # consider using AbstractBaseUser for password hashing
     is_available = models.BooleanField(default=True)    
     created_at = models.DateTimeField(default=timezone.now)  
     updated_at = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='project_caretaker/', null=True, blank=True)
     role = models.CharField(max_length=20, default='caretaker')
     username = models.CharField(max_length=150, unique=True)
-
 
    
     def __str__(self):
@@ -72,10 +80,8 @@ class Booking(models.Model):
     number = models.BigIntegerField(null=True, blank=True) 
     location = models.CharField(max_length=20, null=True, blank=True)
     status = models.CharField(max_length=20, default='Pending') 
-    payment = models.CharField(max_length=150)
     last_name=models.CharField(max_length=150)
     first_name=models.CharField(max_length=150)
-    note =  models.CharField(max_length=250)
     def __str__(self):
         return f"Booking by {self.user.id} for {self.caretaker.name} on {self.booking_date}"
 
