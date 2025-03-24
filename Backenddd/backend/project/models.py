@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
-# from django.conf import settings  
+from cloudinary.models import CloudinaryField
 from django.core.validators import RegexValidator
 
 
@@ -58,7 +58,7 @@ class Caretaker(models.Model):
     is_available = models.BooleanField(default=True)    
     created_at = models.DateTimeField(default=timezone.now)  
     updated_at = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to='project_caretaker/', null=True, blank=True)
+    image = CloudinaryField('image', null=True, blank=True)  # Cloudinary field
     role = models.CharField(max_length=20, default='caretaker')
     username = models.CharField(max_length=150, unique=True)
 

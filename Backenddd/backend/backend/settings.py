@@ -16,12 +16,12 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-import os
+# import os
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# MEDIA_URL = "/media/"
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 # Quick-start development settings - unsuitable for production
@@ -111,6 +111,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'ddh1i3vod',
+    'API_KEY': '853555928432793',
+    'API_SECRET': 'CnycpEU9TwVCwZcH_TnfMhs-scU',
+}
+
+# Cloudinary settings
+CLOUDINARY_URL = 'cloudinary://853555928432793:CnycpEU9TwVCwZcH_TnfMhs-scU@ddh1i3vod'
+
+# Django-Storages settings for Cloudinary
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 

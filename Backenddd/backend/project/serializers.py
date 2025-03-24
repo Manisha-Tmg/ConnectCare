@@ -83,12 +83,16 @@ class LoginSerializer(serializers.Serializer):
         return {"user": user}  # Ensure 'user' is returned for CustomUser
 
 
-
 class CaretakerSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
     class Meta:
         model = Caretaker
         fields = '__all__'
 
+    def get_image_url(self, obj): # for showing full url of image in responses
+        if obj.image:
+            return f"https://res.cloudinary.com/ddh1i3vod/{obj.image}"
+        return None
 
 
 class BookingSerializer(serializers.ModelSerializer):

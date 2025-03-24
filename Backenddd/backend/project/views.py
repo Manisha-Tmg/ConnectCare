@@ -6,7 +6,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status, permissions
-# from .models import CaretakerBooking
+from cloudinary_storage.storage import MediaCloudinaryStorage
+from django.shortcuts import render
+from django.http import JsonResponse
 from datetime import datetime
 from django.contrib.auth.models import update_last_login
 from .serializers import ChangePasswordSerializer
@@ -119,6 +121,29 @@ class AdminLoginView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+
+
+
+
+
+def upload_image(request):
+    if request.method == 'POST' and request.FILES.get('image'):
+        image_file = request.FILES['image']
+        storage = MediaCloudinaryStorage()
+        uploaded_image = storage.save('project_caretaker/' + image_file.name, image_file)
+        image_url = storage.url(uploaded_image)
+
+        # Create a new Caretaker with the uploaded image URL
+        # caretaker = Caretaker.objects.create(
+        #     name=request.POST['name'],
+        #     image=image_url,
+        #     hourly_rate=request.POST['hourly_rate'],
+        #     experience=request.POST['experience'],
+        #     specialty=request.POST['specialty']
+        # )
+
+        return JsonResponse({'message': 'Caretaker created successfully', 'image_url': image_url})
+    return JsonResponse({'error': 'Image not uploaded'}, status=400)
 
 # API of caretaker list
 @api_view(['GET'])

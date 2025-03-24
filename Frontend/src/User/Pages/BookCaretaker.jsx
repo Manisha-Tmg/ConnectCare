@@ -117,6 +117,11 @@ const BookCaretaker = () => {
                 setIsOpen(true);
               }}
             >
+              <img
+                src={caretaker.image_url}
+                alt={caretaker.name}
+                className="caretaker-image"
+              />
               <h2 className="user-caretaker-name">Name: {caretaker.name}</h2>
               <p className="user-caretaker-text">
                 Hourly Rate: {caretaker.hourly_rate}

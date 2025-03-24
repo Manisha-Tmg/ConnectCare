@@ -2,7 +2,7 @@
   font-family: "Arial", sans-serif;
   margin: 80px auto;
   padding: 2rem;
-
+  text-transform: capitalize;
   max-width: 1200px;
   background-color: #f5f3f3;
 }
