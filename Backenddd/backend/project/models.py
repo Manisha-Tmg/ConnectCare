@@ -31,7 +31,7 @@ class CustomUser(AbstractUser):
 
 
 class Caretaker(models.Model):
-    # Personal Information
+    # Personal Information th
     name = models.CharField(max_length=255)
     # date_of_birth = models.DateField(null=True, blank=True)
     
@@ -66,7 +66,7 @@ class Caretaker(models.Model):
 
     # Availability & Preferences
     working_days = models.JSONField(null=True, blank=True)  
-    preferred_locations = models.TextField(null=True, blank=True)
+    # preferred_locations = models.TextField(null=True, blank=True)
 
     # Rates
     hourly_rate = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
@@ -86,7 +86,7 @@ class Caretaker(models.Model):
 
     # Status & Timestamps
     is_available = models.BooleanField(default=True)
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 

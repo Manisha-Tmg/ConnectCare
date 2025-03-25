@@ -101,11 +101,6 @@ class BookingSerializer(serializers.ModelSerializer):
         fields = ['id','user','caretaker','booking_date',"status",'location','number','first_name', 'last_name']
         
 
-# class BookingCaretakerSerializer(serializers.ModelSerializer):
-#        class Meta:
-#         model = CaretakerBooking
-#         fields = ['status','caretaker_id','user_id']
-
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -131,19 +126,3 @@ class ChangePasswordSerializer(serializers.Serializer):
 
 
 
-
-# User = get_user_model()
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ['id', 'first_name', 'last_name', 'number','location'] 
-
-
-
-# class CaretakerBookingSerializer(serializers.ModelSerializer):
-#     user = UserSerializer(read_only=True)  
-#     caretaker = serializers.PrimaryKeyRelatedField(read_only=True) 
-
-#     class Meta:
-#         model = CaretakerBooking
-#         fields = ['status','caretaker_id','user_id']

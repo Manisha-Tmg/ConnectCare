@@ -22,6 +22,7 @@ import CaretakerBookingPortal from "./User/Pages/Caretaker/Caretakermybooking";
 import BookCaretakerViewDetails from "./User/Pages/BookCaretakerViewDetails";
 import Contact from "./User/Pages/Contact";
 import Details from "./User/Pages/Caretaker/Details";
+import Addcaretaker from "./Adminpage/Pages/Addcaretaker";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
           path="/booking-details/:booking_id"
           element={<BookingDetails />}
         />
+
         {/* Caretaker */}
         <Route path="/login/caretaker" element={<CaretakerLogin />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -55,8 +57,10 @@ function App() {
         <Route path="/notification" element={<Notifiation />} />
         <Route path="/caretaker/profile" element={<CaretakerProfile />} />
         {/* <Route path="/caretaker/mybooking/:id" element={<BookingDetails />} /> */}
+
         {/* Admin */}
-        <Route path="/login/admin" element={<AdminLogin />} />
+        <Route path="/admin/login/" element={<AdminLogin />} />
+        <Route path="/admin/Addcaretaker" element={<Addcaretaker />} />
       </Routes>
     </BrowserRouter>
   );
