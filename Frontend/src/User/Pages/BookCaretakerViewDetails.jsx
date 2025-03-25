@@ -12,6 +12,7 @@ const BookCaretakerViewDetails = () => {
   const [selectedCaretaker, setSelectedCaretaker] = useState(null);
   const [date, setDate] = useState("");
   const [number, setNumber] = useState("");
+  const [note, setNote] = useState("");
   const [location, setLocation] = useState("");
   // const [first_name, setfirst_name] = useState("");
   // const [last_name, setlast_name] = useState("");
@@ -52,6 +53,7 @@ const BookCaretakerViewDetails = () => {
       const requestBody = {
         location: location,
         number: number,
+        note: note,
         // first_name: first_name,
         // last_name: last_name,
         caretaker_id: selectedCaretaker.id,

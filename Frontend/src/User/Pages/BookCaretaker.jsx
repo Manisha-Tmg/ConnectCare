@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 const BookCaretaker = () => {
   const [selectedCaretaker, setSelectedCaretaker] = useState(null);
   const [date, setDate] = useState("");
-  const [number, setNumber] = useState("");
+  const [note, setNote] = useState("");
   const [location, setLocation] = useState("");
   // const [first_name, setfirst_name] = useState("");
   // const [last_name, setlast_name] = useState("");
@@ -51,7 +51,7 @@ const BookCaretaker = () => {
 
       const requestBody = {
         location: location,
-        number: number,
+        note: note,
         // first_name: first_name,
         // last_name: last_name,
         caretaker_id: selectedCaretaker.id,
@@ -132,6 +132,7 @@ const BookCaretaker = () => {
               <p className="user-caretaker-text">
                 Speciality: {caretaker.specialty}
               </p>
+
               <p className="user-caretaker-text">
                 Status: {caretaker.is_available ? "Available" : "Not Available"}
               </p>
@@ -157,13 +158,7 @@ const BookCaretaker = () => {
                 onChange={(e) => setfirst_name(e.target.value)}
                 className="date-picker"
               />
-              <input
-                placeholder="Last Name"
-                type="text"
-                value={last_name}
-                onChange={(e) => setlast_name(e.target.value)}
-                className="date-picker"
-              /> */}
+             */}
               <input
                 type="date"
                 value={date}
@@ -173,8 +168,8 @@ const BookCaretaker = () => {
               <input
                 placeholder="Number"
                 type="number"
-                value={number}
-                onChange={(e) => setNumber(e.target.value)}
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
                 className="date-picker"
               />
               <input
@@ -182,6 +177,13 @@ const BookCaretaker = () => {
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
+                className="date-picker"
+              />
+              <input
+                placeholder="Note"
+                type="text"
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
                 className="date-picker"
               />
 

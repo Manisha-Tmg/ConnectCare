@@ -14,8 +14,6 @@ const Signup = () => {
   const [username, setName] = useState("");
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
-  const [address, setAddress] = useState("");
-  const [number, setNumber] = useState("");
 
   const navigate = useNavigate();
 
@@ -33,8 +31,6 @@ const Signup = () => {
           last_name,
           username,
           password,
-          address,
-          number,
         }),
       });
 
@@ -78,18 +74,19 @@ const Signup = () => {
             type="email"
             placeholder="Email"
           />
-          <InputField
+          {/* <InputField
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             type="email"
             placeholder="Address"
-          />
+          /> 
+          
           <InputField
             value={number}
             onChange={(e) => setNumber(e.target.value)}
             type="email"
             placeholder="Number"
-          />
+          /> */}
           <InputField
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -100,7 +97,7 @@ const Signup = () => {
             Sign Up
           </button>
           <p>
-            Already have an account?{" "}
+            Already have an account?
             <Link to="/login" className="login">
               Log In
             </Link>

@@ -16,10 +16,10 @@
 }
 
 .auth-box-signup {
-  height: 105vh;
+  height: 500px;
   width: 400px;
   background: white;
-  padding: 30px;
+  padding: 40px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   z-index: 2;
@@ -35,7 +35,7 @@ p {
   margin-top: 0.5rem;
   font-size: 14px;
   color: #666;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 .auth-button-signup {

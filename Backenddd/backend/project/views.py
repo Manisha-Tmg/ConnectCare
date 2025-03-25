@@ -64,9 +64,7 @@ class LoginView(APIView):
                 'access_token': str(refresh.access_token),
                 'username': user.username,
                 'first_name': user.first_name,
-                'number': user.number,
-                'address': user.address,
-                # 'first_name':user.first_name,
+                                # 'first_name':user.first_name,
 
                 'email': user.email,
                 'role': user.role  # Include role in response

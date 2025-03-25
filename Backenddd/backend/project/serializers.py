@@ -13,7 +13,7 @@ from django.contrib.auth.password_validation import validate_password
 class UserRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password', 'first_name', 'last_name','number' ,'address','role']
+        fields = ['username', 'email', 'password', 'first_name', 'last_name','role']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -39,10 +39,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         if last_name:
             user.last_name = last_name
 
-        if address:
-            user.address = address
-        if number:
-            user.number = number
+        # if address:
+        #     user.address = address
+        # if number:
+        #     user.number = number
 
         user.is_active = True
         user.role = 'user'  # Default role as 'user'
