@@ -9,12 +9,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const BookCaretakerdetails = () => {
-  const [selectedCaretaker, setSelectedCaretaker] = useState(null);
-  const [date, setDate] = useState("");
-  const [note, setNote] = useState("");
-  const [location, setLocation] = useState("");
   const [caretakers, setCaretakers] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const bookLogin = () => {
@@ -58,7 +53,9 @@ const BookCaretakerdetails = () => {
         <div className="user-caretaker-grid">
           {caretakers.map((caretaker) => (
             <div key={caretaker.id} className="user-caretaker-card">
-              <div className="verified-badge">Verified Guide</div>
+              <div className="verified-badge">
+                {caretaker.is_approved ? "Verified " : "Verified "}
+              </div>
               <img
                 src={caretaker.image_url}
                 alt={caretaker.name}
