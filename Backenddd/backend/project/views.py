@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny,IsAuthenticated,IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework import status, permissions
+from rest_framework import status, permissions,generics
 from cloudinary_storage.storage import MediaCloudinaryStorage
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -123,7 +123,6 @@ class AdminLoginView(APIView):
 
 
 
-
 def upload_image(request):
     if request.method == 'POST' and request.FILES.get('image'):
         image_file = request.FILES['image']
@@ -142,6 +141,7 @@ def upload_image(request):
 
         return JsonResponse({'message': 'Caretaker created successfully', 'image_url': image_url})
     return JsonResponse({'error': 'Image not uploaded'}, status=400)
+
 
 # API of caretaker list
 @api_view(['GET'])
@@ -174,7 +174,7 @@ def get_user(request,user_id=None):
 
 
 
-
+# Booking the caretaker
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])  # Ensure user is logged in
 def book_caretaker(request):
@@ -208,23 +208,7 @@ def book_caretaker(request):
     return Response({"booking_id": booking.id, **BookingSerializer(booking).data}, status=status.HTTP_201_CREATED)
 
 
-
-# @api_view(['GET'])
-# @permission_classes([AllowAny])
-# def get_Booking(request, booking_id=None):
-#     if booking_id:
-#         try:
-#             booking = Booking.objects.get(id=booking_id)
-#             serializer = BookingSerializer(booking)  
-#             return Response(serializer.data, status=200)
-#         except Booking.DoesNotExist:
-#             return Response({"error": "Booking not found"}, status=404) 
-
-#     else:
-#         bookings = Booking.objects.all()
-#         serializer = BookingSerializer(bookings, many=True)
-#         return Response(serializer.data)
-
+# Booking details
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])  # Ensure only authenticated users can access
 def get_Booking(request, booking_id=None):
@@ -244,8 +228,8 @@ def get_Booking(request, booking_id=None):
         return Response(serializer.data, status=200)
 
 
-# Caretaker list side
 
+# Caretaker list side
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])  # Ensure only authenticated users can access
 def get_CaretakerBooking(request, caretaker_id=None, booking_id=None):
@@ -302,6 +286,7 @@ class ChangePasswordView(APIView):
 
 
 
+# Caretaker accepting portal
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def booking_action(request, booking_id):
@@ -323,3 +308,4 @@ def booking_action(request, booking_id):
     booking.save()
 
     return Response({"message": f"Booking {booking.status} successfully"}, status=status.HTTP_200_OK)
+

@@ -5,17 +5,14 @@ import Header from "../components/Header";
 import Previous from "../components/Previous";
 import { API } from "../../env";
 import Cookies from "js-cookie";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-const BookCaretakerViewDetails = () => {
+const BookCaretakerdetails = () => {
   const [selectedCaretaker, setSelectedCaretaker] = useState(null);
   const [date, setDate] = useState("");
-  const [number, setNumber] = useState("");
   const [note, setNote] = useState("");
   const [location, setLocation] = useState("");
-  // const [first_name, setfirst_name] = useState("");
-  // const [last_name, setlast_name] = useState("");
   const [caretakers, setCaretakers] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -27,60 +24,6 @@ const BookCaretakerViewDetails = () => {
       navigate("/login");
     } else {
       navigate("/bookcaretaker");
-    }
-  };
-  const handleBooking = async () => {
-    try {
-      const token = Cookies.get("accessToken");
-
-      if (!token) {
-        toast.error("Session expired. Please log in again.");
-        return;
-      }
-
-      if (!selectedCaretaker) {
-        toast.error("Please select a caretaker before booking.");
-
-        return;
-      }
-
-      // Convert date format to YYYY-MM-DD (Backend expects this)
-      const dateObj = new Date(date);
-      const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}-${dateObj.getDate().toString().padStart(2, "0")}`;
-
-      const requestBody = {
-        location: location,
-        number: number,
-        note: note,
-        // first_name: first_name,
-        // last_name: last_name,
-        caretaker_id: selectedCaretaker.id,
-        booking_date: formattedDate,
-        status: "Pending",
-      };
-
-      const response = await fetch(`${API}api/book_caretaker/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      const data = await response.json();
-      // Cookies.set("booking_id", data.booking_id);
-
-      if (!response.ok) {
-        throw new Error(data.detail || "Booking failed");
-      }
-
-      toast.success("Booking confirmed!");
-      setIsOpen(false);
-    } catch (error) {
-      alert("Error: " + error.message);
     }
   };
 
@@ -96,8 +39,11 @@ const BookCaretakerViewDetails = () => {
 
         const data = await res.json();
         setCaretakers(data);
-      } catch (error) {}
+      } catch (error) {
+        console.error("Error fetching caretakers:", error);
+      }
     };
+
     fetchCaretakers();
   }, []);
 
@@ -111,32 +57,29 @@ const BookCaretakerViewDetails = () => {
         </h1>
         <div className="user-caretaker-grid">
           {caretakers.map((caretaker) => (
-            <div
-              key={caretaker.id}
-              className="user-caretaker-card"
-              onClick={() => {
-                setSelectedCaretaker(caretaker);
-                setIsOpen(true);
-              }}
-            >
-              <h2 className="user-caretaker-name">Name: {caretaker.name}</h2>
-              <p className="user-caretaker-text">
-                Hourly Rate: {caretaker.hourly_rate}
+            <div key={caretaker.id} className="user-caretaker-card">
+              <div className="verified-badge">Verified Guide</div>
+              <img
+                src={caretaker.image_url}
+                alt={caretaker.name}
+                className="caretaker-image"
+              />
+              <h2 className="user-caretaker-name">{caretaker.name}</h2>
+              <p className="user-caretaker-languages">
+                {caretaker.languages_spoken
+                  ? caretaker.languages_spoken.split(",").join(", ")
+                  : "Not specified"}
               </p>
-              <p className="user-caretaker-text">
-                Experience: {caretaker.experience}
-              </p>
-              <p className="user-caretaker-text">
-                Speciality: {caretaker.specialty}
-              </p>
-              <p className="user-caretaker-text">
-                Status: {caretaker.is_available ? "Available" : "Not Available"}
-              </p>
-              <Link to={"/viewDetails"}>
-                <button className="user-book-button" onClick={bookLogin}>
-                  View Details
-                </button>
-              </Link>
+              {/* <div className="caretaker-rating">
+                ⭐ {caretaker.rating} ({caretaker.reviews} reviews)
+              </div> */}
+              <div className="location-tags">
+                <span className="tag">{caretaker.address}</span>
+              </div>
+              <p className="user-caretaker-bio">{caretaker.bio}</p>
+              <button className="view-details-btn" onClick={bookLogin}>
+                View Details
+              </button>
             </div>
           ))}
         </div>
@@ -146,4 +89,4 @@ const BookCaretakerViewDetails = () => {
   );
 };
 
-export default BookCaretakerViewDetails;
+export default BookCaretakerdetails;

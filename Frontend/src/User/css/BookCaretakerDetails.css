@@ -1,0 +1,76 @@
+.user-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.user-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.user-caretaker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.user-caretaker-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.verified-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+}
+
+.caretaker-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.user-caretaker-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.user-caretaker-languages {
+  font-size: 14px;
+  color: gray;
+}
+
+.caretaker-rating {
+  font-size: 14px;
+  color: #ffa500;
+  margin: 5px 0;
+}
+
+.location-tags {
+  margin-top: 10px;
+}
+
+.tag {
+  background: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-right: 5px;
+  display: inline-block;
+}

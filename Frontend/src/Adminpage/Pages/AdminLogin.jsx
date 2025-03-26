@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import "../../css/login.css";
+import "../Css/login.css";
 import { Link, useNavigate } from "react-router-dom";
-import { API } from "../../../env";
 import Cookies from "js-cookie";
-import Header from "../../components/Header";
-import InputField from "../../components/Input";
+import { API } from "../../env";
+import InputField from "../../User/components/Input";
 
 const AdminLogin = () => {
   const [username, setUsername] = useState("");
@@ -59,7 +58,7 @@ const AdminLogin = () => {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className="auth-container">
         <div className="auth-box">
           <h2>Welcome Back</h2>
@@ -85,7 +84,6 @@ const AdminLogin = () => {
         </div>
         <div className="auth-img login-imagee"></div>
       </div>
-      <Footer />
     </div>
   );
 };

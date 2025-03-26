@@ -52,8 +52,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 
 
-
-
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
@@ -89,9 +87,9 @@ class CaretakerSerializer(serializers.ModelSerializer):
         model = Caretaker
         fields = '__all__'
 
-    def get_image_url(self, obj): # for showing full url of image in responses
-        if obj.image:
-            return f"https://res.cloudinary.com/ddh1i3vod/{obj.image}"
+    def get_image_url(self, obj):  # Fix: Use profile_picture instead of image
+        if obj.profile_picture:
+            return f"https://res.cloudinary.com/ddh1i3vod/{obj.profile_picture}"
         return None
 
 

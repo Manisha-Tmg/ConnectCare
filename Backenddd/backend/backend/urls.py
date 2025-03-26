@@ -4,8 +4,6 @@ from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
 from project.views import UserViewSet, UserRegistrationView,LoginView,AdminLoginView,CaretakerLoginView,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,booking_action,get_CaretakerBooking
-from django.conf import settings
-
 
 # Initialize the router
 router = DefaultRouter()
@@ -53,6 +51,9 @@ urlpatterns = [
 
     # Admin
     path('auth/api/login/admin', AdminLoginView.as_view(), name='Admin_login'),
+    # path('caretakers/register/', CaretakerCreateView.as_view(), name='caretaker-register'),
+
+
 
 
     ]

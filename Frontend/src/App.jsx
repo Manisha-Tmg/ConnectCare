@@ -13,16 +13,16 @@ import { Toaster } from "react-hot-toast";
 import CaretakerLogin from "./User/Pages/Caretaker/CaretakerLogin";
 import Dashboard from "./User/Pages/Caretaker/Dashboard";
 import Notifiation from "./User/Pages/Caretaker/Notification";
-import AdminLogin from "./User/Pages/Admin/AdminLogin";
 import Profile from "./User/Pages/profile";
 import ChangePassword from "./User/Pages/Changepassword";
 import BookingDetails from "./User/Pages/MyBookings";
 import CaretakerProfile from "./User/Pages/Caretaker/CaretakerProfile";
 import CaretakerBookingPortal from "./User/Pages/Caretaker/Caretakermybooking";
 import BookCaretakerViewDetails from "./User/Pages/BookCaretakerViewDetails";
-import Contact from "./User/Pages/Contact";
 import Details from "./User/Pages/Caretaker/Details";
 import Addcaretaker from "./Adminpage/Pages/Addcaretaker";
+import AdminLogin from "./Adminpage/Pages/AdminLogin";
+import BookCaretakerdetails from "./User/Pages/BookCaretakerViewDetails";
 
 function App() {
   return (
@@ -37,8 +37,8 @@ function App() {
         <Route path="/blog" element={<Blogmain />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/user/:id" element={<Profile />} />
-        <Route path="/bookcaretaker" element={<BookCaretaker />} />
-        {/* <Route path="/bookcaretaker" element={<Details />} /> */}
+        {/* <Route path="/bookcaretaker" element={<BookCaretaker />} /> */}
+        <Route path="/bookcaretaker" element={<BookCaretakerdetails />} />
         <Route path="/setting" element={<SettingsPage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/Caretakerview" element={<BookCaretakerViewDetails />} />
