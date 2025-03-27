@@ -19,10 +19,10 @@ import BookingDetails from "./User/Pages/MyBookings";
 import CaretakerProfile from "./User/Pages/Caretaker/CaretakerProfile";
 import CaretakerBookingPortal from "./User/Pages/Caretaker/Caretakermybooking";
 import BookCaretakerViewDetails from "./User/Pages/BookCaretakerViewDetails";
-import Details from "./User/Pages/Caretaker/Details";
 import Addcaretaker from "./Adminpage/Pages/Addcaretaker";
 import AdminLogin from "./Adminpage/Pages/AdminLogin";
 import BookCaretakerdetails from "./User/Pages/BookCaretakerViewDetails";
+import Details from "./User/Pages/Caretaker/Details";
 
 function App() {
   return (
@@ -44,6 +44,8 @@ function App() {
         <Route path="/Caretakerview" element={<BookCaretakerViewDetails />} />
         <Route path="/viewDetails" element={<Details />} />
         <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="/bookcaretaker/:id" element={<Details />} />
+
         <Route
           path="/booking-details/:booking_id"
           element={<BookingDetails />}

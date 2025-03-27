@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import "../css/BookCaretaker.css";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import Previous from "../components/Previous";
 import { API } from "../../env";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import Previous from "../components/Previous";
 
 const BookCaretakerdetails = () => {
   const [caretakers, setCaretakers] = useState([]);
@@ -62,21 +62,33 @@ const BookCaretakerdetails = () => {
                 className="caretaker-image"
               />
               <h2 className="user-caretaker-name">{caretaker.name}</h2>
-              <p className="user-caretaker-languages">
+              <div className="user-caretaker-languages">
                 {caretaker.languages_spoken
-                  ? caretaker.languages_spoken.split(",").join(", ")
+                  ? caretaker.languages_spoken.split(",").map((lang, index) => (
+                      <span key={index} className="language-tag">
+                        {/* to separate the strings given by the user */}
+                        {lang.trim()}{" "}
+                      </span>
+                    ))
                   : "Not specified"}
-              </p>
-              {/* <div className="caretaker-rating">
-                ⭐ {caretaker.rating} ({caretaker.reviews} reviews)
-              </div> */}
+              </div>
+
               <div className="location-tags">
-                <span className="tag">{caretaker.address}</span>
+                <span className="tag">
+                  {caretaker.address
+                    ? caretaker.address.split(",").map((lang, index) => (
+                        <span key={index} className="location-tag">
+                          {/* to separate the strings given by the user */}
+                          {lang.trim()}
+                        </span>
+                      ))
+                    : "Not specified"}
+                </span>
               </div>
               <p className="user-caretaker-bio">{caretaker.bio}</p>
-              <button className="view-details-btn" onClick={bookLogin}>
-                View Details
-              </button>
+              <Link to={`/bookcaretaker/${caretaker.id}`}>
+                <button className="view-details-btn">View Details</button>
+              </Link>
             </div>
           ))}
         </div>

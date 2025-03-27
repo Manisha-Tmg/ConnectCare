@@ -19,11 +19,11 @@
 
 .user-caretaker-card {
   width: 20rem;
-  height: 22rem;
+  height: auto;
   background: white;
-  border-radius: 12px;
+  border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 25px;
+  padding: 10px;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -31,8 +31,8 @@
 
 .verified-badge {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 15px;
   background: #007bff;
   color: white;
   padding: 5px 10px;
@@ -42,23 +42,41 @@
 
 .caretaker-image {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 10px;
+  height: 190px;
+  object-fit: fit;
 }
 
 .user-caretaker-name {
   font-size: 18px;
   font-weight: bold;
   margin-top: 10px;
+  margin-left: 32px;
   text-align: justify;
 }
 
 .user-caretaker-languages {
   font-size: 14px;
   text-align: justify;
+  display: flex;
+  gap: 0px;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-left: 1rem;
+}
 
-  color: gray;
+.language-tag {
+  color: aliceblue;
+  margin: 0px 2px;
+  padding: 6px 10px;
+  border-radius: 7px;
+  background-color: gray;
+}
+
+.location-tag {
+  margin: 0px 2px;
+  padding: 5px 8x;
 }
 
 .caretaker-rating {
@@ -68,12 +86,12 @@
 }
 
 .location-tags {
-  margin-top: 10px;
+  margin-left: 25px;
+  /* margin-top: 10px; */
   text-align: justify;
 }
 
 .tag {
-  background: #f0f0f0;
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 12px;
@@ -85,23 +103,24 @@
 .user-caretaker-bio {
   font-size: 14px;
   color: #666;
-  margin-top: 20px;
-  /* text-align: justify; */
+  margin-left: 30px;
+
+  margin-top: 10px;
   text-align: left;
 }
 
 .view-details-btn {
-  border: 2px solid #008080;
   background-color: #008080;
   color: white;
   border: none;
-  padding: 10px;
+  padding: 10px 16px;
   border-radius: 8px;
+  margin-bottom: 10px;
   cursor: pointer;
   margin-top: 10px;
   width: 100%;
 }
 
 .view-details-btn:hover {
-  background: #0056b3;
+  background-color: #015555;
 }

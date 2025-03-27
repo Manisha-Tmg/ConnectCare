@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "../../css/BookCaretaker.css";
 import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import { API } from "../../../env";
-import Backbtn from "../../components/Backbtn";
 import Previous from "../../components/Previous";
 
 const Details = () => {
   const navigate = useNavigate();
   const [caretakers, setCaretakers] = useState([]);
-  const location = useLocation();
-  const caretaker = location.state;
+  const { id } = useParams();
+
+  console.log(caretakers);
 
   useEffect(() => {
     const fetchCaretakers = async () => {
+      // const id = Cookies.get("caretaker_id");
       try {
-        const res = await fetch(`${API}api/caretakers/`, {
+        const res = await fetch(`${API}api/caretakers/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -36,18 +36,11 @@ const Details = () => {
       <div className="user-container">
         <h1 className="user-title">
           <Previous />
-          Book a Caretaker
+          Caretaker Details
         </h1>
         <div className="user-caretaker-grid">
           {caretakers.map((caretaker) => (
-            <div
-              key={caretaker.id}
-              className="user-caretaker-card"
-              // onClick={() => {
-              //   setSelectedCaretaker(caretaker);
-              //   setIsOpen(true);
-              // }}
-            >
+            <div key={caretaker.id} className="user-caretaker-card">
               <img
                 src={caretaker.image_url}
                 alt={caretaker.name}
