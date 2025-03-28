@@ -97,24 +97,7 @@
 }
 
 .Details-book-button {
-  background: #007bff;
-  color: white;
-  width: 100%;
-  padding: 10px;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.Details-or-text {
-  text-align: center;
-  margin: 1rem 0;
-  font-weight: bold;
-}
-
-.Details-message-button {
-  background: #0047ab;
+  background-color: #008080;
   color: white;
   width: 100%;
   padding: 10px;

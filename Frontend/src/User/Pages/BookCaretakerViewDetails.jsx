@@ -3,12 +3,12 @@ import "../css/BookCaretaker.css";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { API } from "../../env";
-import { MdVerified } from "react-icons/md";
-
 import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Previous from "../components/Previous";
+import { MdVerified } from "react-icons/md";
+import { ImCross } from "react-icons/im";
 
 const BookCaretakerdetails = () => {
   const [caretakers, setCaretakers] = useState([]);
@@ -59,24 +59,10 @@ const BookCaretakerdetails = () => {
                 {caretaker.is_approved ? (
                   <MdVerified className="icon-verified" />
                 ) : (
-                  "Verified "
+                  <ImCross className="icon-verified" />
                 )}
               </div>
-              {/* <div className="verified-badge">
-                {caretaker.is_approved ? (
-                  <img
-                    src={verified}
-                    alt="Verified"
-                    className="verified-icon"
-                  />
-                ) : (
-                  <img
-                    src={notverified}
-                    alt="Not Verified"
-                    className="verified-icon"
-                  />
-                )}
-              </div> */}
+
               <img
                 src={caretaker.image_url}
                 alt={caretaker.name}
@@ -106,7 +92,11 @@ const BookCaretakerdetails = () => {
                     : "Not specified"}
                 </span>
               </div>
-              <p className="user-caretaker-bio">{caretaker.bio}</p>
+              <p className="user-caretaker-bio">
+                {caretaker.bio?.length > 100
+                  ? `${caretaker.bio.substring(0, 100)}...`
+                  : caretaker.bio}
+              </p>
               <Link to={`/bookcaretaker/${caretaker.id}`}>
                 <button className="view-details-btn">View Details</button>
               </Link>
