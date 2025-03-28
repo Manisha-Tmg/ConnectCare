@@ -3,6 +3,8 @@ import "../css/BookCaretaker.css";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { API } from "../../env";
+import { MdVerified } from "react-icons/md";
+
 import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -54,8 +56,27 @@ const BookCaretakerdetails = () => {
           {caretakers.map((caretaker) => (
             <div key={caretaker.id} className="user-caretaker-card">
               <div className="verified-badge">
-                {caretaker.is_approved ? "Verified " : "Verified "}
+                {caretaker.is_approved ? (
+                  <MdVerified className="icon-verified" />
+                ) : (
+                  "Verified "
+                )}
               </div>
+              {/* <div className="verified-badge">
+                {caretaker.is_approved ? (
+                  <img
+                    src={verified}
+                    alt="Verified"
+                    className="verified-icon"
+                  />
+                ) : (
+                  <img
+                    src={notverified}
+                    alt="Not Verified"
+                    className="verified-icon"
+                  />
+                )}
+              </div> */}
               <img
                 src={caretaker.image_url}
                 alt={caretaker.name}

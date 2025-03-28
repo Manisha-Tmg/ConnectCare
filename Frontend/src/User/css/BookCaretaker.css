@@ -31,13 +31,13 @@
 
 .verified-badge {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  background: #007bff;
-  color: white;
+  top: 13rem;
+  right: 10.5rem;
+  color: #007bff;
   padding: 5px 10px;
   border-radius: 15px;
   font-size: 12px;
+  font-size: 1.3rem;
 }
 
 .caretaker-image {
