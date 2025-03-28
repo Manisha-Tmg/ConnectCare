@@ -20,6 +20,7 @@
 }
 
 .user-caretaker-card {
+  width: 320px;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   overflow: hidden;
@@ -57,6 +58,7 @@
 
 .user-caretaker-name {
   margin: 10px 35px 12px 0px;
+  /* text-align: ; */
   font-size: 18px;
   color: #333;
 }
@@ -92,11 +94,10 @@
   padding: 4px 10px;
   border-radius: 5px;
   font-size: 12px;
-  margin: 0 5px;
+  margin: 5px;
 }
 
 .user-caretaker-bio {
-  text-align: center;
   color: #666;
   text-align: justify;
   padding: 0 15px;
@@ -111,9 +112,8 @@
   padding: 10px;
   background-color: #008080;
   color: white;
-  text-decoration: none;
-
   border: none;
+  font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
 }
