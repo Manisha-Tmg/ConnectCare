@@ -36,8 +36,8 @@
 
 .verified-badge {
   position: absolute;
-  top: 14.53rem;
-  right: 5.5rem;
+  top: 14.9rem;
+  right: 10.2rem;
   display: flex;
   padding: 5px 10px;
   border-radius: 20px;
@@ -57,8 +57,7 @@
 }
 
 .user-caretaker-name {
-  margin: 10px 35px 12px 0px;
-  /* text-align: ; */
+  margin: 1rem 12rem 1rem 1rem;
   font-size: 18px;
   color: #333;
 }
@@ -68,7 +67,7 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 5px;
-  margin-bottom: 10px;
+  margin: 1rem 5.5rem 1rem 1rem;
   padding: 0 15px;
 }
 
@@ -101,7 +100,8 @@
   color: #666;
   text-align: justify;
   padding: 0 15px;
-  margin-bottom: 15px;
+  /* margin-left: 1rem; */
+  margin: 1rem 1rem 1rem 1rem;
   min-height: 60px;
 }
 

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "../../css/BookCaretakerDetails.css";
+import "../../css/Details.css";
 import Header from "../../components/Header";
 import { API } from "../../../env";
+import { MdEmail, MdLanguage } from "react-icons/md";
+import { FaPhone, FaRegCalendarDays } from "react-icons/fa6";
 import { FaStar, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 import { MdVerified } from "react-icons/md";
 import { ImCross } from "react-icons/im";
@@ -45,28 +47,36 @@ const Details = () => {
               <ImCross className="Details-verified-icon" />
             )}
           </h1>
-
           <p className="Details-joined-date">
             Joined {new Date(caretaker.created_at).toISOString().split("T")[0]}
           </p>
+          <p className="Details-joined-date">
+            <strong>Hourly Rate:</strong> ${caretaker.hourly_rate}
+          </p>
+          <p className="Details-joined-date"></p>
           <hr />
           <h2 className="Details-section-title">About {caretaker.name}</h2>
           <p>
-            <strong>Experience:</strong> {caretaker.experience} years
+            <strong>Experience:</strong> {caretaker.experience} years ,
+            {caretaker.previous_experience}
+          </p>
+
+          <p>
+            <strong>Gender:</strong> {caretaker.gender}
+          </p>
+          <p>
+            <strong>
+              Specialty:
+              <strong className="specialty"> {caretaker.specialty}</strong>
+            </strong>
           </p>
           <p className="Details-about-text">{caretaker.bio}</p>
           <button className="Details-show-more">Show More</button>
-          <h2 className="Details-section-title">Reviews</h2>
-          <p className="Details-no-reviews">
-            No reviews yet. Be the first to review {caretaker.name}.
-          </p>
-          <button className="Details-write-review">Write a review</button>
         </div>
 
         {/* Right Side - Booking & Details */}
         <div className="Details-caretaker-sidebar">
           <button className="Details-book-button">Create a new booking</button>
-          <p className="Details-or-text">OR</p>
 
           <div className="Details-info-card">
             <h3>Available Areas</h3>
@@ -74,22 +84,36 @@ const Details = () => {
               <FaMapMarkerAlt /> {caretaker.address}
             </p>
           </div>
-
           <div className="Details-info-card">
-            {caretaker.languages_spoken
-              ? caretaker.languages_spoken.split(",").map((lang, index) => (
-                  <span key={index} className="Details-language-tag">
-                    {/* to separate the strings given by the user */}
-                    {lang.trim()}{" "}
-                  </span>
-                ))
-              : "Not specified"}
+            <h3>Working Days:</h3>
+            <p>
+              <FaRegCalendarDays />
+              {caretaker.working_days}
+            </p>
           </div>
 
           <div className="Details-info-card">
-            <h3>Response Time</h3>
+            <h3>Language</h3>
             <p>
-              <FaClock /> Usually responds within 1 hour
+              <MdLanguage />
+              {caretaker.languages_spoken
+                ? caretaker.languages_spoken.split(",").map((lang, index) => (
+                    <span key={index}>
+                      {/* to separate the strings given by the user */}
+                      {lang.trim()}
+                    </span>
+                  ))
+                : "Not specified"}
+            </p>
+          </div>
+
+          <div className="Details-info-card">
+            <h3>For more information</h3>
+            <p>
+              <MdEmail /> {caretaker.email}
+            </p>
+            <p>
+              <FaPhone /> {caretaker.phone}
             </p>
           </div>
         </div>

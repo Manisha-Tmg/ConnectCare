@@ -94,7 +94,7 @@ const BookCaretakerdetails = () => {
               </div>
               <p className="user-caretaker-bio">
                 {caretaker.bio?.length > 100
-                  ? `${caretaker.bio.substring(0, 155)}................`
+                  ? `${caretaker.bio.substring(0, 140)}................`
                   : caretaker.bio}
               </p>
               <Link

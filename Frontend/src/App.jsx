@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./User/Pages/HomePage";
 import AboutUs from "./User/Pages/Aboutus";
-import BookCaretaker from "./User/Pages/BookCaretaker";
+// import BookCaretaker from "./User/Pages/BookCaretaker";
 import Blogmain from "./User/Pages/Blogmain";
 import SettingsPage from "./User/Pages/Setting";
 import BlogDetail from "./User/Pages/BlogDetails";
@@ -23,6 +23,8 @@ import Addcaretaker from "./Adminpage/Pages/Addcaretaker";
 import AdminLogin from "./Adminpage/Pages/AdminLogin";
 import BookCaretakerdetails from "./User/Pages/BookCaretakerViewDetails";
 import Details from "./User/Pages/Caretaker/Details";
+import BookCaretakerView from "./User/Pages/Booking";
+// import BookingFormPreview from "./User/Pages/Booking";
 
 function App() {
   return (
@@ -37,12 +39,11 @@ function App() {
         <Route path="/blog" element={<Blogmain />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/user/:id" element={<Profile />} />
-        {/* <Route path="/bookcaretaker" element={<BookCaretaker />} /> */}
         <Route path="/bookcaretaker" element={<BookCaretakerdetails />} />
         <Route path="/setting" element={<SettingsPage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/Caretakerview" element={<BookCaretakerViewDetails />} />
-        <Route path="/viewDetails" element={<Details />} />
+        {/* <Route path="/viewDetails" element={<Details />} /> */}
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/bookcaretaker/:id" element={<Details />} />
 
