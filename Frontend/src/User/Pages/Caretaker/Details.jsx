@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "../../css/Details.css";
 import Header from "../../components/Header";
 import { API } from "../../../env";
+import Cookies from "js-cookie";
+
 import { MdEmail, MdLanguage } from "react-icons/md";
 import { FaPhone, FaRegCalendarDays } from "react-icons/fa6";
 import { FaStar, FaMapMarkerAlt, FaClock } from "react-icons/fa";
@@ -19,6 +21,8 @@ const Details = () => {
         const res = await fetch(`${API}api/caretakers/${id}`);
         const data = await res.json();
         setCaretaker(data);
+        const name = Cookies.set("name");
+        console.log(name);
       } catch (error) {
         console.error("Error fetching caretaker data", error);
       }
@@ -76,8 +80,11 @@ const Details = () => {
 
         {/* Right Side - Booking & Details */}
         <div className="Details-caretaker-sidebar">
-          <button className="Details-book-button">Create a new booking</button>
-
+          <Link to={"/BookCaretaker"}>
+            <button className="Details-book-button">
+              Create a new booking
+            </button>
+          </Link>
           <div className="Details-info-card">
             <h3>Available Areas</h3>
             <p>

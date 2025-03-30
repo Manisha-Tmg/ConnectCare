@@ -94,11 +94,11 @@ const BookCaretakerdetails = () => {
               </div>
               <p className="user-caretaker-bio">
                 {caretaker.bio?.length > 100
-                  ? `${caretaker.bio.substring(0, 140)}................`
+                  ? `${caretaker.bio.substring(0, 135)}................`
                   : caretaker.bio}
               </p>
               <Link
-                to={`/bookcaretaker/${caretaker.id}`}
+                to={`/caretakerDetails/${caretaker.id}`}
                 style={{ textDecoration: "none" }}
               >
                 <button className="view-details-btn">View Details</button>

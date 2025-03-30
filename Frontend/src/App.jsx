@@ -24,6 +24,7 @@ import AdminLogin from "./Adminpage/Pages/AdminLogin";
 import BookCaretakerdetails from "./User/Pages/BookCaretakerViewDetails";
 import Details from "./User/Pages/Caretaker/Details";
 import BookCaretakerView from "./User/Pages/Booking";
+import BookingFormPreview from "./User/Pages/Booking";
 // import BookingFormPreview from "./User/Pages/Booking";
 
 function App() {
@@ -39,13 +40,13 @@ function App() {
         <Route path="/blog" element={<Blogmain />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/user/:id" element={<Profile />} />
-        <Route path="/bookcaretaker" element={<BookCaretakerdetails />} />
+        <Route path="/caretaker" element={<BookCaretakerdetails />} />
         <Route path="/setting" element={<SettingsPage />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/Caretakerview" element={<BookCaretakerViewDetails />} />
-        {/* <Route path="/viewDetails" element={<Details />} /> */}
+        {/* <Route path="/Caretakerview" element={<BookCaretakerViewDetails />} /> */}
+        <Route path="/BookCaretaker" element={<BookingFormPreview />} />
         <Route path="/change-password" element={<ChangePassword />} />
-        <Route path="/bookcaretaker/:id" element={<Details />} />
+        <Route path="/caretakerDetails/:id" element={<Details />} />
 
         <Route
           path="/booking-details/:booking_id"
