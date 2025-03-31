@@ -1,18 +1,42 @@
 // import React, { useState } from "react";
 import Header from "../components/Header";
 import "../css/BookCaretaker.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 import { API } from "../../env";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const BookingFormPreview = () => {
   const [date, setDate] = useState("");
   const [note, setNote] = useState("");
   const [location, setlocation] = useState("");
+  const [number, setNumber] = useState(null);
+  const [caretaker, setCaretaker] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
   const { id } = useParams();
 
+  useEffect(() => {
+    const fetchCaretaker = async () => {
+      try {
+        const response = await fetch(`${API}api/caretakers/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+        setCaretaker(data);
+      } catch (error) {
+        console.error("Error fetching caretaker details:", error);
+      }
+    };
+
+    fetchCaretaker();
+  }, [id]);
   const handleBooking = async () => {
     try {
       const token = Cookies.get("accessToken");
@@ -22,13 +46,6 @@ const BookingFormPreview = () => {
         return;
       }
 
-      //   if (!selectedCaretaker) {
-      //     toast.error("Please select a caretaker before booking.");
-
-      //     return;
-      //   }
-
-      // Convert date format to YYYY-MM-DD (Backend expects this)
       const dateObj = new Date(date);
       const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1)
         .toString()
@@ -37,8 +54,9 @@ const BookingFormPreview = () => {
       const requestBody = {
         location: location,
         note: note,
+        number: number,
 
-        caretaker_id: selectedCaretaker.id,
+        caretaker_id: caretaker.id,
         booking_date: formattedDate,
         status: "Pending",
       };
@@ -60,6 +78,7 @@ const BookingFormPreview = () => {
 
       toast.success("Booking confirmed!");
       setIsOpen(false);
+      navigate("/");
     } catch (error) {
       alert("Error: " + error.message);
     }
@@ -79,6 +98,18 @@ const BookingFormPreview = () => {
           <div className="form-group"></div>
           <div className="form-row">
             <div className="form-group">
+              {caretaker && (
+                <div className="form-group">
+                  <label className="label">Name</label>
+                  <input
+                    type="text"
+                    id="date"
+                    className="input"
+                    value={caretaker.name}
+                    // disabled
+                  />
+                </div>
+              )}
               <label className="label">Date</label>
               <input
                 type="date"
@@ -86,6 +117,14 @@ const BookingFormPreview = () => {
                 className="input"
                 onChange={(e) => setDate(e.target.value)}
                 value={date}
+              />
+              <label className="label">Number</label>
+              <input
+                type="number"
+                id="date"
+                className="input"
+                onChange={(e) => setNumber(e.target.value)}
+                value={number}
               />
             </div>
           </div>

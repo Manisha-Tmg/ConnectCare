@@ -3,10 +3,10 @@ import "../../css/profile.css";
 import Cookies from "js-cookie";
 import { API } from "../../../env";
 import CaretakerSidebar from "../../components/side";
-import Previous from "../../components/Previous";
 
 const CaretakerProfile = () => {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchCaretakerProfile() {
@@ -15,6 +15,7 @@ const CaretakerProfile = () => {
 
       if (!Token || !id) {
         console.error("Missing authentication details");
+        setLoading(false);
         return;
       }
 
@@ -23,7 +24,6 @@ const CaretakerProfile = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            // Authorization: `Bearer ${Token}`,
           },
         });
 
@@ -35,42 +35,99 @@ const CaretakerProfile = () => {
         setData(result);
       } catch (error) {
         console.error("Error fetching profile:", error);
+      } finally {
+        setLoading(false);
       }
     }
 
     fetchCaretakerProfile();
   }, []);
 
+  if (loading) {
+    return <div className="loading">Loading profile...</div>;
+  }
+
   if (!data) {
     return (
-      <div>
-        <CaretakerSidebar />
-        <Previous />
-      </div>
+      <div className="error">Error loading profile. Please try again.</div>
     );
   }
 
   return (
-    <div>
+    <div className="profile-page">
       <CaretakerSidebar />
-      {/* <Previous /> */}
-      <div className="profile-container-main">
-        <div className="profile-container">
-          <h2 className="h22">Profile</h2>
-          <label>Full Name</label>
-          <input type="text" value={data.name || "NA"} disabled />
-          <label>Username</label>
-          <input type="email" value={data.username || "NA"} disabled />
-          <label>Email</label>
-          <input type="email" value={data.email || "NA"} disabled />
-          <label>Speciality</label>
-          <input type="text" value={data.speciality || "NA"} disabled />
-          <label>Hourly Rate</label>
-          <input type="text" value={data.hourly_rate || "NA"} disabled />
-          <label>Experience</label>
-          <input type="text" value={data.experience || "NA"} disabled />
-          <label>Phone Number</label>
-          <input type="text" value={data.phone || "NA"} disabled />
+      <div className="profile-container">
+        <div className="profile-card">
+          <div className="profile-header">
+            <img
+              src={data.profile_picture_url}
+              alt="Profile"
+              className="profile-pic"
+            />
+            <h2>{data.name}</h2>
+            <p className="bio">{data.bio}</p>
+          </div>
+
+          <div className="profile-details">
+            <div className="info">
+              <strong>Gender:</strong> {data.gender}
+            </div>
+            <div className="info">
+              <strong>Email:</strong> {data.email}
+            </div>
+            <div className="info">
+              <strong>Phone:</strong> {data.phone}
+            </div>
+            <div className="info">
+              <strong>Address:</strong> {data.address}
+            </div>
+            <div className="info">
+              <strong>Specialty:</strong> {data.specialty}
+            </div>
+            <div className="info">
+              <strong>Experience:</strong> {data.experience} years
+            </div>
+            <div className="info">
+              <strong>Previous Experience:</strong> {data.previous_experience}
+            </div>
+            <div className="info">
+              <strong>Hourly Rate:</strong> ${data.hourly_rate}/hr
+            </div>
+            <div className="info">
+              <strong>Languages Spoken:</strong> {data.languages_spoken}
+            </div>
+            <div className="info">
+              <strong>Working Days:</strong> {data.working_days.join(", ")}
+            </div>
+          </div>
+
+          <div className="document-section">
+            <h3>Documents</h3>
+            <a
+              href={data.gov_id_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="doc-link"
+            >
+              Government ID
+            </a>
+            <a
+              href={data.certification_docs_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="doc-link"
+            >
+              Certification Documents
+            </a>
+            <a
+              href={data.police_clearance_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="doc-link"
+            >
+              Police Clearance
+            </a>
+          </div>
         </div>
       </div>
     </div>

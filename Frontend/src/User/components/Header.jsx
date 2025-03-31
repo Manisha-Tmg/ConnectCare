@@ -60,7 +60,7 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link to="/bookcaretaker" className="nav-link">
+            <Link to="/caretaker" className="nav-link">
               Find Caretaker
             </Link>
           </li>

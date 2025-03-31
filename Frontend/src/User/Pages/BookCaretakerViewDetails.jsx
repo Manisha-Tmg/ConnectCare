@@ -64,7 +64,7 @@ const BookCaretakerdetails = () => {
               </div>
 
               <img
-                src={caretaker.image_url}
+                src={caretaker.profile_picture_url}
                 alt={caretaker.name}
                 className="caretaker-image"
               />

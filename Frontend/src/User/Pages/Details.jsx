@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import "../../css/Details.css";
-import Header from "../../components/Header";
-import { API } from "../../../env";
+import "../css/Details.css";
+import Header from "../components/Header";
+import { API } from "../../env";
 import Cookies from "js-cookie";
 
 import { MdEmail, MdLanguage } from "react-icons/md";
@@ -39,7 +39,7 @@ const Details = () => {
         {/* Left Side - Profile Info */}
         <div className="Details-caretaker-profile">
           <img
-            src={caretaker.image_url}
+            src={caretaker.profile_picture_url}
             alt={caretaker.name}
             className="Details-profile-img"
           />
@@ -80,7 +80,7 @@ const Details = () => {
 
         {/* Right Side - Booking & Details */}
         <div className="Details-caretaker-sidebar">
-          <Link to={"/BookCaretaker"}>
+          <Link to={`/BookCaretaker/${id}`}>
             <button className="Details-book-button">
               Create a new booking
             </button>
