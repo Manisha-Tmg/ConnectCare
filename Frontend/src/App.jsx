@@ -5,7 +5,6 @@ import Home from "./User/Pages/HomePage";
 import AboutUs from "./User/Pages/Aboutus";
 // import BookCaretaker from "./User/Pages/BookCaretaker";
 import Blogmain from "./User/Pages/Blogmain";
-import SettingsPage from "./User/Pages/Setting";
 import BlogDetail from "./User/Pages/BlogDetails";
 import Login from "./User/Pages/login";
 import Signup from "./User/Pages/signup";
@@ -40,7 +39,6 @@ function App() {
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/user/:id" element={<Profile />} />
         <Route path="/caretaker" element={<BookCaretakerdetails />} />
-        <Route path="/setting" element={<SettingsPage />} />
         <Route path="/profile" element={<Profile />} />
         {/* <Route path="/Caretakerview" element={<BookCaretakerViewDetails />} /> */}
         <Route path="/BookCaretaker/:id" element={<BookingFormPreview />} />

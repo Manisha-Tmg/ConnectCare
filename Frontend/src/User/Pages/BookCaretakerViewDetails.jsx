@@ -56,12 +56,13 @@ const BookCaretakerdetails = () => {
           {caretakers.map((caretaker) => (
             <div key={caretaker.id} className="user-caretaker-card">
               <div className="verified-badge">
-                {caretaker.is_approved ? (
-                  <MdVerified className="icon-verified" />
-                ) : (
-                  <ImCross className="icon-verified" />
-                )}
+                {caretaker.is_approved ? "Verified " : "Not Verified "}
               </div>
+              {/* //     <MdVerified className="icon-verified" />
+              //   ) : (
+              //     <ImCross className="icon-verified" />
+              //   )}
+              // </div> */}
 
               <img
                 src={caretaker.profile_picture_url}

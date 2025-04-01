@@ -182,6 +182,7 @@ def book_caretaker(request):
     booking_date = request.data.get('booking_date') 
     location = request.data.get('location')  
     number = request.data.get('number')
+    note = request.data.get('note')
     
     # Validate caretaker exists
     try:
@@ -198,7 +199,7 @@ def book_caretaker(request):
 
     # Create and save booking
     booking = Booking(user=request.user, caretaker=caretaker, booking_date=booking_date, status="Pending",location=location,  # Save location
-        number=number )
+        number=number,note=note)
     booking.save()
 
     # Check if saved

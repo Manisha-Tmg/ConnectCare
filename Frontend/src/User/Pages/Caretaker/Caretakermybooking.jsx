@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
-import "../../css/Booking.css";
-import CaretakerSidebar from "../../components/side";
 import { API } from "../../../env";
 import Cookies from "js-cookie";
+import "../../css/Booking.css";
+import CaretakerSidebar from "../../components/side";
+import {
+  MapPin,
+  Phone,
+  CheckCircle,
+  XCircle,
+  User,
+  Notebook,
+} from "lucide-react";
 
 const CaretakerBookingPortal = () => {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
     const token = Cookies.get("accessToken");
-    const storedUsername = Cookies.get("username");
 
     const fetchBooking = async () => {
       try {
@@ -20,12 +27,11 @@ const CaretakerBookingPortal = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        if (res.ok) {
-          const data = await res.json();
-          setBookings(data); // Store the fetched data
-        } else {
-          console.error("Failed to fetch bookings");
-        }
+
+        if (!res.ok) throw new Error("Failed to fetch bookings");
+
+        const data = await res.json();
+        setBookings(data);
       } catch (error) {
         console.error("Error fetching bookings:", error);
       }
@@ -34,8 +40,21 @@ const CaretakerBookingPortal = () => {
     fetchBooking();
   }, []);
 
-  const fetchBookingstatus = async (id, action) => {
+  const updateBookingStatus = async (id, action) => {
     const token = Cookies.get("accessToken");
+
+    // Convert "Approved" -> "accept", "Rejected" -> "reject"
+    const actionMap = {
+      Approved: "accept",
+      Rejected: "reject",
+    };
+
+    const formattedAction = actionMap[action];
+
+    if (!formattedAction) {
+      console.error("Invalid action provided");
+      return;
+    }
 
     try {
       const res = await fetch(`${API}caretaker/bookings/${id}/action/`, {
@@ -44,14 +63,13 @@ const CaretakerBookingPortal = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ action: action }),
+        body: JSON.stringify({ action: formattedAction }),
       });
 
       if (res.ok) {
-        setBookings((prevBookings) =>
-          prevBookings.map(
-            (booking) =>
-              booking.id === id ? { ...booking, status: action } : booking //unchanged in booking doesnt match
+        setBookings((prev) =>
+          prev.map((booking) =>
+            booking.id === id ? { ...booking, status: action } : booking
           )
         );
       } else {
@@ -63,57 +81,75 @@ const CaretakerBookingPortal = () => {
   };
 
   return (
-    <div>
+    <div className="booking-container">
       <CaretakerSidebar />
-      <div className="caretake-container">
-        <div className="caretake-header">
-          <div className="caretake-header-cell">Request</div>
-        </div>
+      <div className="booking-content">
+        <h2 className="booking-title">Booking Requests</h2>
+        {bookings.length === 0 ? (
+          <p className="no-bookings">No new requests.</p>
+        ) : (
+          <div className="booking-list">
+            {bookings.map((request) => (
+              <div key={request.id} className="booking-card">
+                <div className="user-info">
+                  <div className="user-avatar">
+                    <User size={20} color="white" />
+                  </div>
+                  <div>
+                    <h3></h3>
+                    <p className="booking-type">
+                      Name • {request.first_name} {request.last_name}
+                    </p>
+                  </div>
+                </div>
 
-        {bookings.map((request) => (
-          <div key={request.id} className="caretake-request-row">
-            <div className="caretake-profile">
-              <div className="caretaker-info">
-                <div className="profile-icon">
-                  {request.first_name[0]}
-                  {request.last_name[0]}
+                <div className="booking-details">
+                  <p>
+                    <MapPin size={16} /> <strong>From:</strong>
+                    {request.location}
+                  </p>
+
+                  <p>
+                    <Notebook size={16} />
+                    <strong>Special Needs:</strong> {request.note}
+                  </p>
+
+                  <p>
+                    <Phone size={16} /> <strong>Contact:</strong>{" "}
+                    {request.number}
+                  </p>
+                </div>
+
+                <div className="booking-actions">
+                  {request.status === "Pending" ? (
+                    <>
+                      <button
+                        className="approve-btn"
+                        onClick={() =>
+                          updateBookingStatus(request.id, "Approved")
+                        }
+                      >
+                        <CheckCircle size={16} /> Approve
+                      </button>
+                      <button
+                        className="decline-btn"
+                        onClick={() =>
+                          updateBookingStatus(request.id, "Rejected")
+                        }
+                      >
+                        <XCircle size={16} /> Decline
+                      </button>
+                    </>
+                  ) : (
+                    <span className={`status ${request.status.toLowerCase()}`}>
+                      {request.status}
+                    </span>
+                  )}
                 </div>
               </div>
-              <div className="caretake-user-info">
-                <div className="name">
-                  {request.first_name} {request.last_name}
-                </div>
-                <div className="email">{request.location}</div>
-                <div className="number">{request.number}</div>
-              </div>
-            </div>
-
-            <div className="caretake-actions">
-              {/* Show Accept/Reject buttons only if status is Pending */}
-              {request.status === "Pending" ? (
-                <>
-                  <button
-                    className="caretake-btn  caretake-btn-accept"
-                    onClick={() => fetchBookingstatus(request.id, "accept")}
-                  >
-                    Accept
-                  </button>
-                  <button
-                    className="caretake-btn caretake-btn-reject"
-                    onClick={() => fetchBookingstatus(request.id, "reject")}
-                  >
-                    Reject
-                  </button>
-                </>
-              ) : (
-                // If status is Accepted or Rejected, show the respective status
-                <span className={`status-${request.status}`}>
-                  {request.status}
-                </span>
-              )}
-            </div>
+            ))}
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

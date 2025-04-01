@@ -34,10 +34,8 @@ const Login = () => {
         });
         Cookies.set("user_id", data.user_id);
         Cookies.set("role", data.role);
-        Cookies.set("address", data.address);
         Cookies.set("first_name", data.first_name);
         Cookies.set("last_name", data.last_name);
-        Cookies.set("number", data.number);
         Cookies.set("username", data.username);
 
         // Navigate based on user role

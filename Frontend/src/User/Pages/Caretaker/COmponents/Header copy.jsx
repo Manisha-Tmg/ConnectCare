@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../css/Header.css";
-import Logo from "./Logo";
+import Logo from "../../../components/Logo";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 

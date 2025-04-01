@@ -96,31 +96,37 @@ class Caretaker(models.Model):
         return self.name
 
 
+
 class Booking(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
         ('accepted', 'Accepted'),
         ('rejected', 'Rejected'),
     ]
-     
+    
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)  # Link to User
-    caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE)  # Link to Caretaker
-    booking_date = models.DateTimeField()  # Date and time of booking
+    caretaker = models.ForeignKey("Caretaker", on_delete=models.CASCADE)  # Link to Caretaker
+    last_name = models.CharField(max_length=150, blank=True)  # Allow blank values
+    first_name = models.CharField(max_length=150, blank=True)  # Allow blank values
+    booking_date = models.DateTimeField()  
     number = models.CharField(
         max_length=10,
         validators=[
-             RegexValidator(
+            RegexValidator(
                 regex=r'^\d{10}$',
                 message="Enter exactly 10 digits." 
-                )#validating the number
-            ]
-            )   
+            )
+        ]
+    )   
     location = models.CharField(max_length=20, null=True, blank=True)
     note = models.CharField(max_length=30, null=True, blank=True)
-    status = models.CharField(max_length=20, default='Pending') 
-    last_name=models.CharField(max_length=150)
-    first_name=models.CharField(max_length=150)
-    
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending') 
+
+    def save(self, *args, **kwargs):
+        if self.user:
+            self.first_name = self.user.first_name
+            self.last_name = self.user.last_name
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"Booking by {self.user.id} for {self.caretaker.name} on {self.booking_date}"
-

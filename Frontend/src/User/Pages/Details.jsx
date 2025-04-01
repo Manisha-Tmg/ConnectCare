@@ -8,6 +8,8 @@ import Cookies from "js-cookie";
 import { MdEmail, MdLanguage } from "react-icons/md";
 import { FaPhone, FaRegCalendarDays } from "react-icons/fa6";
 import { FaStar, FaMapMarkerAlt, FaClock } from "react-icons/fa";
+import { IoDocumentAttachSharp } from "react-icons/io5";
+
 import { MdVerified } from "react-icons/md";
 import { ImCross } from "react-icons/im";
 
@@ -21,8 +23,8 @@ const Details = () => {
         const res = await fetch(`${API}api/caretakers/${id}`);
         const data = await res.json();
         setCaretaker(data);
-        const name = Cookies.set("name");
-        console.log(name);
+        // const name = Cookies.set("name");
+        // console.log(name);
       } catch (error) {
         console.error("Error fetching caretaker data", error);
       }
@@ -75,7 +77,6 @@ const Details = () => {
             </strong>
           </p>
           <p className="Details-about-text">{caretaker.bio}</p>
-          <button className="Details-show-more">Show More</button>
         </div>
 
         {/* Right Side - Booking & Details */}
@@ -122,6 +123,21 @@ const Details = () => {
             <p>
               <FaPhone /> {caretaker.phone}
             </p>
+          </div>
+          <div className="Details-info-card">
+            <h3>Documents</h3>
+            <a href={caretaker.gov_id_url} className="doc">
+              <IoDocumentAttachSharp />
+              Government ID
+            </a>
+            <a href={caretaker.certification_docs_url} className="doc">
+              <IoDocumentAttachSharp />
+              Certification Documents
+            </a>
+            <a href={caretaker.police_clearance_url} className="doc">
+              <IoDocumentAttachSharp />
+              Police Clearance
+            </a>
           </div>
         </div>
       </div>

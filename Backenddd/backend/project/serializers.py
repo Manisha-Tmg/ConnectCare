@@ -81,22 +81,39 @@ class LoginSerializer(serializers.Serializer):
         return {"user": user}  # Ensure 'user' is returned for CustomUser
 
 
+
 class CaretakerSerializer(serializers.ModelSerializer):
-    image_url = serializers.SerializerMethodField()
+    profile_picture_url = serializers.SerializerMethodField()
+    gov_id_url = serializers.SerializerMethodField()
+    certification_docs_url = serializers.SerializerMethodField()
+    police_clearance_url = serializers.SerializerMethodField()
+
     class Meta:
         model = Caretaker
         fields = '__all__'
 
-    def get_image_url(self, obj):  # Fix: Use profile_picture instead of image
-        if obj.profile_picture:
-            return f"https://res.cloudinary.com/ddh1i3vod/{obj.profile_picture}"
+    def get_profile_picture_url(self, obj):
+        return self.get_cloudinary_url(obj.profile_picture)
+
+    def get_gov_id_url(self, obj):
+        return self.get_cloudinary_url(obj.gov_id)
+
+    def get_certification_docs_url(self, obj):
+        return self.get_cloudinary_url(obj.certification_docs)
+
+    def get_police_clearance_url(self, obj):
+        return self.get_cloudinary_url(obj.police_clearance)
+
+    def get_cloudinary_url(self, field):
+        if field:
+            return f"https://res.cloudinary.com/ddh1i3vod/{field}"
         return None
 
 
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields = ['id','user','caretaker','booking_date',"status",'location','number','first_name', 'last_name']
+        fields = ['id','user','caretaker','booking_date',"status",'location','number','note','first_name','last_name']
         
 
 

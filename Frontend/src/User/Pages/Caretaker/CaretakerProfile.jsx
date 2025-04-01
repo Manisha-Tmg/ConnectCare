@@ -68,40 +68,45 @@ const CaretakerProfile = () => {
             <p className="bio">{data.bio}</p>
           </div>
 
-          <div className="profile-details">
-            <div className="info">
+          <div className="profile-section">
+            <h3>Personal Information</h3>
+            <div className="profile-info">
               <strong>Gender:</strong> {data.gender}
             </div>
-            <div className="info">
+            <div className="profile-info">
               <strong>Email:</strong> {data.email}
             </div>
-            <div className="info">
+            <div className="profile-info">
               <strong>Phone:</strong> {data.phone}
             </div>
-            <div className="info">
+            <div className="profile-info">
               <strong>Address:</strong> {data.address}
             </div>
-            <div className="info">
+          </div>
+
+          <div className="profile-section">
+            <h3>Professional Details</h3>
+            <div className="profile-info">
               <strong>Specialty:</strong> {data.specialty}
             </div>
-            <div className="info">
+            <div className="profile-info">
               <strong>Experience:</strong> {data.experience} years
             </div>
-            <div className="info">
+            <div className="profile-info">
               <strong>Previous Experience:</strong> {data.previous_experience}
             </div>
-            <div className="info">
+            <div className="profile-info">
               <strong>Hourly Rate:</strong> ${data.hourly_rate}/hr
             </div>
-            <div className="info">
+            <div className="profile-info">
               <strong>Languages Spoken:</strong> {data.languages_spoken}
             </div>
-            <div className="info">
+            <div className="profile-info">
               <strong>Working Days:</strong> {data.working_days.join(", ")}
             </div>
           </div>
 
-          <div className="document-section">
+          <div className="profile-section">
             <h3>Documents</h3>
             <a
               href={data.gov_id_url}
