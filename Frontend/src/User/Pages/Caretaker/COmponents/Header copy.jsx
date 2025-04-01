@@ -27,10 +27,10 @@ const Header = () => {
   const handleLogout = () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (confirmLogout) {
-      Cookies.remove("accessToken", { path: "/" }); //to remove the cookies data that is saved
+      Cookies.remove("accessToken", { path: "/" });
       Cookies.remove("username", { path: "/" });
       Cookies.remove("role", { path: "/" });
-      Cookies.remove("user_id", { path: "/" });
+      Cookies.remove("caretaker_id", { path: "/" });
       Cookies.remove("booking_id", { path: "/" });
 
       // Update state
@@ -61,24 +61,9 @@ const Header = () => {
           </li>
           <li>
             <Link to="/caretaker" className="nav-link">
-              Find Caretaker
+              Find Users
             </Link>
           </li>
-          <li>
-            <Link to="/aboutus" className="nav-link">
-              About Us
-            </Link>
-          </li>
-          <li>
-            <Link to="/blog" className="nav-link">
-              Blog
-            </Link>
-          </li>
-          {/* <li>
-            <Link to="/profile" className="nav-link">
-              Setting
-            </Link>
-          </li> */}
         </ul>
       </nav>
 

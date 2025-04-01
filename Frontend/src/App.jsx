@@ -23,6 +23,7 @@ import AdminLogin from "./Adminpage/Pages/AdminLogin";
 import BookCaretakerdetails from "./User/Pages/BookCaretakerViewDetails";
 import BookingFormPreview from "./User/Pages/Booking";
 import Details from "./User/Pages/Details";
+import CaretakerDashboard from "./User/Pages/Caretaker/Notification";
 // import BookingFormPreview from "./User/Pages/Booking";
 
 function App() {
@@ -55,7 +56,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/viewDetails" element={<BookCaretakerViewDetails />} />
         <Route path="/booking/" element={<CaretakerBookingPortal />} />
-        <Route path="/notification" element={<Notifiation />} />
+        <Route path="/notification" element={<CaretakerDashboard />} />
         <Route path="/caretaker/profile" element={<CaretakerProfile />} />
         {/* <Route path="/caretaker/mybooking/:id" element={<BookingDetails />} /> */}
 
