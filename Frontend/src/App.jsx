@@ -11,7 +11,7 @@ import Signup from "./User/Pages/signup";
 import { Toaster } from "react-hot-toast";
 import CaretakerLogin from "./User/Pages/Caretaker/CaretakerLogin";
 import Dashboard from "./User/Pages/Caretaker/Dashboard";
-import Notifiation from "./User/Pages/Caretaker/Notification";
+// import Notifiation from "./User/Pages/Caretaker/Notification";
 import Profile from "./User/Pages/profile";
 import ChangePassword from "./User/Pages/Changepassword";
 import BookingDetails from "./User/Pages/MyBookings";

@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status, permissions,generics
 from cloudinary_storage.storage import MediaCloudinaryStorage
 from django.shortcuts import render
+from django.middleware.csrf import get_token
 from django.http import JsonResponse
 from datetime import datetime
 from django.contrib.auth.models import update_last_login
@@ -91,6 +92,7 @@ class CaretakerLoginView(APIView):
                     'refresh': str(refresh),
                     'access_token': str(refresh.access_token),
                     'username': user.username,
+                    'name':user.name,
                     'email': user.email,
                     'role': "caretaker"  # Explicitly return role
                 }, status=status.HTTP_200_OK)
@@ -111,18 +113,35 @@ class AdminLoginView(APIView):
                 return Response({"error": "You are not authorized as an admin"}, status=status.HTTP_403_FORBIDDEN)
 
             refresh = RefreshToken.for_user(user)  # Generate JWT tokens
+            
             return Response({
                 'refresh': str(refresh),
                 'access_token': str(refresh.access_token),
+                'csrf_token': get_token(request), 
                 'username': user.username,
+                'role' :user.role,
             }, status=status.HTTP_200_OK)
+        
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
 
 
+@api_view(['POST'])
+@permission_classes([IsAdminUser])  # making ensure that admin can only add caretaker
+def add_caretaker(request):
+    if request.method == 'POST':
+        serializer = CaretakerSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()  # Save the new caretaker object to the database
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
+# Api for adding user details in amin# 
+
+    
 def upload_image(request):
     if request.method == 'POST' and request.FILES.get('image'):
         image_file = request.FILES['image']
@@ -309,4 +328,31 @@ def booking_action(request, booking_id):
     booking.save()
 
     return Response({"message": f"Booking {booking.status} successfully"}, status=status.HTTP_200_OK)
+
+
+# count booking
+
+@api_view(["GET"])
+def booking_count_api(request):
+    total_bookings = Booking.objects.count()
+    
+    return Response({"total_bookings": total_bookings},status=status.HTTP_200_OK)
+
+
+@api_view(["GET"])
+def booking_count_api(request):
+    total_bookings = Booking.objects.count()
+    return Response({"total_bookings": total_bookings},status=status.HTTP_200_OK)
+
+
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def admin_dashboard(request):
+    total_caretaker = Caretaker.objects.count()
+    total_user = CustomUser.objects.count()   
+    total_bookings = Booking.objects.count()
+
+
+    return Response({"total_caretaker": total_caretaker,"total_user": total_user,"total_bookings": total_bookings},status=status.HTTP_200_OK)
 

@@ -17,8 +17,8 @@ class CustomUser(AbstractUser):
     last_name=models.CharField(max_length=150)
     first_name=models.CharField(max_length=150)
     role = models.CharField(max_length=10,  default='user')
-    groups = models.ManyToManyField(Group, related_name="customuser_groups")
-    user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions")
+    # groups = models.ManyToManyField(Group, related_name="customuser_groups")
+    # user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions")
 
    
     USERNAME_FIELD = 'username'  
@@ -95,6 +95,7 @@ class Caretaker(models.Model):
     def __str__(self):
         return self.name
 
+# class Admin(models.Model):
 
 
 class Booking(models.Model):

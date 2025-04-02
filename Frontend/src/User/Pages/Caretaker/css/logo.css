@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.care-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.care-left-container {
+  margin: auto;
+  display: flex;
+  align-items: center;
+  color: #ff5733;
+}
+.care-imge {
+  height: 6.5rem;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  width: 7rem;
+}

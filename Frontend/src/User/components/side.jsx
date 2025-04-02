@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FaTasks,
   FaCalendarAlt,
@@ -7,87 +7,106 @@ import {
   FaStar,
   FaCog,
   FaSignOutAlt,
+  FaHome,
+  FaBookmark,
 } from "react-icons/fa";
 import "../css/side.css";
-import Logo from "../components/Logo";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
+import Logos from "../Pages/Caretaker/Components/Logo";
+import { API } from "../../env";
+import { useEffect } from "react";
 
 const CaretakerSidebar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isLoggedIn, setIsLoggedIn] = useState(!!Cookies.get("accessToken"));
+  const [data, setData] = useState(!!Cookies.get("accessToken"));
+
   const handleLogout = async () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (confirmLogout) {
-      // Remove accessToken cookie
-      // document.cookie =
-      //   "accessToken=; path=/; expires=Thu, 01 Jan 2970 00:00:00 UTC;";
-      // document.cookie = "role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-      // document.cookie =
-      //   "caretaker_id=; path=/; expires=Thu, 01 Jan 2970 00:00:00 UTC;";
-
+      // Remove cookies
       Cookies.remove("accessToken", { path: "/" });
-      Cookies.remove("role");
-      Cookies.remove("caretaker_id");
+      Cookies.remove("role", { path: "/" });
+      Cookies.remove("caretaker_id", { path: "/" });
 
       // Update state
       setIsLoggedIn(false);
-      navigate("/"); // Redirect to home
+      navigate("/login/caretaker");
     }
   };
 
+  useEffect(() => {
+    async function fetchcaretakerdata() {
+      const id = Cookies.get("caretaker_id");
+      const name = Cookies.get("name");
+      try {
+        const res = await fetch(`${API}api/caretakers/${id}`);
+        const data = await res.json();
+        setData(data);
+      } catch (error) {}
+    }
+    fetchcaretakerdata();
+  }, []);
+
+  // Check if current path matches the link path
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
+
+  // Menu items configuration
+  const menuItems = [
+    {
+      path: "/dashboard",
+      icon: <FaHome className="icon" />,
+      label: "Dashboard",
+    },
+    // { path: "/task", icon: <FaTasks className="icon" />, label: "Tasks" },
+    {
+      path: "/calendar",
+      icon: <FaCalendarAlt className="icon" />,
+      label: "Calendar",
+    },
+    {
+      path: "/booking/",
+      icon: <FaBookmark className="icon" />,
+      label: "Booking",
+    },
+    {
+      path: "/notification",
+      icon: <FaBell className="icon" />,
+      label: "Notifications",
+    },
+    {
+      path: "/caretaker/profile",
+      icon: <FaCog className="icon" />,
+      label: "Settings",
+    },
+  ];
+
   return (
     <div className="caretaker-sidebar">
-      <Logo />
+      <div className="sidebar-logo">
+        <Logos />
+      </div>
+
+      <h2 className="sidebar-title">{data.name}</h2>
+
       <ul className="sidebar-menu">
-        <Link to={"/dashboard"}>
-          <li>
-            <FaTasks className="icon" />
-            <span className="sidebar-menu2">Dashboard</span>
-          </li>
-        </Link>
-        {/* <Link to={"/task"}>
-          <li>
-            <FaTasks className="icon" />
-            <span className="sidebar-menu2">Tasks</span>
-          </li>
-        </Link> */}
-        {/* <li>
-          <FaCalendarAlt className="icon" />
-          <span className="sidebar-menu2">Calendar</span>
-        </li> */}
-        {/* <li>
-          <FaUser className="icon" />
-          <span className="sidebar-menu2"> Profile Management</span>
-        </li> */}
-        <Link to={"/booking"}>
-          <li>
-            <FaUser className="icon" />
-            <span className="sidebar-menu2">Booking</span>
-          </li>
-        </Link>
-        <Link to={"/notification"}>
-          <li>
-            <FaBell className="icon" />
-            <span className="sidebar-menu2">Notifications</span>
-          </li>
-        </Link>
-        {/* <li>
-          <FaStar className="icon" />
-          <span className="sidebar-menu2">Reviews</span>
-        </li> */}
-        <Link to={"/caretaker/profile"}>
-          <li>
-            <FaCog className="icon" />
-            <span className="sidebar-menu2">Settings</span>
-          </li>
-        </Link>
-        <Link to={"/login/caretaker"}>
-          <li>
-            <FaSignOutAlt className="icon" />
-            <span className="sidebar-menu2" onClick={handleLogout}>
-              Logout
-            </span>
-          </li>
-        </Link>
+        {menuItems.map((item) => (
+          <Link to={item.path} key={item.path} className="sidebar-link">
+            <li className={isActive(item.path) ? "active-menu-item" : ""}>
+              {item.icon}
+              <span className="sidebar-menu2">{item.label}</span>
+            </li>
+          </Link>
+        ))}
+
+        <li className="logout-item" onClick={handleLogout}>
+          <FaSignOutAlt className="icon" />
+          <span className="sidebar-menu2">Logout</span>
+        </li>
       </ul>
     </div>
   );

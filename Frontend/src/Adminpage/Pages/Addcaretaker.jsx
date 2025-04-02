@@ -18,11 +18,18 @@ const Addcaretaker = () => {
   const [bio, setBio] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [profile_picture_url, setProfilePicture] = useState("");
+  const [gov_id_url, setGovId] = useState("");
+  const [certification_docs_url, setCertDocs] = useState("");
+  const [police_clearance_url, , setPoliceClearance] = useState("");
   const navigate = useNavigate();
 
   const formData = {
     name: name,
     gender: gender,
+    profile_picture: profile_picture_url,
+    certificate: certification_docs_url,
+    govId: gov_id_url,
     email: email,
     phone: phone,
     address: address,
@@ -33,9 +40,11 @@ const Addcaretaker = () => {
     bio: bio,
     username: username,
     password: password,
+    police_clearance: police_clearance_url,
   };
 
   async function hanldeCaretaker() {
+    e.preventDefault();
     try {
       const res = await fetch(`${API}caretakers/register/`, {
         method: "POST",
@@ -201,6 +210,49 @@ const Addcaretaker = () => {
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Profile Picture URL:</label>
+              <input
+                type="url"
+                name="profile_picture"
+                value={profile_picture_url}
+                onChange={(e) => setProfilePicture(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Gov ID URL:</label>
+              <input
+                type="url"
+                name="gov_id"
+                value={gov_id_url}
+                onChange={(e) => setGovId(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Certification Docs URL:</label>
+              <input
+                type="url"
+                name="certification_docs"
+                value={certification_docs_url}
+                onChange={(e) => setCertDocs(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Police Clearance URL:</label>
+              <input
+                type="url"
+                name="police_clearance"
+                value={police_clearance_url}
+                onChange={(e) => setPoliceClearance(e.target.value)}
                 required
               />
             </div>

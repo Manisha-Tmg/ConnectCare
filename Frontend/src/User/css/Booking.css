@@ -1,7 +1,10 @@
 .booking-container {
   display: flex;
   min-height: 100vh;
-  margin-left: 20rem;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: 17rem;
+  margin-top: 0.5rem;
   background-color: #f8f9fc;
 }
 
