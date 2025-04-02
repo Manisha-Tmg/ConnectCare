@@ -86,7 +86,6 @@ const Addcaretaker = () => {
               required
             />
           </div>
-
           <div className="form-row">
             <div className="form-group">
               <label>Gender:</label>
@@ -113,7 +112,6 @@ const Addcaretaker = () => {
               />
             </div>
           </div>
-
           <div className="form-group">
             <label>Email:</label>
             <input
@@ -124,7 +122,6 @@ const Addcaretaker = () => {
               required
             />
           </div>
-
           <div className="form-group">
             <label>Address:</label>
             <textarea
@@ -133,7 +130,6 @@ const Addcaretaker = () => {
               onChange={(e) => setAddress(e.target.value)}
             ></textarea>
           </div>
-
           <div className="form-row">
             <div className="form-group">
               <label>Experience (Years):</label>
@@ -161,7 +157,6 @@ const Addcaretaker = () => {
               </select>
             </div>
           </div>
-
           <div className="form-group">
             <label>Hourly Rate:</label>
             <input
@@ -172,7 +167,6 @@ const Addcaretaker = () => {
               required
             />
           </div>
-
           <div className="form-group">
             <label>Languages Spoken:</label>
             <input
@@ -182,7 +176,6 @@ const Addcaretaker = () => {
               onChange={(e) => setLanguagesSpoken(e.target.value)}
             />
           </div>
-
           <div className="form-group">
             <label>Bio:</label>
             <textarea
@@ -191,7 +184,46 @@ const Addcaretaker = () => {
               onChange={(e) => setBio(e.target.value)}
             ></textarea>
           </div>
-
+          <div className="form-group">
+            <label>Profile Picture URL:</label>
+            <input
+              type="url"
+              name="profile_picture"
+              value={profile_picture_url}
+              onChange={(e) => setProfilePicture(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Gov ID URL:</label>
+            <input
+              type="url"
+              name="gov_id"
+              value={gov_id_url}
+              onChange={(e) => setGovId(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Certification Docs URL:</label>
+            <input
+              type="url"
+              name="certification_docs"
+              value={certification_docs_url}
+              onChange={(e) => setCertDocs(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Police Clearance URL:</label>
+            <input
+              type="url"
+              name="police_clearance"
+              value={police_clearance_url}
+              onChange={(e) => setPoliceClearance(e.target.value)}
+              required
+            />
+          </div>{" "}
           <div className="form-row">
             <div className="form-group">
               <label>Username:</label>
@@ -213,51 +245,7 @@ const Addcaretaker = () => {
                 required
               />
             </div>
-            <div className="form-group">
-              <label>Profile Picture URL:</label>
-              <input
-                type="url"
-                name="profile_picture"
-                value={profile_picture_url}
-                onChange={(e) => setProfilePicture(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Gov ID URL:</label>
-              <input
-                type="url"
-                name="gov_id"
-                value={gov_id_url}
-                onChange={(e) => setGovId(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Certification Docs URL:</label>
-              <input
-                type="url"
-                name="certification_docs"
-                value={certification_docs_url}
-                onChange={(e) => setCertDocs(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Police Clearance URL:</label>
-              <input
-                type="url"
-                name="police_clearance"
-                value={police_clearance_url}
-                onChange={(e) => setPoliceClearance(e.target.value)}
-                required
-              />
-            </div>
           </div>
-
           <button type="submit" onClick={hanldeCaretaker}>
             Submit
           </button>

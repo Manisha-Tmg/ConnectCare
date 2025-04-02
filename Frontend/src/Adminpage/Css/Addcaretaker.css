@@ -5,17 +5,12 @@
   font-family: "Roboto", "Open Sans", sans-serif;
 }
 
-body {
-  background-color: #f5f8fa;
-  color: #333;
-  line-height: 1.6;
-}
-
 /* Form container styling */
 .form-container {
-  max-width: 800px;
-  margin: 30px auto;
-  padding: 30px;
+  max-width: 1500px;
+  margin: auto;
+  margin-left: 15rem;
+  padding: 40px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -120,6 +115,7 @@ button:hover {
 
 /* Required field indicator */
 input:required,
+textarea:required,
 select:required {
   border-left: 3px solid #3498db;
 }

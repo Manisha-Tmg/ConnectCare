@@ -23,6 +23,12 @@ const Sidebar = () => {
             <span>Caretakers</span>
           </li>
         </Link>
+        <Link to="/admin/Addcaretaker">
+          <li>
+            <FiUsers />
+            <span>Add Caretakers</span>
+          </li>
+        </Link>
         <Link to="/admin/User">
           <li>
             <FiUsers /> <span>Users</span>
