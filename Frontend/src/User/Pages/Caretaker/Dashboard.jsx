@@ -36,8 +36,7 @@ const Dashboard = () => {
     handledash();
   }, []);
 
-  console.log("ttt", data);
-
+  const booking = booking.filter;
   return (
     <div>
       <CaretakerSidebar />

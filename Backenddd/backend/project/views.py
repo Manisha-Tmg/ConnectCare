@@ -331,28 +331,38 @@ def booking_action(request, booking_id):
 
 
 # count booking
-
 @api_view(["GET"])
+# @permission_classes([IsAuthenticated])
 def booking_count_api(request):
-    total_bookings = Booking.objects.count()
+    user = request.user
+
+    try:
+        caretaker= Caretaker.object.get(user=user)
+        
+    except Caretaker.DoesNotExist:
+        return Response({ "error": "Caretaker dosenot found"}, status=status.HTTP_400_BAD_REQUEST)
+        
     
-    return Response({"total_bookings": total_bookings},status=status.HTTP_200_OK)
+    total_bookings = Booking.objects.filter(caretaker=caretaker).count()
+
+
+    
+    return Response({" The total_bookings": total_bookings},status=status.HTTP_200_OK)
+
+
+
+
 
 
 @api_view(["GET"])
-def booking_count_api(request):
-    total_bookings = Booking.objects.count()
-    return Response({"total_bookings": total_bookings},status=status.HTTP_200_OK)
-
-
-
-@api_view(["GET"])
-@permission_classes([IsAdminUser])
+# @permission_classes([AllowAny])
 def admin_dashboard(request):
     total_caretaker = Caretaker.objects.count()
-    total_user = CustomUser.objects.count()   
+    total_user = CustomUser.objects.count()
     total_bookings = Booking.objects.count()
 
-
-    return Response({"total_caretaker": total_caretaker,"total_user": total_user,"total_bookings": total_bookings},status=status.HTTP_200_OK)
-
+    return Response({
+        "total_caretaker": total_caretaker,
+        "total_user": total_user,
+        "total_bookings": total_bookings
+    }, status=status.HTTP_200_OK)

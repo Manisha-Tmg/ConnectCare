@@ -29,6 +29,10 @@ const AdminLogin = () => {
           expires: 7,
           secure: true,
         });
+        Cookies.set("csrf", data.csrf_token, {
+          expires: 7,
+          secure: true,
+        });
 
         Cookies.set("role", data.role || "admin", {
           expires: 7,
@@ -44,7 +48,7 @@ const AdminLogin = () => {
         } else if (userRole === "caretaker") {
           navigate("/dashboard");
         } else if (userRole === "admin") {
-          navigate("/admin-panel");
+          navigate("/admin/dashboard/");
         }
       } else {
         console.log("Login failed:", data.error || "Invalid credentials");
