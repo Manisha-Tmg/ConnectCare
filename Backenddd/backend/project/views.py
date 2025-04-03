@@ -340,8 +340,6 @@ def booking_count_api(request, caretaker_id=None):
 
     
 
-
-
 @api_view(["GET"])
 # @permission_classes([AllowAny])
 def admin_dashboard(request):

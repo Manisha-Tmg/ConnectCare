@@ -1,0 +1,11 @@
+/* UserPanel.css */
+:root {
+  --primary-color: #3498db;
+  --dark-primary: #2980b9;
+  --light-bg: #f5f8fa;
+  --border-color: #e1e8ed;
+  --text-color: #333;
+  --success-color: #2ecc71;
+  --warning-color: #f39c12;
+  --danger-color: #e74c3c;
+}

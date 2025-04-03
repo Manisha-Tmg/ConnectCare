@@ -29,8 +29,8 @@ urlpatterns = [
 
 
     #User list and id
-    path('api/users/',get_user,name='ger_caretaker'),
-    path('api/users/<int:user_id>',get_user,name='get_caretaker'),
+    path('api/users/',get_user,name='ger_user'),
+    path('api/users/<int:user_id>',get_user,name='ger_user'),
 
 
     # Booking

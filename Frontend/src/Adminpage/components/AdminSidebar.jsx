@@ -29,7 +29,7 @@ const Sidebar = () => {
             <span>Add Caretakers</span>
           </li>
         </Link>
-        <Link to="/admin/User">
+        <Link to="/admin/Users">
           <li>
             <FiUsers /> <span>Users</span>
           </li>
