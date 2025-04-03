@@ -332,25 +332,13 @@ def booking_action(request, booking_id):
 
 # count booking
 @api_view(["GET"])
-# @permission_classes([IsAuthenticated])
-def booking_count_api(request):
-    user = request.user
+def booking_count_api(request, caretaker_id=None):
+    caretaker = request.user  # Get the logged-in user
 
-    try:
-        caretaker= Caretaker.object.get(user=user)
-        
-    except Caretaker.DoesNotExist:
-        return Response({ "error": "Caretaker dosenot found"}, status=status.HTTP_400_BAD_REQUEST)
-        
-    
-    total_bookings = Booking.objects.filter(caretaker=caretaker).count()
-
+    total_bookings = Booking.objects.filter(caretaker_id=caretaker.id).count()  # Count bookings for the login caretaker only
+    return Response({"total_bookings": total_bookings}, status=status.HTTP_200_OK)
 
     
-    return Response({" The total_bookings": total_bookings},status=status.HTTP_200_OK)
-
-
-
 
 
 

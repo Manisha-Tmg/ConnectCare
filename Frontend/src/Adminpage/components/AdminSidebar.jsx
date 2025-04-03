@@ -40,10 +40,12 @@ const Sidebar = () => {
             <span>Bookings</span>
           </li>
         </Link>
-        <li className="logout">
-          <FiLogOut />
-          <span>Logout</span>
-        </li>
+        <Link to={"/api/admin/login"}>
+          <li className="logout">
+            <FiLogOut />
+            <span>Logout</span>
+          </li>
+        </Link>
       </ul>
     </div>
   );
