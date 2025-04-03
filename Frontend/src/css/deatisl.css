@@ -1,0 +1,287 @@
+/* Page Background */
+.profile-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin-left: 17rem;
+  margin-top: 0;
+  background: #f4f4f4;
+  font-family: "Arial", sans-serif;
+}
+
+/* Profile Container */
+.profile-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 20px;
+  padding: 20px;
+}
+
+/* Profile Card */
+.profile-card {
+  background: white;
+  /* box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); */
+  border-radius: 10px;
+  padding: 25px;
+  text-align: center;
+}
+
+/* Profile Header */
+.profile-header {
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5);
+}
+
+h2 {
+  margin-top: 10px;
+  font-size: 22px;
+  color: #333;
+}
+
+.bio {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+/* Profile Sections */
+.profile-section {
+  background: #f9f9f9;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 8px;
+}
+
+.profile-section h3 {
+  color: #000000;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Profile Details */
+.profile-info {
+  font-size: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.profile-info:last-child {
+  border-bottom: none;
+}
+
+.profile-info strong {
+  color: #007bff;
+}
+
+/* Document Section */
+.doc-link {
+  display: block;
+  font-size: 16px;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 5px;
+  text-align: start;
+  transition: 0.3s;
+}
+
+.doc-link:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+/* Loading and Error Messages */
+.loading,
+.error {
+  text-align: center;
+  font-size: 18px;
+  color: #d9534f;
+  margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-container {
+    max-width: 90%;
+  }
+
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .profile-info {
+    font-size: 14px;
+  }
+
+  .doc-link {
+    font-size: 14px;
+  }
+}
+
+/* Page Styling */
+.booking-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f4f4;
+  min-height: 100vh;
+  font-family: "Arial", sans-serif;
+}
+
+/* Booking Container */
+.booking-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px;
+  padding: 20px;
+}
+
+.booking-title {
+  font-size: 24px;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.no-bookings {
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+}
+
+/* Booking Card */
+.booking-card {
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 15px 0;
+  transition: 0.3s;
+}
+
+.booking-card:hover {
+  transform: scale(1.02);
+}
+
+/* Booking Header */
+.booking-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.profile-icon {
+  width: 50px;
+  height: 50px;
+  background: #007bff;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.booking-user-info h3 {
+  font-size: 18px;
+  color: #333;
+  margin: 0;
+}
+
+.booking-detail {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0;
+}
+
+/* Booking Actions */
+.booking-actions {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 10px 15px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+  margin: 5px;
+}
+
+.accept-btn {
+  background: #28a745;
+  color: white;
+}
+
+.reject-btn {
+  background: #dc3545;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+/* Status Badges */
+.status {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.status-accepted {
+  background: #28a745;
+  color: white;
+}
+
+.status-rejected {
+  background: #dc3545;
+  color: white;
+}
+
+.status-pending {
+  background: #ffc107;
+  color: black;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .booking-container {
+    max-width: 90%;
+  }
+
+  .profile-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}

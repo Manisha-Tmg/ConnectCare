@@ -26,6 +26,8 @@ import Details from "./User/Pages/Details";
 import CaretakerDashboard from "./User/Pages/Caretaker/Notification";
 import Admindash from "./Adminpage/Pages/Admindash";
 import UserPanel from "./Adminpage/Pages/UserDetails";
+import CaretakerPanel from "./Adminpage/Pages/Caretaker";
+import CaretakerDetails from "./Adminpage/Pages/CaretakerDetails";
 // import BookingFormPreview from "./User/Pages/Booking";
 
 function App() {
@@ -67,7 +69,8 @@ function App() {
         <Route path="/admin/Addcaretaker" element={<Addcaretaker />} />
         <Route path="/admin/Dashboard" element={<Admindash />} />
         <Route path="/admin/Users" element={<UserPanel />} />
-        {/* <Route path="/admin/Caretaker" element={<UserPanel />} /> */}
+        <Route path="/admin/Caretaker" element={<CaretakerPanel />} />
+        <Route path="/caretakers/:id" element={<CaretakerDetails />} />
       </Routes>
     </BrowserRouter>
   );

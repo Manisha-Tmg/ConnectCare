@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../Css/UsrDetails.css";
 import Cookies from "js-cookie";
 import { API } from "../../env";
+import Sidebar from "../components/AdminSidebar";
 
 const UserPanel = () => {
   const [users, setUsers] = useState([]);
@@ -48,6 +49,7 @@ const UserPanel = () => {
 
   return (
     <div className="user-panel">
+      <Sidebar />
       <div className="panel-header">
         <h1>User Management</h1>
         <button className="add-user-btn">+ Add User</button>
@@ -72,7 +74,7 @@ const UserPanel = () => {
               <th>Email</th>
               <th>Role</th>
               <th>Status</th>
-              <th>Last Login</th>
+              <th>Username</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -102,12 +104,6 @@ const UserPanel = () => {
           </tbody>
         </table>
       </div>
-
-      {/* <div className="panel-footer">
-        <p>
-          Showing {filteredUsers.length} of {users.length} users
-        </p>
-      </div> */}
     </div>
   );
 };
