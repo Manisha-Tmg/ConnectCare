@@ -3,6 +3,7 @@ import "../../Adminpage/Css/Addcaretaker.css";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../env";
+import Cookies from "js-cookie";
 import Sidebar from "../components/AdminSidebar";
 
 const Addcaretaker = () => {
@@ -21,12 +22,19 @@ const Addcaretaker = () => {
   const [profile_picture_url, setProfilePicture] = useState("");
   const [gov_id_url, setGovId] = useState("");
   const [certification_docs_url, setCertDocs] = useState("");
-  const [police_clearance_url, , setPoliceClearance] = useState("");
+  const [police_clearance_url, setPoliceClearance] = useState("");
   const navigate = useNavigate();
 
-  async function hanldeCaretaker() {
+  async function handleCaretaker(e) {
     e.preventDefault();
-    const formData = new formData();
+    const token = Cookies.get("accessToken");
+
+    if (!token) {
+      toast.error("Unauthorized: No token found");
+      return;
+    }
+
+    const formData = new FormData();
     formData.append("name", name);
     formData.append("gender", gender);
     formData.append("email", email);
@@ -39,34 +47,33 @@ const Addcaretaker = () => {
     formData.append("bio", bio);
     formData.append("username", username);
     formData.append("password", password);
-    // for image
-    formData.append("profile_picture", profile_picture_url);
-    formData.append("certificate", certification_docs_url);
-    formData.append("govId", gov_id_url);
-    formData.append("police_clearance", police_clearance_url);
+    formData.append("profile_picture", profile_picture);
+    formData.append("certificate", certification_docs);
+    formData.append("govId", gov_id);
+    formData.append("police_clearance", police_clearance);
 
     try {
       const res = await fetch(`${API}caretakers/register/`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${Token}`,
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ formData }),
+        body: formData,
       });
 
       const data = await res.json();
 
-      if (data.ok) {
+      if (res.ok) {
         toast.success("Caretaker Registration was successful");
         navigate("/dashboard");
       } else {
-        toast.error("Error creatinng the caretaker");
+        toast.error(data.message || "Error creating the caretaker");
       }
     } catch (error) {
-      toast.error(error);
+      toast.error(error.message || "Something went wrong");
     }
   }
+
   return (
     <div>
       <Sidebar />
@@ -124,11 +131,11 @@ const Addcaretaker = () => {
           </div>
           <div className="form-group">
             <label>Address:</label>
-            <textarea
+            <input
               name="address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-            ></textarea>
+            ></input>
           </div>
           <div className="form-row">
             <div className="form-group">
@@ -190,9 +197,7 @@ const Addcaretaker = () => {
               type="file"
               accept="image/*"
               name="profile_picture"
-              value={profile_picture_url}
-              onChange={(e) => setProfilePicture(e.target.value)}
-              required
+              onChange={(e) => setProfilePicture(e.target.files[0])}
             />
           </div>
           <div className="form-group">
@@ -201,8 +206,7 @@ const Addcaretaker = () => {
               type="file"
               accept="image/*"
               name="gov_id"
-              value={gov_id_url}
-              onChange={(e) => setGovId(e.target.value)}
+              onChange={(e) => setGovId(e.target.files[0])}
               required
             />
           </div>
@@ -212,12 +216,11 @@ const Addcaretaker = () => {
               type="file"
               accept="image/*"
               name="certification_docs"
-              value={certification_docs_url}
-              onChange={(e) => setCertDocs(e.target.value)}
+              onChange={(e) => setCertDocs(e.target.files[0])}
               required
             />
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label>Police Clearance URL:</label>
             <input
               type="file"
@@ -227,7 +230,7 @@ const Addcaretaker = () => {
               onChange={(e) => setPoliceClearance(e.target.value)}
               required
             />
-          </div>
+          </div> */}
           <div className="form-row">
             <div className="form-group">
               <label>Username:</label>
@@ -250,7 +253,7 @@ const Addcaretaker = () => {
               />
             </div>
           </div>
-          <button type="submit" onClick={hanldeCaretaker}>
+          <button type="submit" onClick={handleCaretaker}>
             Submit
           </button>
         </form>
