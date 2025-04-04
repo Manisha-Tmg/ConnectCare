@@ -24,27 +24,27 @@ const Addcaretaker = () => {
   const [police_clearance_url, , setPoliceClearance] = useState("");
   const navigate = useNavigate();
 
-  const formData = {
-    name: name,
-    gender: gender,
-    profile_picture: profile_picture_url,
-    certificate: certification_docs_url,
-    govId: gov_id_url,
-    email: email,
-    phone: phone,
-    address: address,
-    experience: experience,
-    specialty: specialty,
-    hourly_rate: hourly_rate,
-    languages_spoken: languages_spoken,
-    bio: bio,
-    username: username,
-    password: password,
-    police_clearance: police_clearance_url,
-  };
-
   async function hanldeCaretaker() {
     e.preventDefault();
+    const formData = new formData();
+    formData.append("name", name);
+    formData.append("gender", gender);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("address", address);
+    formData.append("experience", experience);
+    formData.append("specialty", specialty);
+    formData.append("hourly_rate", hourly_rate);
+    formData.append("languages_spoken", languages_spoken);
+    formData.append("bio", bio);
+    formData.append("username", username);
+    formData.append("password", password);
+    // for image
+    formData.append("profile_picture", profile_picture_url);
+    formData.append("certificate", certification_docs_url);
+    formData.append("govId", gov_id_url);
+    formData.append("police_clearance", police_clearance_url);
+
     try {
       const res = await fetch(`${API}caretakers/register/`, {
         method: "POST",
@@ -187,7 +187,8 @@ const Addcaretaker = () => {
           <div className="form-group">
             <label>Profile Picture URL:</label>
             <input
-              type="url"
+              type="file"
+              accept="image/*"
               name="profile_picture"
               value={profile_picture_url}
               onChange={(e) => setProfilePicture(e.target.value)}
@@ -197,7 +198,8 @@ const Addcaretaker = () => {
           <div className="form-group">
             <label>Gov ID URL:</label>
             <input
-              type="url"
+              type="file"
+              accept="image/*"
               name="gov_id"
               value={gov_id_url}
               onChange={(e) => setGovId(e.target.value)}
@@ -207,7 +209,8 @@ const Addcaretaker = () => {
           <div className="form-group">
             <label>Certification Docs URL:</label>
             <input
-              type="url"
+              type="file"
+              accept="image/*"
               name="certification_docs"
               value={certification_docs_url}
               onChange={(e) => setCertDocs(e.target.value)}
@@ -217,13 +220,14 @@ const Addcaretaker = () => {
           <div className="form-group">
             <label>Police Clearance URL:</label>
             <input
-              type="url"
+              type="file"
+              accept="image/*"
               name="police_clearance"
               value={police_clearance_url}
               onChange={(e) => setPoliceClearance(e.target.value)}
               required
             />
-          </div>{" "}
+          </div>
           <div className="form-row">
             <div className="form-group">
               <label>Username:</label>

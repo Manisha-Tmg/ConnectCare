@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "../Css/UsrDetails.css";
+import "../Css/CaretakerDetails.css";
 import Cookies from "js-cookie";
 import { API } from "../../env";
 import { FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-
 import { Link } from "react-router-dom";
 import Sidebar from "../components/AdminSidebar";
 
@@ -40,8 +39,10 @@ const CaretakerPanel = () => {
       <Sidebar />
       <div className="caretaker-panel">
         <div className="panel-header">
-          <h1>caretaker Management</h1>
-          <button className="add-caretaker-btn">+ Add Caretaker</button>
+          <h1>Caretaker Management</h1>
+          <Link to={"/admin/Addcaretaker"}>
+            <button className="add-caretaker-btn">+ Add Caretaker</button>
+          </Link>
         </div>
 
         <div className="search-filter-container">
@@ -63,7 +64,7 @@ const CaretakerPanel = () => {
                 <th>Email</th>
                 <th>Role</th>
                 <th>Status</th>
-                <th>caretakername</th>
+                <th>username</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -82,7 +83,7 @@ const CaretakerPanel = () => {
                       {caretaker.is_active ? "Active" : "Not Active"}
                     </span>
                   </td>
-                  <td>{caretaker.caretakername}</td>
+                  <td>{caretaker.username}</td>
                   <td className="actions">
                     <Link to={`/caretakers/${caretaker.id}`}>
                       <button className="edit-btn">

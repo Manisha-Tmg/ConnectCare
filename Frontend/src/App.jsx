@@ -25,9 +25,10 @@ import BookingFormPreview from "./User/Pages/Booking";
 import Details from "./User/Pages/Details";
 import CaretakerDashboard from "./User/Pages/Caretaker/Notification";
 import Admindash from "./Adminpage/Pages/Admindash";
-import UserPanel from "./Adminpage/Pages/UserDetails";
 import CaretakerPanel from "./Adminpage/Pages/Caretaker";
 import CaretakerDetails from "./Adminpage/Pages/CaretakerDetails";
+import UserPanel from "./Adminpage/Pages/User";
+import UserDetails from "./Adminpage/Pages/UserDetails.jsx";
 // import BookingFormPreview from "./User/Pages/Booking";
 
 function App() {
@@ -70,7 +71,9 @@ function App() {
         <Route path="/admin/Dashboard" element={<Admindash />} />
         <Route path="/admin/Users" element={<UserPanel />} />
         <Route path="/admin/Caretaker" element={<CaretakerPanel />} />
+        <Route path="/admin/Caretaker" element={<CaretakerPanel />} />
         <Route path="/caretakers/:id" element={<CaretakerDetails />} />
+        <Route path="/users/:id" element={<UserDetails />} />
       </Routes>
     </BrowserRouter>
   );

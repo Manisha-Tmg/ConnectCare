@@ -2,17 +2,21 @@ import React, { useEffect, useState } from "react";
 import "../Css/UsrDetails.css";
 import Cookies from "js-cookie";
 import { API } from "../../env";
-import Sidebar from "../components/AdminSidebar";
 
-const UserPanel = () => {
+import Sidebar from "../components/AdminSidebar";
+import { useParams } from "react-router-dom";
+
+const UserDetails = () => {
   const [users, setUsers] = useState([]);
-  const [datas, setdata] = useState([]);
+  const [data, setdata] = useState([]);
+  const { id } = useParams();
 
   useEffect(() => {
     async function userdetail() {
       const token = Cookies.get("accessToken");
+      // const id = Cookies.get("user_id");
       try {
-        const res = await fetch(`${API}api/users/`, {
+        const res = await fetch(`${API}api/users/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -50,62 +54,27 @@ const UserPanel = () => {
   return (
     <div className="user-panel">
       <Sidebar />
-      <div className="panel-header">
-        <h1>User Management</h1>
-        <button className="add-user-btn">+ Add User</button>
-      </div>
-
-      <div className="search-filter-container">
-        <div className="search-container">
-          <input
-            type="text"
-            placeholder="Search users..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+      <div className="profile-container-main">
+        <h2>Profile</h2>
+        <div className="profile-section">
+          <h3>Personal Information</h3>
+          <div className="profile-info">
+            <strong>Gender:</strong> {data.first_name}
+            {data.last_name}
+          </div>
+          <div className="profile-info">
+            <strong>Email:</strong> {data.email}
+          </div>
+          <div className="profile-info">
+            <strong>Phone:</strong> {data.phone}
+          </div>
+          <div className="profile-info">
+            <strong>Username:</strong> {data.username}
+          </div>
         </div>
-      </div>
-
-      <div className="users-table-container">
-        <table className="users-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Username</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>
-                  {user.first_name}
-                  {user.last_name}
-                </td>
-                <td>{user.email}</td>
-                <td>
-                  <span className={`role-badge ${user.role}`}>{user.role}</span>
-                </td>
-                <td>
-                  <span className={`status-badge ${user.is_active}`}>
-                    {user.is_active ? "Active" : "Not Active"}
-                  </span>
-                </td>
-                <td>{user.username}</td>
-                <td className="actions">
-                  <button className="edit-btn">View</button>
-                  <button className="delete-btn">Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </div>
   );
 };
 
-export default UserPanel;
+export default UserDetails;
