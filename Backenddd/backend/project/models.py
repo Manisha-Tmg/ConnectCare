@@ -14,8 +14,37 @@ from django.core.validators import RegexValidator
 class CustomUser(AbstractUser):
     # address = models.CharField(max_length=150)
     email = models.EmailField(unique=True)
-    last_name=models.CharField(max_length=150)
-    first_name=models.CharField(max_length=150)
+    name = models.CharField(max_length=150)
+    
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other'),
+    ]
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True, blank=True)
+    
+    profile_picture = CloudinaryField('Upload Profile Picture', null=True, blank=True)
+
+    # Contact Information
+    phone = models.CharField(
+        max_length=10,
+        validators=[RegexValidator(regex=r'^\d{10}$', message="Enter exactly 10 digits.")]
+    )
+    address = models.TextField(max_length=150, null=True, blank=True)
+
+    # Availability & Preferences
+    working_days = models.JSONField(null=True, blank=True)  
+    # preferred_locations = models.TextField(null=True, blank=True)
+
+    # Account Information
+    username = models.CharField(max_length=150, unique=True)
+    password = models.CharField(max_length=255)  
+
+    # Status & Timestamps
+    is_approved = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+  
     role = models.CharField(max_length=10,  default='user')
     # groups = models.ManyToManyField(Group, related_name="customuser_groups")
     # user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions")
