@@ -13,15 +13,15 @@ from django.contrib.auth.password_validation import validate_password
 class UserRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password', 'first_name', 'last_name','role']
+        fields = ['username', 'email', 'password', 'name', 'address','phone','gender','profile_picture','role']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        first_name = validated_data.pop('first_name', None)
-        last_name = validated_data.pop('last_name', None)
+        name = validated_data.pop('name', None)
+        gender = validated_data.pop('gender', None)
         address= validated_data.pop('address', None)
-        number= validated_data.pop('number', None)
-
+        phone= validated_data.pop('phone', None)
+        profile_picture= validated_data.pop('profile_picture', None)
         username = validated_data.get('username')
         email = validated_data.get('email')
 
@@ -34,15 +34,20 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         validated_data['password'] = make_password(validated_data['password'])
         user = CustomUser.objects.create(**validated_data)
 
-        if first_name:
-            user.first_name = first_name
-        if last_name:
-            user.last_name = last_name
+        if name:
+            user.name = name
 
-        # if address:
-        #     user.address = address
-        # if number:
-        #     user.number = number
+        if gender:
+            user.gender = gender
+
+        if profile_picture:
+            user.profile_picture=profile_picture
+
+        if address:
+            user.address = address
+
+        if phone:
+            user.phone = phone
 
         user.is_active = True
         user.role = 'user'  # Default role as 'user'
@@ -61,12 +66,12 @@ class LoginSerializer(serializers.Serializer):
         password = data.get('password')
 
         # Try authenticating as CustomUser first
-        user = authenticate(username=username, password=password)
+        user = authenticate( username=username, password=password)
 
         if user is None:
             # If user not found, try authenticating as Caretaker
             try:
-                caretaker = Caretaker.objects.get(username=username)
+                caretaker = Caretaker.objects.get(password=password , username =username)
                 # Assuming caretakers have their password stored in a hashed format,ie. similar to the user
                 if caretaker.password != password:  #checking password, improve password validation here
                     raise serializers.ValidationError("Invalid credentials.")
@@ -119,10 +124,20 @@ class BookingSerializer(serializers.ModelSerializer):
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
+    profile_picture_url = serializers.SerializerMethodField()
+
     class Meta:
         model = CustomUser
         fields = '__all__'
+        
+    def get_profile_picture_url(self, obj):
+        return self.get_cloudinary_url(obj.profile_picture)
 
+  
+    def get_cloudinary_url(self, field):
+        if field:
+            return f"https://res.cloudinary.com/ddh1i3vod/{field}"
+        return None
 
 
 class ChangePasswordSerializer(serializers.Serializer):

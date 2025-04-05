@@ -33,6 +33,7 @@ const Profile = () => {
 
         const result = await res.json();
         setData(result);
+        // Cookies.set("profile_picture_url");
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
@@ -53,21 +54,33 @@ const Profile = () => {
   return (
     <div>
       <Header />
-      {/* <Sidebar /> */}
       <div className="profile-container-main">
-        <h2>Profile</h2>
-        <div className="profile-container">
-          <label>First Name</label>
-          <input type="text" value={data.first_name || "NA"} disabled />
-
-          <label>Last Name</label>
-          <input type="text" value={data.last_name || "NA"} disabled />
-
-          <label>Email</label>
-          <input type="email" value={data.email || "NA"} disabled />
-
-          <label>Phone Number</label>
-          <input type="text" value={data.phone_number || "NA"} disabled />
+        <div className="p-container">
+          <div className="p-card">
+            <div className="p-header">
+              <img
+                src={data.profile_picture_url}
+                alt="Profile"
+                className="p-pic"
+              />
+              <h2>{data.name}</h2>
+            </div>
+            <div className="p-section">
+              <h3>Personal Information</h3>
+              <div className="p-info">
+                <strong>Gender:</strong> {data.gender}
+              </div>
+              <div className="p-info">
+                <strong>Email:</strong> {data.email}
+              </div>
+              <div className="p-info">
+                <strong>Phone:</strong> {data.phone}
+              </div>
+              <div className="p-info">
+                <strong>Address:</strong> {data.address}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

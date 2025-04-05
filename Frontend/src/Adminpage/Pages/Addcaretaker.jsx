@@ -47,10 +47,10 @@ const Addcaretaker = () => {
     formData.append("bio", bio);
     formData.append("username", username);
     formData.append("password", password);
-    formData.append("profile_picture", profile_picture);
-    formData.append("certificate", certification_docs);
-    formData.append("govId", gov_id);
-    formData.append("police_clearance", police_clearance);
+    formData.append("profile_picture", profile_picture_url);
+    formData.append("certificate", certification_docs_url);
+    formData.append("govId", gov_id_url);
+    formData.append("police_clearance", police_clearance_url);
 
     try {
       const res = await fetch(`${API}caretakers/register/`, {

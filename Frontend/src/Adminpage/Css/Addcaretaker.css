@@ -75,7 +75,7 @@ input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: #016161;
   box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
 
@@ -96,7 +96,8 @@ select {
 
 /* Button styling */
 button {
-  background-color: #3498db;
+  border: 2px solid #008080;
+  background-color: #008080;
   color: white;
   border: none;
   padding: 14px 25px;
@@ -110,14 +111,14 @@ button {
 }
 
 button:hover {
-  background-color: #2980b9;
+  background-color: #016161;
 }
 
 /* Required field indicator */
 input:required,
 textarea:required,
 select:required {
-  border-left: 3px solid #3498db;
+  border-left: 3px solid #016161;
 }
 
 /* Responsive adjustments */

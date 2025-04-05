@@ -22,7 +22,7 @@ from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSer
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserRegistrationSerializer
     queryset = get_user_model().objects.all()
-    permission_classes = [IsAuthenticated]  # Restrict actions to authenticated users, or any custom permission.
+    # permission_classes = [IsAuthenticated]  # Restrict actions to authenticated users, or any custom permission.
 
 
 # Registration API view for creating new users
@@ -39,7 +39,12 @@ class UserRegistrationView(APIView):
             return Response({
                 "message": "User registered successfully!",
                 "user": {
-                    "username": user.username,
+                    "username": user.username,   
+                    "name":user.name,
+                      "gender" :user.gender,
+                      "address"  :user.address,     
+                      "phone"  :user.phone,    
+        # profile_picture:user.p
                     "email": user.email,
                     "role": user.role  # Send role in response to navigate to roles based home
                 }
@@ -64,8 +69,6 @@ class LoginView(APIView):
                 'refresh': str(refresh),
                 'access_token': str(refresh.access_token),
                 'username': user.username,
-                'first_name': user.first_name,
-                                # 'first_name':user.first_name,
 
                 'email': user.email,
                 'role': user.role  # Include role in response
@@ -76,7 +79,7 @@ class LoginView(APIView):
 # api for caretakerlogin
 class CaretakerLoginView(APIView):
     permission_classes = [AllowAny]
-
+ 
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():

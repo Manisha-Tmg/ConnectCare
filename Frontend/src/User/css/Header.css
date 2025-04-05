@@ -69,21 +69,21 @@
 }
 
 .nav-avatar {
-  margin-right: 4rem;
-  width: 60px;
-  height: 60px;
-  background-color: purple;
-  color: white;
-  font-size: 25px;
-  font-weight: bold;
+  margin-right: 7rem;
+  width: 10px;
+  height: 10px;
+  margin-top: 1.5rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid white;
 }
 
+.nav-img {
+  width: 60px;
+  height: auto;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #15382a;
+}
 /* Dropdown Menu */
 .dropdown-menu {
   position: absolute;

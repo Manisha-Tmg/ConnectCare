@@ -12,7 +12,7 @@ from django.core.validators import RegexValidator
 
 
 class CustomUser(AbstractUser):
-    # address = models.CharField(max_length=150)
+    address = models.CharField(max_length=150)
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=150)
     
@@ -30,11 +30,6 @@ class CustomUser(AbstractUser):
         max_length=10,
         validators=[RegexValidator(regex=r'^\d{10}$', message="Enter exactly 10 digits.")]
     )
-    address = models.TextField(max_length=150, null=True, blank=True)
-
-    # Availability & Preferences
-    working_days = models.JSONField(null=True, blank=True)  
-    # preferred_locations = models.TextField(null=True, blank=True)
 
     # Account Information
     username = models.CharField(max_length=150, unique=True)

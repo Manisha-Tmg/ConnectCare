@@ -3,26 +3,59 @@ import "../css/Header.css";
 import Logo from "./Logo";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { API } from "../../env";import { IoNotificationsOutline } from "react-icons/io5";
+
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [data, setData] = useState("");
+
   const navigate = useNavigate();
 
-  // Function to get first initial of username
-  const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : "");
-
   useEffect(() => {
-    if (Cookies.get("accessToken")) {
-      setIsLoggedIn(true);
-      const storedUsername = Cookies.get("username"); // geeting the username that is   stored in a cookie
-      if (storedUsername) {
-        setUsername(storedUsername);
+    async function fetchProfile() {
+      const token = Cookies.get("accessToken");
+      const id = Cookies.get("user_id");
+
+      if (!token || !id) {
+        console.error("Missing authentication details");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API}api/users/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch profile data");
+        }
+
+        const result = await res.json();
+        setData(result);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
       }
     }
+
+    if (Cookies.get("accessToken")) {
+      setIsLoggedIn(true);
+    
+    }
+    fetchProfile();
   }, []);
+
+
+  // useEffect(() => {
+
+  // }, []);
 
   const handleLogout = () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
@@ -74,28 +107,24 @@ const Header = () => {
               Blog
             </Link>
           </li>
-          {/* <li>
-            <Link to="/profile" className="nav-link">
-              Setting
-            </Link>
-          </li> */}
         </ul>
       </nav>
-
+<
       <div className="nav-profile-section">
         {isLoggedIn ? (
           <div className="nav-avatar-container relative" ref={dropdownRef}>
-            {/* Avatar Button */}
             <div className="nav-avatar" onClick={toggleDropdown}>
-              {getInitial(username)}
+              <img
+                src={data.profile_picture_url}
+                alt="Img"
+                className="nav-img"
+              />
             </div>
-
             {/* Dropdown Menu */}
-
             {isDropdownOpen && (
               <div className="dropdown-menu">
                 <p className="dropdown-header">
-                  Signed in as <br /> <strong>{username}</strong>
+                  Signed in as <br /> <strong>{data.username}</strong>
                 </p>
                 <Link to="/profile" className="dropdown-item logout">
                   My Profile
