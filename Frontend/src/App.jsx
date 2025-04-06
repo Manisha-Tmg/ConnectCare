@@ -47,16 +47,14 @@ function App() {
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/caretaker" element={<BookCaretakerdetails />} />
         <Route path="/profile" element={<Profile />} />
-        {/* <Route path="/Caretakerview" element={<BookCaretakerViewDetails />} /> */}
+        {/* <Route path="/notification" element={< />} /> */}
         <Route path="/BookCaretaker/:id" element={<BookingFormPreview />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/caretakerDetails/:id" element={<Details />} />
-
         <Route
           path="/booking-details/:booking_id"
           element={<BookingDetails />}
         />
-
         {/* Caretaker */}
         <Route path="/login/caretaker" element={<CaretakerLogin />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -71,6 +69,7 @@ function App() {
         <Route path="/admin/Addcaretaker" element={<Addcaretaker />} />
         <Route path="/admin/Adduser" element={<Adduser />} />
         <Route path="/admin/Dashboard" element={<Admindash />} />
+        {/* api/users/notification/ */}
         <Route path="/admin/Users" element={<UserPanel />} />
         <Route path="/admin/Caretaker" element={<CaretakerPanel />} />
         <Route path="/admin/Caretaker" element={<CaretakerPanel />} />
