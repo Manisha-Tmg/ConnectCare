@@ -86,8 +86,8 @@ const BookingFormPreview = () => {
         caretaker_id: caretaker?.id,
         booking_date: formattedDate,
         status: "Pending",
-        first_name: user?.first_name,
-        last_name: user?.last_name,
+        name: user?.name,
+        // last_name: user?.last_name,
       };
 
       const response = await fetch(`${API}api/book_caretaker/`, {

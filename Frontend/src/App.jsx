@@ -29,6 +29,7 @@ import CaretakerPanel from "./Adminpage/Pages/Caretaker";
 import CaretakerDetails from "./Adminpage/Pages/CaretakerDetails";
 import UserPanel from "./Adminpage/Pages/User";
 import UserDetails from "./Adminpage/Pages/UserDetails.jsx";
+import Adduser from "./Adminpage/Pages/Useradd.jsx";
 // import BookingFormPreview from "./User/Pages/Booking";
 
 function App() {
@@ -68,6 +69,7 @@ function App() {
         {/* Admin */}
         <Route path="api/admin/login/" element={<AdminLogin />} />
         <Route path="/admin/Addcaretaker" element={<Addcaretaker />} />
+        <Route path="/admin/Adduser" element={<Adduser />} />
         <Route path="/admin/Dashboard" element={<Admindash />} />
         <Route path="/admin/Users" element={<UserPanel />} />
         <Route path="/admin/Caretaker" element={<CaretakerPanel />} />

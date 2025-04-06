@@ -55,7 +55,9 @@ const UserPanel = () => {
       <Sidebar />
       <div className="panel-header">
         <h1>User Management</h1>
-        <button className="add-user-btn">+ Add User</button>
+        <Link to={"/admin/Adduser"}>
+          <button className="add-user-btn">+ Add User</button>
+        </Link>
       </div>
 
       <div className="search-filter-container">

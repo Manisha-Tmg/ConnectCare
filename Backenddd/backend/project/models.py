@@ -45,17 +45,17 @@ class CustomUser(AbstractUser):
     # user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions")
 
    
-    USERNAME_FIELD = 'username'  
-    REQUIRED_FIELDS = []  
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']  
+
 
     def __str__(self):
-        return self.username
-
+        return {self.email}
 
 
 
 class Caretaker(models.Model):
-    # Personal Information th
+    # Personal Information 
     name = models.CharField(max_length=255)
     # date_of_birth = models.DateField(null=True, blank=True)
     
@@ -119,7 +119,6 @@ class Caretaker(models.Model):
     def __str__(self):
         return self.name
 
-# class Admin(models.Model):
 
 
 class Booking(models.Model):
@@ -131,6 +130,7 @@ class Booking(models.Model):
     
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)  # Link to User
     caretaker = models.ForeignKey("Caretaker", on_delete=models.CASCADE)  # Link to Caretaker
+    name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)  # Allow blank values
     first_name = models.CharField(max_length=150, blank=True)  # Allow blank values
     booking_date = models.DateTimeField()  
@@ -155,3 +155,15 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"Booking by {self.user.id} for {self.caretaker.name} on {self.booking_date}"
+
+
+# notification
+user = get_user_model()
+class Notification(models.Model):
+    user=models.ForeignKey(CustomUser,on_delete=models.CASCADE ,related_name="Notification")
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return  f"message{self.user.email} -{self.message[:20]}"

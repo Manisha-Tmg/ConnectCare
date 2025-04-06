@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from project.views import UserViewSet, UserRegistrationView,LoginView,AdminLoginView,CaretakerLoginView,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,booking_action,get_CaretakerBooking,booking_count_api,add_caretaker,admin_dashboard
+from project.views import UserViewSet, UserRegistrationView,LoginView,AdminLoginView,CaretakerLoginView,NotificationViewSet,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,booking_action,get_CaretakerBooking,booking_count_api,add_caretaker,admin_dashboard
 # Initialize the router
 router = DefaultRouter()
 router.register('user', UserViewSet, basename='user')
@@ -30,7 +30,10 @@ urlpatterns = [
 
     #User list and id
     path('api/users/',get_user,name='ger_user'),
-    path('api/users/<int:user_id>',get_user,name='ger_user'),
+    path('api/users/<int:user_id>',get_user,name='ger_user'),    
+    
+
+
 
 
     # Booking
@@ -40,7 +43,8 @@ urlpatterns = [
     # Booking list and id
     path('api/bookings/', get_Booking, name='book_caretakerlist'),
     path('api/caretaker/bookings/', get_CaretakerBooking, name='listofbook_caretaker'),
-    # path('api/bookings/<int:booking_id>', get_Booking, name='get_book_caretaker'),
+    path('api/users/notification/', 
+        NotificationViewSet.as_view({'get': 'list'}), name='notification-list'),
 
 
 

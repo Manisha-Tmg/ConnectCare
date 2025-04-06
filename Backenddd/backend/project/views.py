@@ -14,9 +14,9 @@ from datetime import datetime
 from django.contrib.auth.models import update_last_login
 from .serializers import ChangePasswordSerializer
 from django.shortcuts import get_object_or_404
-from .models import Caretaker,Booking,CustomUser
+from .models import Caretaker,Booking,CustomUser,Notification
 from django.contrib.auth import get_user_model
-from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer
+from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer,NotificationSerializer
 
 # User ViewSet for CRUD operations
 class UserViewSet(viewsets.ModelViewSet):
@@ -44,8 +44,7 @@ class UserRegistrationView(APIView):
                       "gender" :user.gender,
                       "address"  :user.address,     
                       "phone"  :user.phone,    
-        # profile_picture:user.p
-                    "email": user.email,
+                      "email": user.email,
                     "role": user.role  # Send role in response to navigate to roles based home
                 }
             }, status=status.HTTP_201_CREATED)
@@ -145,24 +144,24 @@ def add_caretaker(request):
 # Api for adding user details in amin# 
 
     
-def upload_image(request):
-    if request.method == 'POST' and request.FILES.get('image'):
-        image_file = request.FILES['image']
-        storage = MediaCloudinaryStorage()
-        uploaded_image = storage.save('project_caretaker/' + image_file.name, image_file)
-        image_url = storage.url(uploaded_image)
+# def upload_image(request):
+#     if request.method == 'POST' and request.FILES.get('image'):
+#         image_file = request.FILES['image']
+#         storage = MediaCloudinaryStorage()
+#         uploaded_image = storage.save('project_caretaker/' + image_file.name, image_file)
+#         image_url = storage.url(uploaded_image)
 
-        # Create a new Caretaker with the uploaded image URL
-        # caretaker = Caretaker.objects.create(
-        #     name=request.POST['name'],
-        #     image=image_url,
-        #     hourly_rate=request.POST['hourly_rate'],
-        #     experience=request.POST['experience'],
-        #     specialty=request.POST['specialty']
-        # )
+#         # Create a new Caretaker with the uploaded image URL
+#         # caretaker = Caretaker.objects.create(
+#         #     name=request.POST['name'],
+#         #     image=image_url,
+#         #     hourly_rate=request.POST['hourly_rate'],
+#         #     experience=request.POST['experience'],
+#         #     specialty=request.POST['specialty']
+#         # )
 
-        return JsonResponse({'message': 'Caretaker created successfully', 'image_url': image_url})
-    return JsonResponse({'error': 'Image not uploaded'}, status=400)
+#         return JsonResponse({'message': 'Caretaker created successfully', 'image_url': image_url})
+#     return JsonResponse({'error': 'Image not uploaded'}, status=400)
 
 
 # API of caretaker list
@@ -310,25 +309,34 @@ class ChangePasswordView(APIView):
 
 
 # Caretaker accepting portal
+from .models import Notification  # Import your Notification model
+
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def booking_action(request, booking_id):
     try:
-
         booking = Booking.objects.get(id=booking_id, caretaker_id=request.user.id)
     except Booking.DoesNotExist:
         return Response({"error": "Booking not found or unauthorized"}, status=status.HTTP_404_NOT_FOUND)
 
-    action = request.data.get("action") 
+    action = request.data.get("action")
 
     if action == "accept":
         booking.status = "accepted"
+        message = f"Your booking with {booking.caretaker.name} has been accepted!"
     elif action == "reject":
         booking.status = "rejected"
+        message = f"Your booking with {booking.caretaker.name} has been rejected."
     else:
         return Response({"error": "Invalid action"}, status=status.HTTP_400_BAD_REQUEST)
 
     booking.save()
+
+    # Create Notification for the user who made the booking
+    Notification.objects.create(
+        user=booking.user,
+        message=message
+    )
 
     return Response({"message": f"Booking {booking.status} successfully"}, status=status.HTTP_200_OK)
 
@@ -355,3 +363,15 @@ def admin_dashboard(request):
         "total_user": total_user,
         "total_bookings": total_bookings
     }, status=status.HTTP_200_OK)
+
+
+class NotificationViewSet(viewsets.ModelViewSet):
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Notification.objects.filter(user=self.request.user).order_by('-created_at')
+
+    def perform_create(self, serializer):
+        # Automatically assign the logged-in user to the notification
+        serializer.save(user=self.request.user)

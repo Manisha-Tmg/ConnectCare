@@ -3,20 +3,29 @@ import "../css/Header.css";
 import Logo from "./Logo";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { API } from "../../env";import { IoNotificationsOutline } from "react-icons/io5";
-
+import { API } from "../../env";
+import { IoNotificationsOutline } from "react-icons/io5";
+import Li from "./navli";
+import ProfileDropdown from "./ProfileDropd";
+import NotificationDropdown from "./NotificationDropd";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isNotificationOpen, setisNotificationOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const notificationRef = useRef(null);
+  const [notifications, setNotifications] = useState([
+    { message: "Your booking has been confirmed!" },
+    { message: "New caretaker matched your request." },
+  ]);
+
   const [data, setData] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchProfile() {
+    async function fetchProfile(e) {
       const token = Cookies.get("accessToken");
       const id = Cookies.get("user_id");
 
@@ -47,11 +56,9 @@ const Header = () => {
 
     if (Cookies.get("accessToken")) {
       setIsLoggedIn(true);
-    
     }
     fetchProfile();
   }, []);
-
 
   // useEffect(() => {
 
@@ -61,22 +68,26 @@ const Header = () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (confirmLogout) {
       Cookies.remove("accessToken", { path: "/" }); //to remove the cookies data that is saved
-      Cookies.remove("username", { path: "/" });
       Cookies.remove("role", { path: "/" });
       Cookies.remove("user_id", { path: "/" });
       Cookies.remove("booking_id", { path: "/" });
 
       // Update state
       setIsLoggedIn(false);
-      setUsername("");
       setIsDropdownOpen(false);
+      setNotifications(false);
       navigate("/"); // Redirect to home
     }
   };
 
-  // Toggle dropdown
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+    setisNotificationOpen(false);
+  };
+
+  const toggleNotificationDropdown = () => {
+    setisNotificationOpen(!isNotificationOpen);
+    setIsDropdownOpen(false);
   };
 
   return (
@@ -84,68 +95,32 @@ const Header = () => {
       <div>
         <Logo />
       </div>
-
-      <nav className="caretaker-nav">
-        <ul>
-          <li>
-            <Link to="/" className="nav-link">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/caretaker" className="nav-link">
-              Find Caretaker
-            </Link>
-          </li>
-          <li>
-            <Link to="/aboutus" className="nav-link">
-              About Us
-            </Link>
-          </li>
-          <li>
-            <Link to="/blog" className="nav-link">
-              Blog
-            </Link>
-          </li>
-        </ul>
-      </nav>
-<
+      <Li />
       <div className="nav-profile-section">
         {isLoggedIn ? (
           <div className="nav-avatar-container relative" ref={dropdownRef}>
-            <div className="nav-avatar" onClick={toggleDropdown}>
-              <img
-                src={data.profile_picture_url}
-                alt="Img"
-                className="nav-img"
+            <div className="nav-avatar-wrapper">
+              <IoNotificationsOutline
+                className="iconnnnn"
+                onClick={toggleNotificationDropdown}
               />
+              <div
+                className="nav-avatar"
+                onClick={toggleDropdown}
+                ref={notificationRef}
+              >
+                <img
+                  src={data.profile_picture_url}
+                  alt="Img"
+                  className="nav-img"
+                />
+              </div>
             </div>
             {/* Dropdown Menu */}
-            {isDropdownOpen && (
-              <div className="dropdown-menu">
-                <p className="dropdown-header">
-                  Signed in as <br /> <strong>{data.username}</strong>
-                </p>
-                <Link to="/profile" className="dropdown-item logout">
-                  My Profile
-                </Link>
-
-                <Link to="/change-password" className="dropdown-item logout">
-                  Change Password
-                </Link>
-
-                <Link
-                  to="/booking-details/:booking_id"
-                  className="dropdown-item logout"
-                >
-                  Booking Details
-                </Link>
-
-                <p onClick={handleLogout} className="dropdown-item logout">
-                  Log Out
-                </p>
-              </div>
+            {isNotificationOpen && (
+              <NotificationDropdown notifications={notifications} />
             )}
+            {isDropdownOpen && <ProfileDropdown />}
           </div>
         ) : (
           <Link to="/login">
