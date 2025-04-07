@@ -14,9 +14,9 @@ from datetime import datetime
 from django.contrib.auth.models import update_last_login
 from .serializers import ChangePasswordSerializer
 from django.shortcuts import get_object_or_404
-from .models import Caretaker,Booking,CustomUser,Notification
+from .models import Caretaker,Booking,CustomUser,Notification,NotificationCaretaker
 from django.contrib.auth import get_user_model
-from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer,NotificationSerializer
+from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer,NotificationSerializer,NotificationCaretakerSerializer
 
 # User ViewSet for CRUD operations
 class UserViewSet(viewsets.ModelViewSet):
@@ -309,7 +309,6 @@ class ChangePasswordView(APIView):
 
 
 # Caretaker accepting portal
-from .models import Notification  # Import your Notification model
 
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
@@ -335,8 +334,13 @@ def booking_action(request, booking_id):
     # Create Notification for the user who made the booking
     Notification.objects.create(
         user=booking.user,
-        message=message
+        message=message,
+        is_read=False  # default, but good to be explicit
+
     )
+
+
+    
 
     return Response({"message": f"Booking {booking.status} successfully"}, status=status.HTTP_200_OK)
 
@@ -365,6 +369,8 @@ def admin_dashboard(request):
     }, status=status.HTTP_200_OK)
 
 
+
+
 class NotificationViewSet(viewsets.ModelViewSet):
     serializer_class = NotificationSerializer
     permission_classes = [IsAuthenticated]
@@ -375,3 +381,26 @@ class NotificationViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         # Automatically assign the logged-in user to the notification
         serializer.save(user=self.request.user)
+
+
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Caretaker  
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def change_caretaker_status(request, id):
+    try:
+        caretaker = Caretaker.objects.get(id=id)
+        caretaker.is_approved = request.data.get('is_active', caretaker.is_approved)
+        caretaker.save()
+        return Response({
+            "message": "Status updated",
+            "is_approved": caretaker.is_approved
+        }, status=status.HTTP_200_OK)
+    except Caretaker.DoesNotExist:
+        return Response({"error": "Caretaker not found"}, status=status.HTTP_404_NOT_FOUND)
+

@@ -69,7 +69,7 @@ function App() {
         <Route path="/admin/Addcaretaker" element={<Addcaretaker />} />
         <Route path="/admin/Adduser" element={<Adduser />} />
         <Route path="/admin/Dashboard" element={<Admindash />} />
-        {/* api/users/notification/ */}
+        {/*  */}
         <Route path="/admin/Users" element={<UserPanel />} />
         <Route path="/admin/Caretaker" element={<CaretakerPanel />} />
         <Route path="/admin/Caretaker" element={<CaretakerPanel />} />

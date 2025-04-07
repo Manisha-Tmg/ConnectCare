@@ -97,6 +97,7 @@ body {
 .caretakers-table td {
   padding: 12px 15px;
   text-align: left;
+  text-transform: capitalize;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -134,12 +135,12 @@ body {
   color: #8e44ad;
 }
 
-.status-badge.active {
+.status-badge.verified {
   background-color: #e8f8f5;
   color: var(--success-color);
 }
 
-.status-badge.inactive {
+.status-badge.Rejected {
   background-color: #fef5e7;
   color: var(--warning-color);
 }
@@ -186,4 +187,26 @@ body {
   justify-content: flex-end;
   color: #7f8c8d;
   font-size: 14px;
+}
+
+.status-btnn.Reject {
+  padding: 6px 12px;
+  background-color: #087f46;
+  color: var(--text-color1);
+  width: 10rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-right: 5px;
+}
+
+.status-btnn.verify {
+  padding: 6px 12px;
+  width: 10rem;
+  color: var(--text-color1);
+  background-color: #941b09;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-right: 5px;
 }

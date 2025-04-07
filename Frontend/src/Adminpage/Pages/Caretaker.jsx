@@ -6,54 +6,80 @@ import { FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Sidebar from "../components/AdminSidebar";
+import { ShieldCheck } from "lucide-react";
 
 const CaretakerPanel = () => {
-  const [caretakers, setcaretakers] = useState([]);
-  const [datas, setdata] = useState([]);
+  const [caretakers, setCaretakers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    async function caretakerdetail() {
-      const token = Cookies.get("accessToken");
-      try {
-        const res = await fetch(`${API}api/caretakers/`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await res.json();
-        setdata(data);
-        setcaretakers(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    caretakerdetail();
+    fetchCaretakers();
   }, []);
 
-  //
+  const fetchCaretakers = async () => {
+    const token = Cookies.get("accessToken");
+    try {
+      const response = await fetch(`${API}api/caretakers/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      setCaretakers(data);
+    } catch (error) {
+      console.error("Error fetching caretakers:", error);
+    }
+  };
+
+  const handleStatusChange = async (id, currentStatus) => {
+    const token = Cookies.get("accessToken");
+    try {
+      const response = await fetch(`${API}caretakers/${id}/change-status/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ is_approved: !currentStatus }),
+      });
+
+      if (response.ok) {
+        const updated = caretakers.map((ct) =>
+          ct.id === id ? { ...ct, is_approved: !currentStatus } : ct
+        );
+        setCaretakers(updated);
+      } else {
+        console.log("Failed to update status");
+      }
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+
+  const filteredCaretakers = caretakers.filter((ct) =>
+    ct.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
       <Sidebar />
       <div className="caretaker-panel">
         <div className="panel-header">
           <h1>Caretaker Management</h1>
-          <Link to={"/admin/Addcaretaker"}>
+          <Link to="/admin/Addcaretaker">
             <button className="add-caretaker-btn">+ Add Caretaker</button>
           </Link>
         </div>
 
         <div className="search-filter-container">
-          <div className="search-container">
-            <input
-              type="text"
-              placeholder="Search caretakers..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="Search caretakers..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
 
         <div className="caretakers-table-container">
@@ -64,12 +90,12 @@ const CaretakerPanel = () => {
                 <th>Email</th>
                 <th>Role</th>
                 <th>Status</th>
-                <th>username</th>
+                <th>Username</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {caretakers.map((caretaker) => (
+              {filteredCaretakers.map((caretaker) => (
                 <tr key={caretaker.id}>
                   <td>{caretaker.name}</td>
                   <td>{caretaker.email}</td>
@@ -79,8 +105,12 @@ const CaretakerPanel = () => {
                     </span>
                   </td>
                   <td>
-                    <span className={`status-badge ${caretaker.is_active}`}>
-                      {caretaker.is_active ? "Active" : "Not Active"}
+                    <span
+                      className={`status-badge ${
+                        caretaker.is_approved ? "verified" : "Rejected"
+                      }`}
+                    >
+                      {caretaker.is_approved ? "verified" : "Rejected"}
                     </span>
                   </td>
                   <td>{caretaker.username}</td>
@@ -92,6 +122,16 @@ const CaretakerPanel = () => {
                     </Link>
                     <button className="delete-btn">
                       <MdDelete />
+                    </button>
+                    <button
+                      className={`status-btnn ${
+                        caretaker.is_approved ? "verify" : "Reject"
+                      }`}
+                      onClick={() =>
+                        handleStatusChange(caretaker.id, caretaker.is_approved)
+                      }
+                    >
+                      {caretaker.is_approved ? "Reject" : "Verify"}
                     </button>
                   </td>
                 </tr>

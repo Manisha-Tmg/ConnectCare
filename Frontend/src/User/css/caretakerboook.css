@@ -1,0 +1,78 @@
+/* BookingFormPreview.css */
+
+.bookh2 {
+  text-align: center;
+  font-size: 2rem;
+  margin: 20px 0;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.form-section {
+  background-color: #f9f9f9;
+  padding: 20px 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  max-width: 600px;
+  margin: 0 auto 30px;
+}
+
+.form-section h3 {
+  margin-bottom: 20px;
+  color: #34495e;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.input[disabled] {
+  background-color: #e9ecef;
+  color: #6c757d;
+}
+
+.booking-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.booking-button {
+  padding: 12px 30px;
+  font-size: 1rem;
+  border: none;
+
+  border: 2px solid #008080;
+  background-color: #008080;
+  color: #fff;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.booking-button:hover {
+  background-color: #005d5d;
+}

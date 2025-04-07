@@ -101,9 +101,6 @@ const CaretakerProfile = () => {
             <div className="profile-info">
               <strong>Languages Spoken:</strong> {data.languages_spoken}
             </div>
-            <div className="profile-info">
-              <strong>Working Days:</strong> {data.working_days.join(", ")}
-            </div>
           </div>
 
           <div className="profile-section">

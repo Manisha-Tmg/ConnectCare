@@ -1,88 +1,81 @@
-import { useEffect, useState } from "react";
 import Header from "../components/Header";
-import Sidebar from "../components/Sidebaruser";
 import "../css/setting.css";
 import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
 import { API } from "../../env";
 
-const BookingDetails = () => {
-  const [data, setData] = useState([]);
+const BookingPanel = () => {
+  const [bookings, setBookings] = useState([]);
+  const [caretakers, setCaretakers] = useState([]);
 
   useEffect(() => {
-    async function fetchBooking() {
+    const fetchData = async () => {
       const token = Cookies.get("accessToken");
 
-      if (!token) {
-        console.error("Missing authentication details");
-        return;
-      }
-
       try {
-        const res = await fetch(`${API}api/bookings/`, {
-          method: "GET",
+        // Fetch Bookings
+        const resBooking = await fetch(`${API}api/bookings/`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         });
-
-        if (!res.ok) {
-          throw new Error("Failed to fetch Booking data");
-        }
-
-        const result = await res.json();
-        setData(result);
+        const bookingData = await resBooking.json();
+        setBookings(bookingData);
       } catch (error) {
-        console.error("Error fetching Bokking:", error);
+        console.error("Error fetching booking or caretaker data:", error);
       }
-    }
+    };
 
-    fetchBooking();
+    fetchData();
   }, []);
 
   return (
     <div>
       <Header />
-      <div className="booking-container">
-        <h2>Booking Details</h2>
-        {data ? (
-          <table className="booking-table">
+      <div className="caretakers-panel">
+        <div className="panels-header">
+          <h1>My Bookings</h1>
+        </div>
+
+        <div className="caretakers-table-container">
+          <table className="caretakers-table">
             <thead>
               <tr>
-                {/* <th>Caretaker name</th> */}
-                <th>Date</th>
+                <th>Date</th> <th>Number</th>
+                <th>Caretaker</th>
                 <th>Location</th>
-                <th>Number</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((booking) => (
-                <tr key={booking.id}>
-                  <td>
-                    {new Date(booking.booking_date).toLocaleDateString(
-                      "en-US",
-                      {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      }
-                    )}
-                  </td>
-
-                  <td className="rowww">{booking.location}</td>
-                  <td>{booking.number}</td>
-                  <td className="rowww">{booking.status}</td>
+              {bookings.length > 0 ? (
+                bookings.map((booking) => (
+                  <tr key={booking.id}>
+                    <td>{new Date(booking.booking_date).toLocaleString()}</td>
+                    <td>{booking.number}</td>
+                    <td>{booking.caretaker_name}</td>
+                    <td>{booking.location}</td>
+                    <td>
+                      <span
+                        className={`status-badge ${booking.status.toLowerCase()}`}
+                      >
+                        {booking.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5">No bookings found.</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
-        ) : (
-          <p>Loading booking details...</p>
-        )}
+        </div>
       </div>
     </div>
   );
 };
 
-export default BookingDetails;
+export default BookingPanel;

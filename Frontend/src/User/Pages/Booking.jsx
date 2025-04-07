@@ -85,9 +85,8 @@ const BookingFormPreview = () => {
         number: number,
         caretaker_id: caretaker?.id,
         booking_date: formattedDate,
+        name: name,
         status: "Pending",
-        name: user?.name,
-        // last_name: user?.last_name,
       };
 
       const response = await fetch(`${API}api/book_caretaker/`, {
@@ -115,38 +114,45 @@ const BookingFormPreview = () => {
   return (
     <div>
       <Header />
-      <h2>Book Your Caretaker</h2>
-      <div className="form-section">
-        <h3>Booking Details</h3>
+      <div>
+        <h2 className="headh2">Book Your Caretaker</h2>
+        <div className="form-section">
+          <h3>Booking Details</h3>
+          {/* Caretaker Name (Read-Only) */}
+          {caretaker && (
+            <div className="form-group">
+              <label className="label">Caretaker Name</label>
+              <input
+                type="text"
+                className="input"
+                value={caretaker.name}
+                disabled
+              />
+            </div>
+          )}
+          {user && (
+            <div className="form-group">
+              <label className="label">User Name</label>
+              <input type="text" className="input" value={user.name} disabled />
+            </div>
+          )}
 
-        {/* Caretaker Name (Read-Only) */}
-        {caretaker && (
-          <div className="form-group">
-            <label className="label">Caretaker Name</label>
-            <input
-              type="text"
-              className="input"
-              value={caretaker.name}
-              disabled
-            />
-          </div>
-        )}
+          <label className="label">Date</label>
+          <input
+            type="date"
+            className="input"
+            onChange={(e) => setDate(e.target.value)}
+            value={date}
+          />
 
-        <label className="label">Date</label>
-        <input
-          type="date"
-          className="input"
-          onChange={(e) => setDate(e.target.value)}
-          value={date}
-        />
-
-        <label className="label">Number</label>
-        <input
-          type="number"
-          className="input"
-          onChange={(e) => setNumber(e.target.value)}
-          value={number}
-        />
+          <label className="label">Number</label>
+          <input
+            type="number"
+            className="input"
+            onChange={(e) => setNumber(e.target.value)}
+            value={number}
+          />
+        </div>
       </div>
 
       <div className="form-section">
@@ -160,7 +166,6 @@ const BookingFormPreview = () => {
           onChange={(e) => setLocation(e.target.value)}
           value={location}
         />
-
         <label className="label">Additional Note</label>
         <input
           type="text"
@@ -169,16 +174,16 @@ const BookingFormPreview = () => {
           onChange={(e) => setNote(e.target.value)}
           value={note}
         />
-      </div>
 
-      <div className="booking-actions">
-        <button
-          type="button"
-          className="booking-button"
-          onClick={handleBooking}
-        >
-          Confirm Booking
-        </button>
+        <div className="booking-actions">
+          <button
+            type="button"
+            className="booking-button"
+            onClick={handleBooking}
+          >
+            Confirm Booking
+          </button>
+        </div>
       </div>
     </div>
   );

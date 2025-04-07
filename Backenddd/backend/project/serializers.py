@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Caretaker
 from django.contrib.auth import authenticate
-from .models import CustomUser,Booking,Notification
+from .models import CustomUser,Booking,Notification,NotificationCaretaker
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -120,9 +120,10 @@ class CaretakerSerializer(serializers.ModelSerializer):
 
 # booking
 class BookingSerializer(serializers.ModelSerializer):
+    caretaker_name = serializers.CharField(source='caretaker.name', read_only=True)
     class Meta:
         model = Booking
-        fields = ['id','user','caretaker','booking_date',"status",'location','number','note','first_name','last_name','name']
+        fields = ['id','user','caretaker','booking_date',"status",'location','number','note','name',"caretaker_name"]
         
 
 
@@ -164,3 +165,11 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ['id', 'message', 'is_read', 'created_at', 'user']
+
+
+
+# notification for caretaker
+class NotificationCaretakerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NotificationCaretaker
+        fields = ['id', 'message', 'is_read', 'created_at', 'caretaker']

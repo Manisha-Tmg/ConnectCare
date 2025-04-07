@@ -9,7 +9,7 @@ import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
@@ -34,8 +34,6 @@ const Login = () => {
         });
         Cookies.set("user_id", data.user_id);
         Cookies.set("role", data.role);
-        Cookies.set("first_name", data.first_name);
-        Cookies.set("last_name", data.last_name);
         Cookies.set("username", data.username);
 
         // Navigate based on user role
@@ -64,8 +62,8 @@ const Login = () => {
           <h2>Welcome Back</h2>
           <p>Please log in to your account</p>
           <InputField
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             type="text"
             placeholder="Enter your username"
           />

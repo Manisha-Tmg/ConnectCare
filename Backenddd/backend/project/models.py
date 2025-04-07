@@ -88,9 +88,6 @@ class Caretaker(models.Model):
     specialty = models.CharField(max_length=50, choices=SPECIALTY_CHOICES, null=True, blank=True)  # Fixed field name
     previous_experience = models.TextField(null=True, blank=True)
 
-    # Availability & Preferences
-    working_days = models.JSONField(null=True, blank=True)  
-    # preferred_locations = models.TextField(null=True, blank=True)
 
     # Rates
     hourly_rate = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
@@ -131,8 +128,8 @@ class Booking(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)  # Link to User
     caretaker = models.ForeignKey("Caretaker", on_delete=models.CASCADE)  # Link to Caretaker
     name = models.CharField(max_length=150, blank=True)
-    last_name = models.CharField(max_length=150, blank=True)  # Allow blank values
-    first_name = models.CharField(max_length=150, blank=True)  # Allow blank values
+    # last_name = models.CharField(max_length=150, blank=True)  # Allow blank values
+    # first_name = models.CharField(max_length=150, blank=True)  # Allow blank values
     booking_date = models.DateTimeField()  
     number = models.CharField(
         max_length=10,
@@ -167,3 +164,14 @@ class Notification(models.Model):
 
     def __str__(self):
         return  f"message{self.user.email} -{self.message[:20]}"
+    
+
+
+class NotificationCaretaker(models.Model):
+    caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE, related_name="notifications")
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"To: {self.caretaker.email} | Message: {self.message[:30]}"

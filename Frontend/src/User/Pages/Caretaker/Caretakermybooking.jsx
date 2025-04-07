@@ -81,7 +81,7 @@ const CaretakerBookingPortal = () => {
   };
 
   return (
-    <div className="booking-container">
+    <div className="bookings-container">
       <CaretakerSidebar />
       <div className="booking-content">
         <h2 className="booking-title">Booking Requests</h2>

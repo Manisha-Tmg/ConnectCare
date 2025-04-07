@@ -92,13 +92,13 @@ const Details = () => {
               <FaMapMarkerAlt /> {caretaker.address}
             </p>
           </div>
-          <div className="Details-info-card">
+          {/* <div className="Details-info-card">
             <h3>Working Days:</h3>
             <p>
               <FaRegCalendarDays />
               {caretaker.working_days}
             </p>
-          </div>
+          </div> */}
 
           <div className="Details-info-card">
             <h3>Language</h3>

@@ -16,7 +16,7 @@ const HomePage = () => {
 
       navigate("/login");
     } else {
-      navigate("/bookcaretaker");
+      navigate("/caretaker");
     }
   };
 

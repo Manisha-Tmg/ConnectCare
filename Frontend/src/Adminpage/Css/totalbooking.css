@@ -1,0 +1,55 @@
+/* Table styling */
+.booking-table-container {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+.booking-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+.booking-table th,
+.booking-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.booking-table th {
+  background-color: #f0f0f0;
+  color: #555;
+  font-weight: 600;
+}
+
+.booking-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* booking Badge */
+.booking-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+/* booking Colors */
+.booking-badge.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.booking-badge.accepted {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.booking-badge.rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+}

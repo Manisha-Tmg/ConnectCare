@@ -6,26 +6,21 @@ import Cookies from "js-cookie";
 import { API } from "../../env";
 import { IoNotificationsOutline } from "react-icons/io5";
 import Li from "./navli";
-import ProfileDropdown from "./ProfileDropd";
 import NotificationDropdown from "./NotificationDropd";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isNotificationOpen, setisNotificationOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const dropdownRef = useRef(null);
   const notificationRef = useRef(null);
-  const [notifications, setNotifications] = useState([
-    { message: "Your booking has been confirmed!" },
-    { message: "New caretaker matched your request." },
-  ]);
-
+  const [notifications, setNotifications] = useState([]);
   const [data, setData] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchProfile(e) {
+    async function fetchProfile() {
       const token = Cookies.get("accessToken");
       const id = Cookies.get("user_id");
 
@@ -49,6 +44,7 @@ const Header = () => {
 
         const result = await res.json();
         setData(result);
+        // Optionally fetch notifications here too
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
@@ -60,34 +56,29 @@ const Header = () => {
     fetchProfile();
   }, []);
 
-  // useEffect(() => {
-
-  // }, []);
-
   const handleLogout = () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (confirmLogout) {
-      Cookies.remove("accessToken", { path: "/" }); //to remove the cookies data that is saved
+      Cookies.remove("accessToken", { path: "/" }); // to remove the cookies data that is saved
       Cookies.remove("role", { path: "/" });
       Cookies.remove("user_id", { path: "/" });
       Cookies.remove("booking_id", { path: "/" });
 
-      // Update state
       setIsLoggedIn(false);
       setIsDropdownOpen(false);
-      setNotifications(false);
+      setNotifications([]);
       navigate("/"); // Redirect to home
     }
   };
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
-    setisNotificationOpen(false);
+    setIsNotificationOpen(false); // Close notifications if profile dropdown is open
   };
 
   const toggleNotificationDropdown = () => {
-    setisNotificationOpen(!isNotificationOpen);
-    setIsDropdownOpen(false);
+    setIsNotificationOpen(!isNotificationOpen);
+    setIsDropdownOpen(false); // Close profile dropdown if notifications are open
   };
 
   return (
@@ -110,17 +101,39 @@ const Header = () => {
                 ref={notificationRef}
               >
                 <img
-                  src={data.profile_picture_url}
+                  src={data?.profile_picture_url}
                   alt="Img"
                   className="nav-img"
                 />
               </div>
             </div>
-            {/* Dropdown Menu */}
-            {isNotificationOpen && (
-              <NotificationDropdown notifications={notifications} />
+
+            {/* Notification Dropdown */}
+            {isNotificationOpen && <NotificationDropdown />}
+
+            {/* Profile Dropdown */}
+            {isDropdownOpen && (
+              <div className="dropdown-menu">
+                <p className="dropdown-header">
+                  Signed in as <br /> <strong>{data?.username}</strong>
+                </p>
+                <Link to="/profile" className="dropdown-item logout">
+                  My Profile
+                </Link>
+                <Link to="/change-password" className="dropdown-item logout">
+                  Change Password
+                </Link>
+                <Link
+                  to={`/booking-details/${data.id}`}
+                  className="dropdown-item logout"
+                >
+                  Booking Details
+                </Link>
+                <p onClick={handleLogout} className="dropdown-item logout">
+                  Log Out
+                </p>
+              </div>
             )}
-            {isDropdownOpen && <ProfileDropdown />}
           </div>
         ) : (
           <Link to="/login">

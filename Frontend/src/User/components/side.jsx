@@ -62,12 +62,11 @@ const CaretakerSidebar = () => {
       icon: <FaHome className="icon" />,
       label: "Dashboard",
     },
-    // { path: "/task", icon: <FaTasks className="icon" />, label: "Tasks" },
-    {
-      path: "/calendar",
-      icon: <FaCalendarAlt className="icon" />,
-      label: "Calendar",
-    },
+    // {
+    //   path: "/calendar",
+    //   icon: <FaCalendarAlt className="icon" />,
+    //   label: "Calendar",
+    // },
     {
       path: "/booking/",
       icon: <FaBookmark className="icon" />,

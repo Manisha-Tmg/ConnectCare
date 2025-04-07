@@ -6,10 +6,12 @@ import joordan from "../../assets/joordan.jpg";
 
 const Blog = () => {
   return (
-    <div>
+    <div className="testimonial-wrapper">
       <section className="about-us-testimonials">
-        <h2>What Our Families Say</h2>
-        <p>Real stories from people who trust ConnectCare!</p>
+        <h2 className="testimonial-title">What Our Families Say ❤️</h2>
+        <p className="testimonial-subtitle">
+          Real stories from people who trust <strong>ConnectCare</strong>!
+        </p>
         <div className="testimonials-carousel">
           <div className="testimonial-item">
             <img src={photo} alt="Sophia" className="testimonial-image" />

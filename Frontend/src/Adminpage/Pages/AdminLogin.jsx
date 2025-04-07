@@ -6,7 +6,7 @@ import { API } from "../../env";
 import InputField from "../../User/components/Input";
 
 const AdminLogin = () => {
-  const [username, setUsername] = useState("");
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const AdminLogin = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
@@ -68,10 +68,10 @@ const AdminLogin = () => {
           <h2>Welcome Back</h2>
           <p>Please log in to your account</p>
           <InputField
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setemail(e.target.value)}
             type="text"
-            placeholder="Enter your username"
+            placeholder="Enter your email"
           />
           <InputField
             value={password}

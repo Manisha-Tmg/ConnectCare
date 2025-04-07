@@ -16,16 +16,6 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# import os
-
-# BASE_DIR = Path(__file__).resolve().parent.parent
-
-# MEDIA_URL = "/media/"
-# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-8=t2)*8-@69jipw3udtujqsnw5t4nj3t=*bi_d9$ju1+wrc=eo'
@@ -55,10 +45,18 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'project',
+    'channels'
     
-
-
 ]
+
+ASGI_APPLICATION = "connectcare.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
