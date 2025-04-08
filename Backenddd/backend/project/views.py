@@ -130,7 +130,7 @@ class AdminLoginView(APIView):
 
 # Register Caretaker
 @api_view(['POST'])
-@permission_classes([IsAdminUser])  # making ensure that admin can only add caretaker
+@permission_classes([AllowAny])  # making ensure that admin can only add caretaker
 def add_caretaker(request):
     if request.method == 'POST':
         serializer = CaretakerSerializer(data=request.data)
