@@ -33,7 +33,6 @@ class CustomUser(AbstractUser):
 
     # Account Information
     username = models.CharField(max_length=150, unique=True)
-    password = models.CharField(max_length=255)  
 
     # Status & Timestamps
     is_approved = models.BooleanField(default=True)

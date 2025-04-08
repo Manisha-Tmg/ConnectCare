@@ -39,16 +39,37 @@ const UserPanel = () => {
   const [filterRole, setFilterRole] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
 
-  // Filtered users
-  //   const filteredUsers = users.filter((user) => {
-  //     const matchesSearch =
-  //       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //       user.email.toLowerCase().includes(searchTerm.toLowerCase());
-  //     const matchesRole = filterRole === "" || user.role === filterRole;
-  //     const matchesStatus = filterStatus === "" || user.status === filterStatus;
+  const handleStatusChange = async (id, currentStatus) => {
+    const token = Cookies.get("accessToken");
 
-  //     return matchesSearch && matchesRole && matchesStatus;
-  //   });
+    try {
+      const response = await fetch(`${API}users/${id}/change-status/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ is_approved: !currentStatus }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const updated = users.map((ct) =>
+          ct.id === id ? { ...ct, is_approved: data.is_approved } : ct
+        );
+        setUsers(updated);
+      } else {
+        console.error("Status update failed");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const filteredusers = users.filter((ct) =>
+    ct.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="user-panel">
@@ -58,17 +79,6 @@ const UserPanel = () => {
         <Link to={"/admin/Adduser"}>
           <button className="add-user-btn">+ Add User</button>
         </Link>
-      </div>
-
-      <div className="search-filter-container">
-        <div className="search-container">
-          <input
-            type="text"
-            placeholder="Search users..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
       </div>
 
       <div className="users-table-container">
@@ -86,17 +96,14 @@ const UserPanel = () => {
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
-                <td>
-                  {user.first_name}
-                  {user.last_name}
-                </td>
+                <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
                   <span className={`role-badge ${user.role}`}>{user.role}</span>
                 </td>
                 <td>
-                  <span className={`status-badge ${user.is_active}`}>
-                    {user.is_active ? "Active" : "Not Active"}
+                  <span className={`status-badge ${user.is_approved}`}>
+                    {user.is_approved ? "Verified" : "Rejected"}
                   </span>
                 </td>
                 <td>{user.username}</td>
@@ -106,9 +113,18 @@ const UserPanel = () => {
                       <FaEye />
                     </button>
                   </Link>
-
                   <button className="delete-btn">
                     <MdDelete />
+                  </button>
+                  <button
+                    className={`status-btnn ${
+                      user.is_approved ? "verify" : "Reject"
+                    }`}
+                    onClick={() =>
+                      handleStatusChange(user.id, user.is_approved)
+                    }
+                  >
+                    {user.is_approved ? "Reject" : "Verify"}
                   </button>
                 </td>
               </tr>

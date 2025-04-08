@@ -124,7 +124,7 @@ body {
   color: var(--primary-color);
 }
 
-.role-badge.editor {
+.role-badge.user {
   background-color: #e8f8f5;
   color: #16a085;
 }
@@ -134,12 +134,12 @@ body {
   color: #8e44ad;
 }
 
-.status-badge.active {
+.status-badge.Verified {
   background-color: #e8f8f5;
   color: var(--success-color);
 }
 
-.status-badge.inactive {
+.status-badge.Rejected {
   background-color: #fef5e7;
   color: var(--warning-color);
 }

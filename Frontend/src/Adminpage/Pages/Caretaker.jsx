@@ -35,6 +35,7 @@ const CaretakerPanel = () => {
 
   const handleStatusChange = async (id, currentStatus) => {
     const token = Cookies.get("accessToken");
+
     try {
       const response = await fetch(`${API}caretakers/${id}/change-status/`, {
         method: "PATCH",
@@ -45,16 +46,18 @@ const CaretakerPanel = () => {
         body: JSON.stringify({ is_approved: !currentStatus }),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
         const updated = caretakers.map((ct) =>
-          ct.id === id ? { ...ct, is_approved: !currentStatus } : ct
+          ct.id === id ? { ...ct, is_approved: data.is_approved } : ct
         );
         setCaretakers(updated);
       } else {
-        console.log("Failed to update status");
+        console.error("Status update failed");
       }
     } catch (error) {
-      console.error("Error updating status:", error);
+      console.error("Error:", error);
     }
   };
 

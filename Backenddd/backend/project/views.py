@@ -6,7 +6,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status, permissions,generics
-from cloudinary_storage.storage import MediaCloudinaryStorage
 from django.shortcuts import render
 from django.middleware.csrf import get_token
 from django.http import JsonResponse
@@ -14,7 +13,7 @@ from datetime import datetime
 from django.contrib.auth.models import update_last_login
 from .serializers import ChangePasswordSerializer
 from django.shortcuts import get_object_or_404
-from .models import Caretaker,Booking,CustomUser,Notification,NotificationCaretaker
+from .models import Caretaker,Booking,CustomUser,Notification
 from django.contrib.auth import get_user_model
 from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer,NotificationSerializer,NotificationCaretakerSerializer
 
@@ -384,18 +383,13 @@ class NotificationViewSet(viewsets.ModelViewSet):
 
 
 
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework import status
-from .models import Caretaker  
-
+# update status for caretaker
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def change_caretaker_status(request, id):
     try:
         caretaker = Caretaker.objects.get(id=id)
-        caretaker.is_approved = request.data.get('is_active', caretaker.is_approved)
+        caretaker.is_approved = request.data.get('is_approved', caretaker.is_approved)
         caretaker.save()
         return Response({
             "message": "Status updated",
@@ -403,4 +397,20 @@ def change_caretaker_status(request, id):
         }, status=status.HTTP_200_OK)
     except Caretaker.DoesNotExist:
         return Response({"error": "Caretaker not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+# update status for users
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def change_user_status(request, id):
+    try:
+        user = CustomUser.objects.get(id=id)
+        user.is_approved = request.data.get('is_approved', user.is_approved)
+        user.save()
+        return Response({
+            "message": "Status updated",
+            "is_approved": user.is_approved
+        }, status=status.HTTP_200_OK)
+    except Caretaker.DoesNotExist:
+        return Response({"error": "user not found"}, status=status.HTTP_404_NOT_FOUND)
 

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from project.views import UserViewSet, UserRegistrationView,LoginView,AdminLoginView,CaretakerLoginView,NotificationViewSet,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,booking_action,get_CaretakerBooking,booking_count_api,add_caretaker,admin_dashboard,change_caretaker_status
+from project.views import UserViewSet, UserRegistrationView,LoginView,AdminLoginView,CaretakerLoginView,NotificationViewSet,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,booking_action,get_CaretakerBooking,booking_count_api,add_caretaker,admin_dashboard,change_caretaker_status,change_user_status
 # Initialize the router
 router = DefaultRouter()
 router.register('user', UserViewSet, basename='user')
@@ -19,6 +19,7 @@ urlpatterns = [
     path('auth/api/login/', LoginView.as_view(), name='user_login'),
     path('api/changepassword/', ChangePasswordView.as_view(), name='changepassword'),
     path('caretakers/<int:id>/change-status/', change_caretaker_status, name='change-caretaker-status'),
+    path('users/<int:id>/change-status/', change_user_status, name='change-users-status'),
 
 
     # Caretaker list and id
@@ -26,6 +27,7 @@ urlpatterns = [
     path('caretaker/bookings/<int:booking_id>/action/', booking_action, name='booking_action'),
     path('caretaker/dashboard/', booking_count_api, name='booking_count'),
     path('api/caretakers/', get_caretakers, name='get_caretakers'),
+
     path('api/caretakers/<int:caretaker_id>', get_caretakers, name='get_caretakers'),
     # path('api/caretakers/notification/', 
     #     NotificationCaretakerViewSet.as_view({'get': 'list'}), name='caretaker-notification-list'),
