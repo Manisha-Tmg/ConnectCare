@@ -128,7 +128,7 @@ class AdminLoginView(APIView):
     
 
 
-
+# Register Caretaker
 @api_view(['POST'])
 @permission_classes([IsAdminUser])  # making ensure that admin can only add caretaker
 def add_caretaker(request):

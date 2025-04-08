@@ -100,6 +100,8 @@ class CaretakerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Caretaker
         fields = '__all__'
+        extra_kwargs = {'password': {'write_only': True}}
+
 
     def get_profile_picture_url(self, obj):
         return self.get_cloudinary_url(obj.profile_picture)
