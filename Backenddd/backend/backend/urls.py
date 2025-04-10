@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from project.views import UserViewSet, UserRegistrationView,LoginView,AdminLoginView,CaretakerLoginView,NotificationViewSet,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,booking_action,get_CaretakerBooking,booking_count_api,CaretakerRegistrationView,admin_dashboard,change_caretaker_status,change_user_status,CareChangePasswordView,delete_user
+from project.views import UserViewSet, UserRegistrationView,LoginView,AdminLoginView,CaretakerLoginView,NotificationViewSet,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,booking_action,get_CaretakerBooking,booking_count_api,CaretakerRegistrationView,admin_dashboard,change_caretaker_status,change_user_status,CareChangePasswordView,delete_user,caretaker_delete
 # Initialize the router
 router = DefaultRouter()
 router.register('user', UserViewSet, basename='user')
@@ -60,7 +60,8 @@ urlpatterns = [
     path('auth/api/login/admin', AdminLoginView.as_view(), name='Admin_login'),
     path('caretakers/register/', CaretakerRegistrationView.as_view(), name='caretaker-register'),
     path('api/admin/dashboard/', admin_dashboard, name='admin-dashboard'),
-    path('api/admin/delete/<int:user_id>/', delete_user, name='user-delete'),
+    path('api/admin/user/delete/<int:user_id>/', delete_user, name='user-delete'),
+    path('api/admin/caretaker/delete/<int:caretaker_id>/', caretaker_delete, name='user-delete'),
 
     # note:Dont forgot the slash at end this cause error page not faound/
 

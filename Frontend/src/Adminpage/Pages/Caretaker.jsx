@@ -34,16 +34,31 @@ const CaretakerPanel = () => {
     }
   };
 
-  // async function handledelete() {
-  //   const id = Cookies.get("user_id");
-  //   try {
-  //     const res = await fetch(`${API}api/users/delete/${id}`, {
-  //       headers: "DELETE",
-  //     });
-  //   } catch (error) {
-  //     toast.error("erroro");
-  //   }
-  // }
+  async function handleDelete(id) {
+    const token = Cookies.get("accessToken");
+
+    try {
+      const res = await fetch(`${API}api/admin/delete/caretaker/${id}/`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        userdetail(data);
+        toast.success("User deleted successfully");
+      } else {
+        toast.error(data.message || "Something went wrong");
+      }
+    } catch (error) {
+      toast.error("An error occurred");
+      console.error(error);
+    }
+  }
   const handleStatusChange = async (id, currentStatus) => {
     const token = Cookies.get("accessToken");
 
@@ -134,7 +149,10 @@ const CaretakerPanel = () => {
                         <FaEye />
                       </button>
                     </Link>
-                    <button className="delete-btn" onClick={handledelete}>
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(caretaker.id)}
+                    >
                       <MdDelete />
                     </button>
                     <button

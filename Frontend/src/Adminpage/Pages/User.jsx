@@ -72,7 +72,7 @@ const UserPanel = () => {
     const token = Cookies.get("accessToken");
 
     try {
-      const res = await fetch(`${API}api/admin/delete/${id}/`, {
+      const res = await fetch(`${API}api/admin/user/delete/${id}/`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -409,36 +409,6 @@ def change_user_status(request, id):
 
 
 
-class CareChangePasswordView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        caretaker = request.caretaker
-        serializer = ChangePasswordSerializer(data=request.data)
-
-        if serializer.is_valid():
-            old_password = serializer.validated_data['old_password']
-            new_password = serializer.validated_data['new_password']
-            confirm_password = serializer.validated_data['confirm_password']
-
-            # Check if new passwords match
-            if new_password != confirm_password:
-                return Response({"error": "Passwords do not match"}, status=status.HTTP_400_BAD_REQUEST)
-
-            # Check if old password is correct
-            if not caretaker.check_password(old_password):
-                return Response({"error": "Old password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
-
-            # Set the new password
-            caretaker.set_password(new_password)
-            caretaker.save()
-            update_last_login(None, caretaker)  
-
-            return Response({"message": "Password changed successfully"}, status=status.HTTP_200_OK)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 class CaretakerRegistrationView(APIView):
    
     permission_classes = [AllowAny]  # To allow anyone to log in
@@ -479,3 +449,20 @@ def delete_user(request, user_id):
         return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)
     except CustomUser.DoesNotExist:
         return Response({'message': "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+# api for deleting caretaker
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+
+def caretaker_delete(request,caretaker_id):
+    try:
+        caretaker = Caretaker.objects.get(id=caretaker_id)
+        caretaker.delete()
+        return Response({'message' : 'Caretaker deleted successfully'},status=status.HTTP_200_OK)
+    
+    except Caretaker.DoesNotExist:
+        return Response ({'message' : 'Caretaker not found'},status=status.HTTP_400_BAD_REQUEST)
+
