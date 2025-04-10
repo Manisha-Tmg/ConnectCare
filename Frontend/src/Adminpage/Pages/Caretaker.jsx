@@ -7,6 +7,7 @@ import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Sidebar from "../components/AdminSidebar";
 import { ShieldCheck } from "lucide-react";
+import toast from "react-hot-toast";
 
 const CaretakerPanel = () => {
   const [caretakers, setCaretakers] = useState([]);
@@ -33,6 +34,16 @@ const CaretakerPanel = () => {
     }
   };
 
+  // async function handledelete() {
+  //   const id = Cookies.get("user_id");
+  //   try {
+  //     const res = await fetch(`${API}api/users/delete/${id}`, {
+  //       headers: "DELETE",
+  //     });
+  //   } catch (error) {
+  //     toast.error("erroro");
+  //   }
+  // }
   const handleStatusChange = async (id, currentStatus) => {
     const token = Cookies.get("accessToken");
 
@@ -123,7 +134,7 @@ const CaretakerPanel = () => {
                         <FaEye />
                       </button>
                     </Link>
-                    <button className="delete-btn">
+                    <button className="delete-btn" onClick={handledelete}>
                       <MdDelete />
                     </button>
                     <button

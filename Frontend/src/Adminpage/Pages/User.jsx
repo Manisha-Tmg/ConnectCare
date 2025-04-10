@@ -6,29 +6,30 @@ import { FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Sidebar from "../components/AdminSidebar";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const UserPanel = () => {
   const [users, setUsers] = useState([]);
   const [datas, setdata] = useState([]);
 
-  useEffect(() => {
-    async function userdetail() {
-      const token = Cookies.get("accessToken");
-      try {
-        const res = await fetch(`${API}api/users/`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await res.json();
-        setdata(data);
-        setUsers(data);
-      } catch (error) {
-        console.log(error);
-      }
+  async function userdetail() {
+    const token = Cookies.get("accessToken");
+    try {
+      const res = await fetch(`${API}api/users/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      setdata(data);
+      setUsers(data);
+    } catch (error) {
+      console.log(error);
     }
+  }
+  useEffect(() => {
     userdetail();
   }, []);
 
@@ -67,9 +68,31 @@ const UserPanel = () => {
     }
   };
 
-  const filteredusers = users.filter((ct) =>
-    ct.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  async function handleDelete(id) {
+    const token = Cookies.get("accessToken");
+
+    try {
+      const res = await fetch(`${API}api/admin/delete/${id}/`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        userdetail(data);
+        toast.success("User deleted successfully");
+      } else {
+        toast.error(data.message || "Something went wrong");
+      }
+    } catch (error) {
+      toast.error("An error occurred");
+      console.error(error);
+    }
+  }
 
   return (
     <div className="user-panel">
@@ -113,9 +136,14 @@ const UserPanel = () => {
                       <FaEye />
                     </button>
                   </Link>
-                  <button className="delete-btn">
+
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(user.id)}
+                  >
                     <MdDelete />
                   </button>
+
                   <button
                     className={`status-btnn ${
                       user.is_approved ? "verify" : "Reject"

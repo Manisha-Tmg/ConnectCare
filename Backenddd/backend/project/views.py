@@ -15,7 +15,7 @@ from .serializers import ChangePasswordSerializer
 from django.shortcuts import get_object_or_404
 from .models import Caretaker,Booking,CustomUser,Notification
 from django.contrib.auth import get_user_model
-from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer,NotificationSerializer,NotificationCaretakerSerializer
+from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer,NotificationSerializer
 
 # User ViewSet for CRUD operations
 class UserViewSet(viewsets.ModelViewSet):
@@ -77,67 +77,56 @@ class LoginView(APIView):
 # api for caretakerlogin
 class CaretakerLoginView(APIView):
     permission_classes = [AllowAny]
- 
-    def post(self, request):
-        serializer = LoginSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.validated_data.get('caretaker')  # Use 'user' for both CustomUser and Caretaker
-
-            if not user:
-                return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
-
-            if isinstance(user, Caretaker):  # Ensure it's a Caretaker
-                refresh = RefreshToken.for_user(user)  # Generate JWT tokens
-                return Response({
-                    'caretaker_id': user.id,
-                    'refresh': str(refresh),
-                    'access_token': str(refresh.access_token),
-                    'username': user.username,
-                    'name':user.name,
-                    'email': user.email,
-                    'role': "caretaker"  # Explicitly return role
-                }, status=status.HTTP_200_OK)
-
-            return Response({"error": "Unauthorized role"}, status=status.HTTP_403_FORBIDDEN)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class AdminLoginView(APIView):
-    permission_classes = [AllowAny]  # Corrected
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.validated_data.get('user')  # Get user object
-
-            if not user.is_staff:  # Ensure only admin users can log in
-                return Response({"error": "You are not authorized as an admin"}, status=status.HTTP_403_FORBIDDEN)
+            user = serializer.validated_data.get('caretaker')  
 
             refresh = RefreshToken.for_user(user)  # Generate JWT tokens
-            
             return Response({
+                'caretaker_id': user.id,
+                'refresh': str(refresh),
+                'access_token': str(refresh.access_token),
+                'username': user.username,
+                'email': user.email,
+                'role': user.role  # Include role in response
+            }, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+   
+
+class AdminLoginView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.validated_data.get('user')  
+
+            refresh = RefreshToken.for_user(user)  # Generate JWT tokens
+            return Response(
+                {
                 'refresh': str(refresh),
                 'access_token': str(refresh.access_token),
                 'csrf_token': get_token(request), 
                 'username': user.username,
-                'role' :user.role,
+                'role' :user.role,  # Include role in response
             }, status=status.HTTP_200_OK)
         
-
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 
 
 # Register Caretaker
-@api_view(['POST'])
-@permission_classes([AllowAny])  # making ensure that admin can only add caretaker
-def add_caretaker(request):
-    if request.method == 'POST':
-        serializer = CaretakerSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()  # Save the new caretaker object to the database
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# @api_view(['POST'])
+# @permission_classes([IsAdminUser])  # making ensure that admin can only add caretaker
+# def add_caretaker(request):
+#     if request.method == 'POST':
+#         serializer = CaretakerSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()  # Save the new caretaker object to the database
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
 # Api for adding user details in amin# 
@@ -345,14 +334,18 @@ def booking_action(request, booking_id):
 
 
 # count booking
+# 
 @api_view(["GET"])
+@permission_classes([AllowAny])
 def booking_count_api(request, caretaker_id=None):
-    caretaker = request.user  # Get the logged-in user
+    print("Test")
+    
+    if caretaker_id is None:
+        return Response({"error": "Caretaker ID is required"}, status=status.HTTP_400_BAD_REQUEST)
 
-    total_bookings = Booking.objects.filter(caretaker_id=caretaker.id).count()  # Count bookings for the login caretaker only
+    total_bookings = Booking.objects.filter(caretaker_id=caretaker_id).count()
     return Response({"total_bookings": total_bookings}, status=status.HTTP_200_OK)
 
-    
 
 @api_view(["GET"])
 # @permission_classes([AllowAny])
@@ -414,3 +407,75 @@ def change_user_status(request, id):
     except Caretaker.DoesNotExist:
         return Response({"error": "user not found"}, status=status.HTTP_404_NOT_FOUND)
 
+
+
+class CareChangePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        caretaker = request.caretaker
+        serializer = ChangePasswordSerializer(data=request.data)
+
+        if serializer.is_valid():
+            old_password = serializer.validated_data['old_password']
+            new_password = serializer.validated_data['new_password']
+            confirm_password = serializer.validated_data['confirm_password']
+
+            # Check if new passwords match
+            if new_password != confirm_password:
+                return Response({"error": "Passwords do not match"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Check if old password is correct
+            if not caretaker.check_password(old_password):
+                return Response({"error": "Old password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Set the new password
+            caretaker.set_password(new_password)
+            caretaker.save()
+            update_last_login(None, caretaker)  
+
+            return Response({"message": "Password changed successfully"}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CaretakerRegistrationView(APIView):
+   
+    permission_classes = [AllowAny]  # To allow anyone to log in
+
+    def post(self, request):
+        serializer = CaretakerSerializer(data=request.data)
+        if serializer.is_valid():
+            caretaker = serializer.save() 
+            caretaker.role = 'caretaker'
+            caretaker.save()
+            return Response({
+                "message": "caretaker registered successfully!",
+                "user": {
+                    "username": caretaker.username,   
+                    "name":caretaker.name,
+                      "gender" :caretaker.gender,
+                      "address"  :caretaker.address,     
+                      "phone"  :caretaker.phone,    
+                      "email": caretaker.email,
+                    "role": caretaker.role  # Send role in response to navigate to roles based home
+                }
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+# api for deleting the user
+
+
+@api_view(['DELETE'])
+@permission_classes([AllowAny])
+def delete_user(request, user_id):
+    try:
+        user = CustomUser.objects.get(id=user_id)
+        user.delete()
+        return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)
+    except CustomUser.DoesNotExist:
+        return Response({'message': "User not found"}, status=status.HTTP_404_NOT_FOUND)

@@ -14,7 +14,7 @@ const CaretakerLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${API}auth/api/login/caretaker`, {
+      const res = await fetch(`${API}api/login/caretaker`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

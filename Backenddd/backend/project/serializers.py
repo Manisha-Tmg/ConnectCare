@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Caretaker
 from django.contrib.auth import authenticate
-from .models import CustomUser,Booking,Notification,NotificationCaretaker
+from .models import CustomUser,Booking,Notification
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -55,7 +55,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
         return user
 
-
+from django.contrib.auth.hashers import check_password
 
 class LoginSerializer(serializers.Serializer):
     email = serializers.CharField(required=False)
@@ -68,29 +68,33 @@ class LoginSerializer(serializers.Serializer):
         # Try authenticating as CustomUser first
         if email:
             user = authenticate(email=email, password=password)
-        
         else:
-            raise serializers.ValidationError("Email  is required.")
+            raise serializers.ValidationError("Email is required.")
 
         if user is None:
             # If user not found, try authenticating as Caretaker
             try:
-                caretaker = Caretaker.objects.get(password=password , email =email)
-                # Assuming caretakers have their password stored in a hashed format,ie. similar to the user
-                if caretaker.password != password:  #checking password, improve password validation here
+                caretaker = Caretaker.objects.get(email=email)
+                if not check_password(password, caretaker.password):
                     raise serializers.ValidationError("Invalid credentials.")
             except Caretaker.DoesNotExist:
                 raise serializers.ValidationError("Invalid credentials.")
-            # If a caretaker is found and credentials match, return a caretaker object
+            # If caretaker is found, return the caretaker object as part of validated data
             return {"caretaker": caretaker}
+        
+        # If user is authenticated, return user as part of validated data
+        return {"user": user}
+
 
         # If user is found, return user object
-        if user and not user.is_active:
-            raise serializers.ValidationError("User account is inactive.")
-        return {"user": user}  # Ensure 'user' is returned for CustomUser
+        # if user and not user.is_active:
+        #     raise serializers.ValidationError("User account is inactive.")
+        # return {"user": user}  # Ensure 'user' is returned for CustomUser
 
 
 # caretaker
+from django.contrib.auth.hashers import make_password
+
 class CaretakerSerializer(serializers.ModelSerializer):
     profile_picture_url = serializers.SerializerMethodField()
     gov_id_url = serializers.SerializerMethodField()
@@ -100,8 +104,19 @@ class CaretakerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Caretaker
         fields = '__all__'
-        extra_kwargs = {'password': {'write_only': True}}
+        # extra_kwargs = {'password': {'write_only': True}}
 
+    # def create(self, validated_data):
+        # password = validated_data.get('password')
+        # if password:
+        #     validated_data['password'] = make_password(password)
+        # return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        password = validated_data.get('password', None)
+        if password:
+            validated_data['password'] = make_password(password)
+        return super().update(instance, validated_data)
 
     def get_profile_picture_url(self, obj):
         return self.get_cloudinary_url(obj.profile_picture)
@@ -120,6 +135,7 @@ class CaretakerSerializer(serializers.ModelSerializer):
             return f"https://res.cloudinary.com/ddh1i3vod/{field}"
         return None
 
+
 # booking
 class BookingSerializer(serializers.ModelSerializer):
     caretaker_name = serializers.CharField(source='caretaker.name', read_only=True)
@@ -127,7 +143,6 @@ class BookingSerializer(serializers.ModelSerializer):
         model = Booking
         fields = ['id','user','caretaker','booking_date',"status",'location','number','note','name',"caretaker_name"]
         
-
 
 # user
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -145,6 +160,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
         if field:
             return f"https://res.cloudinary.com/ddh1i3vod/{field}"# for image url
         return None
+
+
 
 # changepass
 class ChangePasswordSerializer(serializers.Serializer):
@@ -170,8 +187,8 @@ class NotificationSerializer(serializers.ModelSerializer):
 
 
 
-# notification for caretaker
-class NotificationCaretakerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = NotificationCaretaker
-        fields = ['id', 'message', 'is_read', 'created_at', 'caretaker']
+# # notification for caretaker
+# class NotificationCaretakerSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = NotificationCaretaker
+#         fields = ['id', 'message', 'is_read', 'created_at', 'caretaker']

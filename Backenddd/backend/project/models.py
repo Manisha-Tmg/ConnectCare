@@ -49,7 +49,7 @@ class CustomUser(AbstractUser):
 
 
     def __str__(self):
-        return {self.email}
+        return self.email
 
 
 
@@ -112,7 +112,7 @@ class Caretaker(models.Model):
     role = models.CharField(max_length=20, default='caretaker')
 
     def __str__(self):
-        return self.email
+        return self.name
 
 
 
@@ -164,12 +164,3 @@ class Notification(models.Model):
         return  f"message{self.user.email} -{self.message[:20]}"
     
 
-
-class NotificationCaretaker(models.Model):
-    caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE, related_name="notifications")
-    message = models.TextField()
-    is_read = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"To: {self.caretaker.email} | Message: {self.message[:30]}"

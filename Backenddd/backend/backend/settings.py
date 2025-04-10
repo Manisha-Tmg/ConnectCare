@@ -69,19 +69,17 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'project.CustomUser'
-# AUTH_USER_MODEL = 'project.Caretaker'
 
 
 from datetime import timedelta
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),  # Increase to 2 hours
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # Refresh token lifetime
+    'REFRESH_TOKEN_LIFETIME': timedelta(hours=2),  # Refresh token lifetime
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
-
 
 
 

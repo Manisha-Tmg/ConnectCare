@@ -71,6 +71,7 @@ function App() {
         <Route path="/admin/Dashboard" element={<Admindash />} />
         {/*  */}
         <Route path="/admin/Users" element={<UserPanel />} />
+        {/* <Route path="/admin/user/delete:id" element={<UserPanel />} /> */}
         <Route path="/admin/Caretaker" element={<CaretakerPanel />} />
         <Route path="/admin/Caretaker" element={<CaretakerPanel />} />
         <Route path="/caretakers/:id" element={<CaretakerDetails />} />
