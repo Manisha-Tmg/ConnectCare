@@ -10,7 +10,6 @@ from django.core.validators import RegexValidator
 
 
 
-
 class CustomUser(AbstractUser):
     address = models.CharField(max_length=150)
     email = models.EmailField(unique=True)
@@ -33,7 +32,8 @@ class CustomUser(AbstractUser):
 
     # Account Information
     username = models.CharField(max_length=150, unique=True)
-
+    is_delete = models.BooleanField(default=False)
+    
     # Status & Timestamps
     is_approved = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
@@ -85,6 +85,7 @@ class Caretaker(models.Model):
 
     specialty = models.CharField(max_length=50, choices=SPECIALTY_CHOICES, null=True, blank=True)  # Fixed field name
     previous_experience = models.TextField(null=True, blank=True)
+    is_delete = models.BooleanField(default=False)
 
 
     # Rates

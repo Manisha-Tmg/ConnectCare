@@ -58,15 +58,15 @@ const CaretakerSidebar = () => {
   // Menu items configuration
   const menuItems = [
     {
-      path: "/dashboard",
+      path: `/dashboard/}`,
       icon: <FaHome className="icon" />,
       label: "Dashboard",
     },
-    // {
-    //   path: "/calendar",
-    //   icon: <FaCalendarAlt className="icon" />,
-    //   label: "Calendar",
-    // },
+    {
+      path: "/calendar",
+      icon: <FaCalendarAlt className="icon" />,
+      label: "Calendar",
+    },
     {
       path: "/booking/",
       icon: <FaBookmark className="icon" />,

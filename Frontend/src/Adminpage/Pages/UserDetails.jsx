@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../Css/UsrDetails.css";
+import "../Css/UserDetails.css";
 import Cookies from "js-cookie";
 import { API } from "../../env";
 
@@ -52,24 +52,37 @@ const UserDetails = () => {
   //   });
 
   return (
-    <div className="user-panel">
+    <div className="user-destails-page">
       <Sidebar />
-      <div className="profile-container-main">
-        <h2>Profile</h2>
-        <div className="profile-section">
-          <h3>Personal Information</h3>
-          <div className="profile-info">
-            <strong>Gender:</strong> {data.first_name}
-            {data.last_name}
-          </div>
-          <div className="profile-info">
-            <strong>Email:</strong> {data.email}
-          </div>
-          <div className="profile-info">
-            <strong>Phone:</strong> {data.phone}
-          </div>
-          <div className="profile-info">
-            <strong>Username:</strong> {data.username}
+      <div className="user-destails-container">
+        <div className="user-destails-card">
+          <div className="user-destails-header">
+            <img
+              src={data.profile_picture_url}
+              alt="Profile"
+              className="user-destails-pic"
+            />
+            <div className="user-destails-container-main">
+              <h2>Profile</h2>
+              <div className="user-destails-section">
+                <h3>Personal Information</h3>
+                <div className="user-destails-info">
+                  <strong>Name:</strong> {data.name}
+                </div>
+                <div className="user-destails-info">
+                  <strong>Gender:</strong> {data.gender}
+                </div>
+                <div className="user-destails-info">
+                  <strong>Email:</strong> {data.email}
+                </div>
+                <div className="user-destails-info">
+                  <strong>Phone:</strong> {data.phone}
+                </div>
+                <div className="user-destails-info">
+                  <strong>Username:</strong> {data.username}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

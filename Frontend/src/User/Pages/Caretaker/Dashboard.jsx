@@ -18,9 +18,10 @@ const Dashboard = () => {
   useEffect(() => {
     async function handledash() {
       const token = Cookies.get("accessToken");
+      const id = Cookies.get("caretaker_id");
 
       try {
-        const res = await fetch(`${API}caretaker/dashboard/`, {
+        const res = await fetch(`${API}caretaker/dashboard/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

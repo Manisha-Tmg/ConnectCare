@@ -61,7 +61,7 @@ const Sidebar = () => {
       label: "Users",
     },
     {
-      path: "/admin/Booking",
+      path: "/admin/bookings",
       icon: <FaCog className="icon" />,
       label: "Bookings",
     },

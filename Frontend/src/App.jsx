@@ -3,7 +3,6 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./User/Pages/HomePage";
 import AboutUs from "./User/Pages/Aboutus";
-// import BookCaretaker from "./User/Pages/BookCaretaker";
 import Blogmain from "./User/Pages/Blogmain";
 import BlogDetail from "./User/Pages/BlogDetails";
 import Login from "./User/Pages/login";
@@ -11,7 +10,6 @@ import Signup from "./User/Pages/signup";
 import { Toaster } from "react-hot-toast";
 import CaretakerLogin from "./User/Pages/Caretaker/CaretakerLogin";
 import Dashboard from "./User/Pages/Caretaker/Dashboard";
-// import Notifiation from "./User/Pages/Caretaker/Notification";
 import Profile from "./User/Pages/profile";
 import ChangePassword from "./User/Pages/Changepassword";
 import BookingDetails from "./User/Pages/MyBookings";
@@ -30,7 +28,7 @@ import CaretakerDetails from "./Adminpage/Pages/CaretakerDetails";
 import UserPanel from "./Adminpage/Pages/User";
 import UserDetails from "./Adminpage/Pages/UserDetails.jsx";
 import Adduser from "./Adminpage/Pages/Useradd.jsx";
-// import BookingFormPreview from "./User/Pages/Booking";
+import TotalBookingPanel from "./Adminpage/Pages/TotalBooking.jsx";
 
 function App() {
   return (
@@ -57,7 +55,7 @@ function App() {
         />
         {/* Caretaker */}
         <Route path="/login/caretaker" element={<CaretakerLogin />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/" element={<Dashboard />} />
         <Route path="/viewDetails" element={<BookCaretakerViewDetails />} />
         <Route path="/booking/" element={<CaretakerBookingPortal />} />
         <Route path="/notification" element={<CaretakerDashboard />} />
@@ -73,7 +71,7 @@ function App() {
         <Route path="/admin/Users" element={<UserPanel />} />
         {/* <Route path="/admin/user/delete:id" element={<UserPanel />} /> */}
         <Route path="/admin/Caretaker" element={<CaretakerPanel />} />
-        <Route path="/admin/Caretaker" element={<CaretakerPanel />} />
+        <Route path="/admin/bookings" element={<TotalBookingPanel />} />
         <Route path="/caretakers/:id" element={<CaretakerDetails />} />
         <Route path="/users/:id" element={<UserDetails />} />
       </Routes>

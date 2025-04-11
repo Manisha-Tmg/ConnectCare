@@ -23,22 +23,17 @@ const UserPanel = () => {
         },
       });
       const data = await res.json();
-      setdata(data);
-      setUsers(data);
+      const filteredData = data.filter((user) => !user.is_delete);
+      setdata(filteredData);
+      setUsers(filteredData);
     } catch (error) {
       console.log(error);
     }
   }
+
   useEffect(() => {
     userdetail();
   }, []);
-
-  // Search functionality
-  const [searchTerm, setSearchTerm] = useState("");
-
-  // Filter functionality
-  const [filterRole, setFilterRole] = useState("");
-  const [filterStatus, setFilterStatus] = useState("");
 
   const handleStatusChange = async (id, currentStatus) => {
     const token = Cookies.get("accessToken");
@@ -83,7 +78,7 @@ const UserPanel = () => {
       const data = await res.json();
 
       if (res.ok) {
-        userdetail(data);
+        userdetail();
         toast.success("User deleted successfully");
       } else {
         toast.error(data.message || "Something went wrong");

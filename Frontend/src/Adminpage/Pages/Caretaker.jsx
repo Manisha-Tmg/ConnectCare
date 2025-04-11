@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 const CaretakerPanel = () => {
   const [caretakers, setCaretakers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [datas, setdata] = useState([]);
 
   useEffect(() => {
     fetchCaretakers();
@@ -28,7 +29,9 @@ const CaretakerPanel = () => {
         },
       });
       const data = await response.json();
-      setCaretakers(data);
+      const filterdata = data.filter((caretaker) => !caretaker.is_delete);
+      setdata(filterdata);
+      setCaretakers(filterdata);
     } catch (error) {
       console.error("Error fetching caretakers:", error);
     }
@@ -38,7 +41,7 @@ const CaretakerPanel = () => {
     const token = Cookies.get("accessToken");
 
     try {
-      const res = await fetch(`${API}api/admin/delete/caretaker/${id}/`, {
+      const res = await fetch(`${API}api/admin/caretaker/delete/${id}/`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -49,7 +52,7 @@ const CaretakerPanel = () => {
       const data = await res.json();
 
       if (res.ok) {
-        userdetail(data);
+        fetchCaretakers();
         toast.success("User deleted successfully");
       } else {
         toast.error(data.message || "Something went wrong");

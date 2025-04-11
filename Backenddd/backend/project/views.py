@@ -16,7 +16,7 @@ from django.shortcuts import get_object_or_404
 from .models import Caretaker,Booking,CustomUser,Notification
 from django.contrib.auth import get_user_model
 from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer,NotificationSerializer
-
+import ipdb
 # User ViewSet for CRUD operations
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserRegistrationSerializer
@@ -193,7 +193,9 @@ def book_caretaker(request):
     number = request.data.get('number')
     note = request.data.get('note')
     
-    # Validate caretaker exists
+    # Validate caretaker exists       
+    # ipdb.set_trace()
+
     try:
         caretaker = Caretaker.objects.get(id=caretaker_id)
     except Caretaker.DoesNotExist:
@@ -297,12 +299,12 @@ class ChangePasswordView(APIView):
 
 
 # Caretaker accepting portal
-
 @api_view(['POST'])
-@permission_classes([permissions.IsAuthenticated])
+@permission_classes([AllowAny])
 def booking_action(request, booking_id):
     try:
         booking = Booking.objects.get(id=booking_id, caretaker_id=request.user.id)
+        # ipdb.set_trace()
     except Booking.DoesNotExist:
         return Response({"error": "Booking not found or unauthorized"}, status=status.HTTP_404_NOT_FOUND)
 
@@ -328,17 +330,15 @@ def booking_action(request, booking_id):
     )
 
 
-    
-
     return Response({"message": f"Booking {booking.status} successfully"}, status=status.HTTP_200_OK)
 
 
 # count booking
-# 
+
 @api_view(["GET"])
-@permission_classes([AllowAny])
-def booking_count_api(request, caretaker_id=None):
-    print("Test")
+# @permission_classes([AllowAny])
+def booking_count_api(request, caretaker_id):
+    # print("Test")
     
     if caretaker_id is None:
         return Response({"error": "Caretaker ID is required"}, status=status.HTTP_400_BAD_REQUEST)
@@ -439,30 +439,11 @@ class CaretakerRegistrationView(APIView):
 
 # api for deleting the user
 
-
 @api_view(['DELETE'])
 @permission_classes([AllowAny])
 def delete_user(request, user_id):
-    try:
-        user = CustomUser.objects.get(id=user_id)
-        user.delete()
-        return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)
-    except CustomUser.DoesNotExist:
+    updated_count = CustomUser.objects.filter(id=user_id, is_delete=False).update(is_delete=True)
+    if updated_count == 0:
         return Response({'message': "User not found"}, status=status.HTTP_404_NOT_FOUND)
-
-
-
-# api for deleting caretaker
-
-@api_view(['DELETE'])
-@permission_classes([IsAdminUser])
-
-def caretaker_delete(request,caretaker_id):
-    try:
-        caretaker = Caretaker.objects.get(id=caretaker_id)
-        caretaker.delete()
-        return Response({'message' : 'Caretaker deleted successfully'},status=status.HTTP_200_OK)
-    
-    except Caretaker.DoesNotExist:
-        return Response ({'message' : 'Caretaker not found'},status=status.HTTP_400_BAD_REQUEST)
+    return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)
 

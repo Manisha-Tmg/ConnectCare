@@ -6,8 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.middleware.csrf import get_token
-from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer,NotificationSerializer,NotificationCaretakerSerializer
-
+from ...Serializer.User.login_serializer import LoginSerializer
 
 class AdminLoginView(APIView):
     permission_classes = [IsAdminUser]  

@@ -25,7 +25,7 @@ const Sidebar = () => {
             <FiUsers /> <span>Users</span>
           </li>
         </Link>
-        <Link to="/admin/Booking">
+        <Link to="/admin/bookings">
           <li>
             <FiCalendar />
             <span>Bookings</span>

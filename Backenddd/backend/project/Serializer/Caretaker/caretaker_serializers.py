@@ -1,3 +1,7 @@
+from django.contrib.auth.hashers import make_password
+from rest_framework import serializers
+from ...Models.caretaker_models import Caretaker
+
 
 class CaretakerSerializer(serializers.ModelSerializer):
     profile_picture_url = serializers.SerializerMethodField()
@@ -38,3 +42,4 @@ class CaretakerSerializer(serializers.ModelSerializer):
         if field:
             return f"https://res.cloudinary.com/ddh1i3vod/{field}"
         return None
+

@@ -1,10 +1,10 @@
-import Header from "../components/Header";
 import "../css/totalbooking.css";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { API } from "../../env";
+import Sidebar from "../components/AdminSidebar";
 
-const BookingPanel = () => {
+const TotalBookingPanel = () => {
   const [bookings, setBookings] = useState([]);
   const [caretakers, setCaretakers] = useState([]);
 
@@ -14,7 +14,7 @@ const BookingPanel = () => {
 
       try {
         // Fetch Bookings
-        const resBooking = await fetch(`${API}api/bookings/`, {
+        const resBooking = await fetch(`${API}api/admin/bookings/`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -32,7 +32,7 @@ const BookingPanel = () => {
 
   return (
     <div>
-      <Header />
+      <Sidebar />
       <div className="caretaker-panel">
         <div className="panel-header">
           <h1>My Bookings</h1>
@@ -79,4 +79,4 @@ const BookingPanel = () => {
   );
 };
 
-export default BookingPanel;
+export default TotalBookingPanel;
