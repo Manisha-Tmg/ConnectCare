@@ -447,3 +447,18 @@ def delete_user(request, user_id):
         return Response({'message': "User not found"}, status=status.HTTP_404_NOT_FOUND)
     return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)
 
+
+# api for deleting caretaker
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+
+def caretaker_delete(request,caretaker_id):
+    
+    caretaker = Caretaker.objects.filter(id=caretaker_id,is_delete=False).update(is_delete=True)
+    
+    if caretaker==0:
+        return Response({'message' : 'Caretaker not found'},status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    return Response ({'message' : 'Caretaker deleted successfully'},status=status.HTTP_200_OK)
+
