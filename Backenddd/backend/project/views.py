@@ -462,3 +462,18 @@ def caretaker_delete(request,caretaker_id):
     
     return Response ({'message' : 'Caretaker deleted successfully'},status=status.HTTP_200_OK)
 
+
+@api_view(['GET'])
+@permission_classes([AllowAny])  
+def get_all_bookings(request, booking_id=None): 
+    if booking_id:
+        try:
+            booking = Booking.objects.get(id=booking_id)
+            serializer = BookingSerializer(booking)
+            return Response(serializer.data, status=200)
+        except Booking.DoesNotExist:
+            return Response({"error": "Booking not found"}, status=404)
+
+    bookings = Booking.objects.all()  # Get all bookings
+    serializer = BookingSerializer(bookings, many=True)
+    return Response(serializer.data, status=200)
