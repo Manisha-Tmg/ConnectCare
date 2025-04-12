@@ -117,6 +117,7 @@ class Caretaker(models.Model):
 
 
 
+
 class Booking(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
@@ -140,7 +141,7 @@ class Booking(models.Model):
         ]
     )   
     location = models.CharField(max_length=20, null=True, blank=True)
-    note = models.CharField(max_length=30, null=True, blank=True)
+    note = models.TextField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending') 
 
     def save(self, *args, **kwargs):
@@ -151,6 +152,7 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"Booking by {self.user.id} for {self.caretaker.name} on {self.booking_date}"
+
 
 
 # notification

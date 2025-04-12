@@ -17,6 +17,8 @@ from .models import Caretaker,Booking,CustomUser,Notification
 from django.contrib.auth import get_user_model
 from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer,NotificationSerializer
 import ipdb
+
+
 # User ViewSet for CRUD operations
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserRegistrationSerializer
@@ -24,7 +26,6 @@ class UserViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated]  # Restrict actions to authenticated users, or any custom permission.
 
 
-# Registration API view for creating new users
 class UserRegistrationView(APIView):
    
     permission_classes = [AllowAny]  # To allow anyone to log in
@@ -50,6 +51,27 @@ class UserRegistrationView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register_caretaker(request):
+    serializer = CustomUserSerializer(data=request.data)
+    if serializer.is_valid():
+        user = serializer.save()
+
+        refresh = RefreshToken.for_user(user)
+
+        return Response({
+            'caretaker_id': user.id,
+            'refresh': str(refresh),
+            'access_token': str(refresh.access_token),
+            'username': user.username,
+            'email': user.email,
+            'role': user.role
+        }, status=status.HTTP_201_CREATED)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 # Api creation for login
 User = get_user_model()
 
@@ -67,89 +89,13 @@ class LoginView(APIView):
                 'refresh': str(refresh),
                 'access_token': str(refresh.access_token),
                 'username': user.username,
-
                 'email': user.email,
                 'role': user.role  # Include role in response
             }, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# api for caretakerlogin
-class CaretakerLoginView(APIView):
-    permission_classes = [AllowAny]
 
-    def post(self, request):
-        serializer = LoginSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.validated_data.get('caretaker')  
-
-            refresh = RefreshToken.for_user(user)  # Generate JWT tokens
-            return Response({
-                'caretaker_id': user.id,
-                'refresh': str(refresh),
-                'access_token': str(refresh.access_token),
-                'username': user.username,
-                'email': user.email,
-                'role': user.role  # Include role in response
-            }, status=status.HTTP_200_OK)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-   
-
-class AdminLoginView(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request):
-        serializer = LoginSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.validated_data.get('user')  
-
-            refresh = RefreshToken.for_user(user)  # Generate JWT tokens
-            return Response(
-                {
-                'refresh': str(refresh),
-                'access_token': str(refresh.access_token),
-                'csrf_token': get_token(request), 
-                'username': user.username,
-                'role' :user.role,  # Include role in response
-            }, status=status.HTTP_200_OK)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# Register Caretaker
-# @api_view(['POST'])
-# @permission_classes([IsAdminUser])  # making ensure that admin can only add caretaker
-# def add_caretaker(request):
-#     if request.method == 'POST':
-#         serializer = CaretakerSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()  # Save the new caretaker object to the database
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-
-# Api for adding user details in amin# 
-
-    
-# def upload_image(request):
-#     if request.method == 'POST' and request.FILES.get('image'):
-#         image_file = request.FILES['image']
-#         storage = MediaCloudinaryStorage()
-#         uploaded_image = storage.save('project_caretaker/' + image_file.name, image_file)
-#         image_url = storage.url(uploaded_image)
-
-#         # Create a new Caretaker with the uploaded image URL
-#         # caretaker = Caretaker.objects.create(
-#         #     name=request.POST['name'],
-#         #     image=image_url,
-#         #     hourly_rate=request.POST['hourly_rate'],
-#         #     experience=request.POST['experience'],
-#         #     specialty=request.POST['specialty']
-#         # )
-
-#         return JsonResponse({'message': 'Caretaker created successfully', 'image_url': image_url})
-#     return JsonResponse({'error': 'Image not uploaded'}, status=400)
 
 
 # API of caretaker list
@@ -165,6 +111,7 @@ def get_caretakers(request,caretaker_id=None):
         caretakers = Caretaker.objects.all()  # Fetch all caretakers
         serializer = CaretakerSerializer(caretakers, many=True)  # Serialize data
         return Response(serializer.data)  # Return serialized data as response
+
 
 
 # API of User list
@@ -194,7 +141,6 @@ def book_caretaker(request):
     note = request.data.get('note')
     
     # Validate caretaker exists       
-    # ipdb.set_trace()
 
     try:
         caretaker = Caretaker.objects.get(id=caretaker_id)
@@ -241,29 +187,6 @@ def get_Booking(request, booking_id=None):
 
 
 
-# Caretaker list side
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])  # Ensure only authenticated users can access
-def get_CaretakerBooking(request, caretaker_id=None, booking_id=None):
-    caretaker = request.user  # Get the logged-in user
-
-    # Check if the provided caretaker_id matches the logged-in caretaker's ID
-    if caretaker_id and caretaker.id != int(caretaker_id):
-        return Response({"error": "Unauthorized access"}, status=403)
-
-    if booking_id:
-        try:
-            booking = Booking.objects.get(id=booking_id, caretaker_id=caretaker.id)  # Filter by caretaker_id
-            serializer = BookingSerializer(booking)
-            return Response(serializer.data, status=200)
-        except Booking.DoesNotExist:
-            return Response({"error": "Booking not found or unauthorized"}, status=404)
-    
-    else:
-        bookings = Booking.objects.filter(caretaker_id=caretaker.id)  # Filter bookings for the given caretaker
-        serializer = BookingSerializer(bookings, many=True)
-        return Response(serializer.data, status=200)
-
 
 
 # chnage password for user
@@ -298,71 +221,7 @@ class ChangePasswordView(APIView):
 
 
 
-# Caretaker accepting portal
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def booking_action(request, booking_id):
-    try:
-        booking = Booking.objects.get(id=booking_id, caretaker_id=request.user.id)
-        # ipdb.set_trace()
-    except Booking.DoesNotExist:
-        return Response({"error": "Booking not found or unauthorized"}, status=status.HTTP_404_NOT_FOUND)
-
-    action = request.data.get("action")
-
-    if action == "accept":
-        booking.status = "accepted"
-        message = f"Your booking with {booking.caretaker.name} has been accepted!"
-    elif action == "reject":
-        booking.status = "rejected"
-        message = f"Your booking with {booking.caretaker.name} has been rejected."
-    else:
-        return Response({"error": "Invalid action"}, status=status.HTTP_400_BAD_REQUEST)
-
-    booking.save()
-
-    # Create Notification for the user who made the booking
-    Notification.objects.create(
-        user=booking.user,
-        message=message,
-        is_read=False  # default, but good to be explicit
-
-    )
-
-
-    return Response({"message": f"Booking {booking.status} successfully"}, status=status.HTTP_200_OK)
-
-
-# count booking
-
-@api_view(["GET"])
-# @permission_classes([AllowAny])
-def booking_count_api(request, caretaker_id):
-    # print("Test")
-    
-    if caretaker_id is None:
-        return Response({"error": "Caretaker ID is required"}, status=status.HTTP_400_BAD_REQUEST)
-
-    total_bookings = Booking.objects.filter(caretaker_id=caretaker_id).count()
-    return Response({"total_bookings": total_bookings}, status=status.HTTP_200_OK)
-
-
-@api_view(["GET"])
-# @permission_classes([AllowAny])
-def admin_dashboard(request):
-    total_caretaker = Caretaker.objects.count()
-    total_user = CustomUser.objects.count()
-    total_bookings = Booking.objects.count()
-
-    return Response({
-        "total_caretaker": total_caretaker,
-        "total_user": total_user,
-        "total_bookings": total_bookings
-    }, status=status.HTTP_200_OK)
-
-
-
-
+# notification
 class NotificationViewSet(viewsets.ModelViewSet):
     serializer_class = NotificationSerializer
     permission_classes = [IsAuthenticated]
@@ -373,107 +232,3 @@ class NotificationViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         # Automatically assign the logged-in user to the notification
         serializer.save(user=self.request.user)
-
-
-
-# update status for caretaker
-@api_view(['PATCH'])
-@permission_classes([IsAuthenticated])
-def change_caretaker_status(request, id):
-    try:
-        caretaker = Caretaker.objects.get(id=id)
-        caretaker.is_approved = request.data.get('is_approved', caretaker.is_approved)
-        caretaker.save()
-        return Response({
-            "message": "Status updated",
-            "is_approved": caretaker.is_approved
-        }, status=status.HTTP_200_OK)
-    except Caretaker.DoesNotExist:
-        return Response({"error": "Caretaker not found"}, status=status.HTTP_404_NOT_FOUND)
-
-
-# update status for users
-@api_view(['PATCH'])
-@permission_classes([IsAuthenticated])
-def change_user_status(request, id):
-    try:
-        user = CustomUser.objects.get(id=id)
-        user.is_approved = request.data.get('is_approved', user.is_approved)
-        user.save()
-        return Response({
-            "message": "Status updated",
-            "is_approved": user.is_approved
-        }, status=status.HTTP_200_OK)
-    except Caretaker.DoesNotExist:
-        return Response({"error": "user not found"}, status=status.HTTP_404_NOT_FOUND)
-
-
-
-class CaretakerRegistrationView(APIView):
-   
-    permission_classes = [AllowAny]  # To allow anyone to log in
-
-    def post(self, request):
-        serializer = CaretakerSerializer(data=request.data)
-        if serializer.is_valid():
-            caretaker = serializer.save() 
-            caretaker.role = 'caretaker'
-            caretaker.save()
-            return Response({
-                "message": "caretaker registered successfully!",
-                "user": {
-                    "username": caretaker.username,   
-                    "name":caretaker.name,
-                      "gender" :caretaker.gender,
-                      "address"  :caretaker.address,     
-                      "phone"  :caretaker.phone,    
-                      "email": caretaker.email,
-                    "role": caretaker.role  # Send role in response to navigate to roles based home
-                }
-            }, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
-
-# api for deleting the user
-
-@api_view(['DELETE'])
-@permission_classes([AllowAny])
-def delete_user(request, user_id):
-    updated_count = CustomUser.objects.filter(id=user_id, is_delete=False).update(is_delete=True)
-    if updated_count == 0:
-        return Response({'message': "User not found"}, status=status.HTTP_404_NOT_FOUND)
-    return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)
-
-
-# api for deleting caretaker
-@api_view(['DELETE'])
-@permission_classes([IsAdminUser])
-
-def caretaker_delete(request,caretaker_id):
-    
-    caretaker = Caretaker.objects.filter(id=caretaker_id,is_delete=False).update(is_delete=True)
-    
-    if caretaker==0:
-        return Response({'message' : 'Caretaker not found'},status=status.HTTP_400_BAD_REQUEST)
-    
-    
-    return Response ({'message' : 'Caretaker deleted successfully'},status=status.HTTP_200_OK)
-
-
-@api_view(['GET'])
-@permission_classes([AllowAny])  
-def get_all_bookings(request, booking_id=None): 
-    if booking_id:
-        try:
-            booking = Booking.objects.get(id=booking_id)
-            serializer = BookingSerializer(booking)
-            return Response(serializer.data, status=200)
-        except Booking.DoesNotExist:
-            return Response({"error": "Booking not found"}, status=404)
-
-    bookings = Booking.objects.all()  # Get all bookings
-    serializer = BookingSerializer(bookings, many=True)
-    return Response(serializer.data, status=200)

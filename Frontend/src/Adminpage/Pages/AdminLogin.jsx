@@ -25,19 +25,10 @@ const AdminLogin = () => {
       console.log("API Response:", data);
 
       if (data.access_token) {
-        Cookies.set("accessToken", data.access_token, {
-          expires: 7,
-          secure: true,
-        });
-        Cookies.set("csrf", data.csrf_token, {
-          expires: 7,
-          secure: true,
-        });
-
-        Cookies.set("role", data.role || "admin", {
-          expires: 7,
-          secure: true,
-        });
+        Cookies.set("accessToken", data.access_token);
+        Cookies.set("csrf", data.csrf_token);
+        Cookies.set("username", data.username);
+        Cookies.set("role", data.role || "admin");
 
         // Navigate based on user role
         const userRole = Cookies.get("role");

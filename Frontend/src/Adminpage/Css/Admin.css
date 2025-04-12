@@ -94,6 +94,10 @@
   background-color: rgba(229, 62, 62, 0.1) !important;
 }
 
+.admin-title {
+  color: #e53e3e;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .caretaker-sidebar {

@@ -115,16 +115,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+# import cloudinary
+# import cloudinary.uploader
+# import cloudinary.api
+
+
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': 'ddh1i3vod',
+#     'API_KEY': '853555928432793',
+#     'API_SECRET': 'CnycpEU9TwVCwZcH_TnfMhs-scU',
+# }
+
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'ddh1i3vod',
-    'API_KEY': '853555928432793',
-    'API_SECRET': 'CnycpEU9TwVCwZcH_TnfMhs-scU',
-}
+cloudinary.config(
+    cloud_name="ddh1i3vod",
+    api_key="853555928432793",  
+    api_secret="CnycpEU9TwVCwZcH_TnfMhs-scU"
+)
 
 # Cloudinary settings
 CLOUDINARY_URL = 'cloudinary://853555928432793:CnycpEU9TwVCwZcH_TnfMhs-scU@ddh1i3vod'
@@ -137,7 +147,7 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ConnectCare',  #  database name
+        'NAME': 'CaretakerBooking',  #  database name
         'USER': 'postgres',  # Default PostgreSQL username
         'PASSWORD': 'Manisha',  # database password
         'HOST': 'localhost',

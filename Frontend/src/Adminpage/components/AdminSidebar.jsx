@@ -13,8 +13,6 @@ import {
 } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
-import { API } from "../../env";
-import { useEffect } from "react";
 import Logos from "../../User/Pages/Caretaker/Components/Logo";
 
 const Sidebar = () => {
@@ -73,7 +71,7 @@ const Sidebar = () => {
         <Logos />
       </div>
 
-      {/* <h2 className="sidebar-title">{data.name}</h2> */}
+      <h2 className="admin-title">Admin</h2>
 
       <ul className="sidebar-menu">
         {menuItems.map((item) => (

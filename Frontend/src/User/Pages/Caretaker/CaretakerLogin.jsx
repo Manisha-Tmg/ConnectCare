@@ -41,12 +41,13 @@ const CaretakerLogin = () => {
 
         // Navigate based on user role
         const userRole = Cookies.get("role");
+        const id = Cookies.get("caretaker_id");
         console.log("User Role:", userRole);
 
         if (userRole === "user") {
           navigate("/");
         } else if (userRole === "caretaker") {
-          navigate("/dashboard");
+          navigate(`/dashboard/${id}`);
         } else if (userRole === "admin") {
           navigate("/admin-panel");
         }

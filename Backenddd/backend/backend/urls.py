@@ -2,8 +2,9 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from project.views import UserViewSet, UserRegistrationView,LoginView,AdminLoginView,CaretakerLoginView,NotificationViewSet,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,booking_action,get_CaretakerBooking,booking_count_api,CaretakerRegistrationView,admin_dashboard,change_caretaker_status,change_user_status,delete_user,caretaker_delete,get_all_bookings
-# from project.Views.Admin.total_booking_views import  
+from project.views import UserViewSet, UserRegistrationView,LoginView,NotificationViewSet,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking
+from project.caretaker_views import  CareRegistrationView,CareLoginView,booking_action,get_CaretakerBooking,booking_count_api
+from project.admin_views import  AdminLoginView,admin_dashboard,change_caretaker_status,change_user_status,delete_user,caretaker_delete,get_all_bookings
 
 # Initialize the router
 router = DefaultRouter()
@@ -38,12 +39,13 @@ urlpatterns = [
     
 
     # Caretaker list and api
-    path('api/login/caretaker', CaretakerLoginView.as_view(), name='caretaker_login'),
+    path('api/login/caretaker',CareLoginView.as_view(), name='caretaker_login'),
     path('caretaker/bookings/<int:booking_id>/action/', booking_action, name='booking_action'),
     path('caretaker/dashboard/<int:caretaker_id>', booking_count_api, name='booking_count'),
     path('api/caretakers/', get_caretakers, name='get_caretakers'),
     path('api/caretakers/<int:caretaker_id>', get_caretakers, name='get_caretakers'),
-    
+    path('caretakers/register/', CareRegistrationView.as_view(), name='caretaker-register'),
+
 
   
 
@@ -62,7 +64,6 @@ urlpatterns = [
 
     # Admin
     path('auth/api/login/admin', AdminLoginView.as_view(), name='Admin_login'),
-    path('caretakers/register/', CaretakerRegistrationView.as_view(), name='caretaker-register'),
     path('api/admin/dashboard/', admin_dashboard, name='admin-dashboard'),
     path('caretakers/<int:id>/change-status/', change_caretaker_status, name='change-caretaker-status'),
     path('users/<int:id>/change-status/', change_user_status, name='change-users-status'),

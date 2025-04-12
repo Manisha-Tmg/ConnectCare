@@ -11,7 +11,7 @@ import {
   DollarSign,
 } from "lucide-react";
 
-const CaretakerDashboard = () => {
+const CaretakerDashboardss = () => {
   const [bookings, setBookings] = useState([]);
   const [earnings, setEarnings] = useState(0);
 
@@ -132,4 +132,4 @@ const CaretakerDashboard = () => {
   );
 };
 
-export default CaretakerDashboard;
+export default CaretakerDashboardss;

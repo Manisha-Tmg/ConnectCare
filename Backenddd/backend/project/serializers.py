@@ -6,56 +6,52 @@ from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import serializers
+from .models import Caretaker
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
+    profile_picture_url = serializers.SerializerMethodField()
+
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password', 'name', 'address','phone','gender','profile_picture','role']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = [
+            'username', 'email', 'password', 'name', 'address', 'phone',
+            'gender', 'profile_picture', 'role', 'profile_picture_url'
+        ]
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'role': {'read_only': True},
+        }
+
+    def get_profile_picture_url(self, obj):
+        if obj.profile_picture:
+            return obj.profile_picture.url
+        return None
+
+    def validate_username(self, value):
+        if CustomUser.objects.filter(username=value).exists():
+            raise serializers.ValidationError("Username already exists.")
+        return value
+
+    def validate_email(self, value):
+        if CustomUser.objects.filter(email=value).exists():
+            raise serializers.ValidationError("Email already exists.")
+        return value
 
     def create(self, validated_data):
-        name = validated_data.pop('name', None)
-        gender = validated_data.pop('gender', None)
-        address= validated_data.pop('address', None)
-        phone= validated_data.pop('phone', None)
-        profile_picture= validated_data.pop('profile_picture', None)
-        username = validated_data.get('username')
-        email = validated_data.get('email')
-
-        if CustomUser.objects.filter(username=username).exists():
-            raise serializers.ValidationError({"username": "Username already exists."})
-
-        if CustomUser.objects.filter(email=email).exists():
-            raise serializers.ValidationError({"email": "Email already exists."})
-
-        validated_data['password'] = make_password(validated_data['password'])
-        user = CustomUser.objects.create(**validated_data)
-
-        if name:
-            user.name = name
-
-        if gender:
-            user.gender = gender
-
-        if profile_picture:
-            user.profile_picture=profile_picture
-
-        if address:
-            user.address = address
-
-        if phone:
-            user.phone = phone
-
+        password = validated_data.pop('password')
+        user = CustomUser(**validated_data)
+        user.password = make_password(password)
         user.is_active = True
-        user.role = 'user'  # Default role as 'user'
+        user.role = 'user'
         user.save()
-
         return user
 
-from django.contrib.auth.hashers import check_password
+
+
+
 
 class LoginSerializer(serializers.Serializer):
     email = serializers.CharField(required=False)
@@ -85,16 +81,10 @@ class LoginSerializer(serializers.Serializer):
         # If user is authenticated, return user as part of validated data
         return {"user": user}
 
-
-        # If user is found, return user object
-        # if user and not user.is_active:
-        #     raise serializers.ValidationError("User account is inactive.")
-        # return {"user": user}  # Ensure 'user' is returned for CustomUser
-
+  
+from django.contrib.auth.hashers import check_password
 
 # caretaker
-from django.contrib.auth.hashers import make_password
-
 class CaretakerSerializer(serializers.ModelSerializer):
     profile_picture_url = serializers.SerializerMethodField()
     gov_id_url = serializers.SerializerMethodField()
@@ -104,19 +94,13 @@ class CaretakerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Caretaker
         fields = '__all__'
-        # extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {
+            'password': {'write_only': True},
+        }
 
-    # def create(self, validated_data):
-        # password = validated_data.get('password')
-        # if password:
-        #     validated_data['password'] = make_password(password)
-        # return super().create(validated_data)
-
-    def update(self, instance, validated_data):
-        password = validated_data.get('password', None)
-        if password:
-            validated_data['password'] = make_password(password)
-        return super().update(instance, validated_data)
+    def create(self, validated_data):
+        validated_data['password'] = make_password(validated_data['password'])
+        return super().create(validated_data)
 
     def get_profile_picture_url(self, obj):
         return self.get_cloudinary_url(obj.profile_picture)
@@ -131,9 +115,10 @@ class CaretakerSerializer(serializers.ModelSerializer):
         return self.get_cloudinary_url(obj.police_clearance)
 
     def get_cloudinary_url(self, field):
-        if field:
-            return f"https://res.cloudinary.com/ddh1i3vod/{field}"
+        if field and hasattr(field, 'url'):
+            return field.url
         return None
+
 
 
 # booking
@@ -143,6 +128,8 @@ class BookingSerializer(serializers.ModelSerializer):
         model = Booking
         fields = ['id','user','caretaker','booking_date',"status",'location','number','note','name',"caretaker_name"]
         
+
+
 
 # user
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -163,7 +150,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 
-# changepass
+
+
+# changepass for user
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True, write_only=True)
     new_password = serializers.CharField(required=True, write_only=True)
@@ -179,6 +168,8 @@ class ChangePasswordSerializer(serializers.Serializer):
 
 
 
+
+
 # notification
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -187,8 +178,3 @@ class NotificationSerializer(serializers.ModelSerializer):
 
 
 
-# # notification for caretaker
-# class NotificationCaretakerSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = NotificationCaretaker
-#         fields = ['id', 'message', 'is_read', 'created_at', 'caretaker']

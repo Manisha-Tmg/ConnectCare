@@ -35,7 +35,7 @@ const TotalBookingPanel = () => {
       <Sidebar />
       <div className="caretaker-panel">
         <div className="panel-header">
-          <h1>My Bookings</h1>
+          <h1>Total Bookings</h1>
         </div>
 
         <div className="caretakers-table-container">
@@ -46,6 +46,7 @@ const TotalBookingPanel = () => {
                 <th>Number</th>
                 <th>Caretaker</th>
                 <th>Location</th>
+                <th>Note</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -56,6 +57,7 @@ const TotalBookingPanel = () => {
                     <td>{new Date(booking.booking_date).toLocaleString()}</td>{" "}
                     <td>{booking.number}</td>
                     <td>{booking.caretaker_name}</td>
+                    <td>{booking.note}</td>
                     <td>{booking.location}</td>
                     <td>
                       <span

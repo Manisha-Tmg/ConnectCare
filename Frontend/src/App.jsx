@@ -9,7 +9,6 @@ import Login from "./User/Pages/login";
 import Signup from "./User/Pages/signup";
 import { Toaster } from "react-hot-toast";
 import CaretakerLogin from "./User/Pages/Caretaker/CaretakerLogin";
-import Dashboard from "./User/Pages/Caretaker/Dashboard";
 import Profile from "./User/Pages/profile";
 import ChangePassword from "./User/Pages/Changepassword";
 import BookingDetails from "./User/Pages/MyBookings";
@@ -21,7 +20,7 @@ import AdminLogin from "./Adminpage/Pages/AdminLogin";
 import BookCaretakerdetails from "./User/Pages/BookCaretakerViewDetails";
 import BookingFormPreview from "./User/Pages/Booking";
 import Details from "./User/Pages/Details";
-import CaretakerDashboard from "./User/Pages/Caretaker/Notification";
+// import CaretakerDashboard from "./User/Pages/Caretaker/Notification";
 import Admindash from "./Adminpage/Pages/Admindash";
 import CaretakerPanel from "./Adminpage/Pages/Caretaker";
 import CaretakerDetails from "./Adminpage/Pages/CaretakerDetails";
@@ -29,6 +28,7 @@ import UserPanel from "./Adminpage/Pages/User";
 import UserDetails from "./Adminpage/Pages/UserDetails.jsx";
 import Adduser from "./Adminpage/Pages/Useradd.jsx";
 import TotalBookingPanel from "./Adminpage/Pages/TotalBooking.jsx";
+import CaretakerDashboard from "./Caretaker/Pages/CaretakerDashboard.jsx";
 
 function App() {
   return (
@@ -55,10 +55,12 @@ function App() {
         />
         {/* Caretaker */}
         <Route path="/login/caretaker" element={<CaretakerLogin />} />
-        <Route path="/dashboard/" element={<Dashboard />} />
+        <Route path="/dashboard/:id" element={<CaretakerDashboard />} />
+
+        {/* <Route path="/dashboard/:caretaker_id" element={<Dashboard />} /> */}
         <Route path="/viewDetails" element={<BookCaretakerViewDetails />} />
         <Route path="/booking/" element={<CaretakerBookingPortal />} />
-        <Route path="/notification" element={<CaretakerDashboard />} />
+        {/* <Route path="/notification" element={<CaretakerDashboard />} /> */}
         <Route path="/caretaker/profile" element={<CaretakerProfile />} />
         {/* <Route path="/caretaker/mybooking/:id" element={<BookingDetails />} /> */}
 

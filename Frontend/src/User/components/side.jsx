@@ -36,6 +36,7 @@ const CaretakerSidebar = () => {
       navigate("/login/caretaker");
     }
   };
+  const id = Cookies.get("caretaker_id");
 
   useEffect(() => {
     async function fetchcaretakerdata() {
@@ -58,25 +59,17 @@ const CaretakerSidebar = () => {
   // Menu items configuration
   const menuItems = [
     {
-      path: `/dashboard/}`,
+      path: `/dashboard/${id}`,
       icon: <FaHome className="icon" />,
       label: "Dashboard",
     },
-    {
-      path: "/calendar",
-      icon: <FaCalendarAlt className="icon" />,
-      label: "Calendar",
-    },
+
     {
       path: "/booking/",
       icon: <FaBookmark className="icon" />,
       label: "Booking",
     },
-    {
-      path: "/notification",
-      icon: <FaBell className="icon" />,
-      label: "Notifications",
-    },
+
     {
       path: "/caretaker/profile",
       icon: <FaCog className="icon" />,

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/signup.css";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 import { useNavigate } from "react-router-dom";
-import { API } from "../../env";
-import Footer from "../components/Footer";
+import { API } from "../../../env";
+import Footer from "../../components/Footer";
 import toast from "react-hot-toast";
 
-const Signup = () => {
+const Caretakersignup = () => {
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [email, setEmail] = useState("");
@@ -190,4 +190,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Caretakersignup;
