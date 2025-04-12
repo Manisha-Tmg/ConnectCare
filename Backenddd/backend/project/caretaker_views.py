@@ -66,3 +66,78 @@ class CareLoginView(APIView):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+
+# Caretaker list side
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])  # Ensure only authenticated users can access
+def get_CaretakerBooking(request, caretaker_id=None, booking_id=None):
+    caretaker = request.user  # Get the logged-in user
+
+    # Check if the provided caretaker_id matches the logged-in caretaker's ID
+    if caretaker_id and caretaker.id != int(caretaker_id):
+        return Response({"error": "Unauthorized access"}, status=403)
+
+    if booking_id:
+        try:
+            booking = Booking.objects.get(id=booking_id, caretaker_id=caretaker.id)  # Filter by caretaker_id
+            serializer = BookingSerializer(booking)
+            return Response(serializer.data, status=200)
+        except Booking.DoesNotExist:
+            return Response({"error": "Booking not found or unauthorized"}, status=404)
+    
+    else:
+        bookings = Booking.objects.filter(caretaker_id=caretaker.id)  # Filter bookings for the given caretaker
+        serializer = BookingSerializer(bookings, many=True)
+        return Response(serializer.data, status=200)
+
+
+
+# Caretaker accepting portal
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def booking_action(request, booking_id):
+    try:
+        booking = Booking.objects.get(id=booking_id, caretaker_id=request.user.id)
+        # ipdb.set_trace()
+    except Booking.DoesNotExist:
+        return Response({"error": "Booking not found or unauthorized"}, status=status.HTTP_404_NOT_FOUND)
+
+    action = request.data.get("action")
+
+    if action == "accept":
+        booking.status = "accepted"
+        message = f"Your booking with {booking.caretaker.name} has been accepted!"
+    elif action == "reject":
+        booking.status = "rejected"
+        message = f"Your booking with {booking.caretaker.name} has been rejected."
+    else:
+        return Response({"error": "Invalid action"}, status=status.HTTP_400_BAD_REQUEST)
+
+    booking.save()
+
+    # Create Notification for the user who made the booking
+    Notification.objects.create(
+        user=booking.user,
+        message=message,
+        is_read=False  # default, but good to be explicit
+
+    )
+
+
+    return Response({"message": f"Booking {booking.status} successfully"}, status=status.HTTP_200_OK)
+
+
+
+# count booking
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def booking_count_api(request, caretaker_id):
+   
+    if caretaker_id is None:
+        return Response({"error": "Caretaker ID is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+    total_bookings = Booking.objects.filter(caretaker_id=caretaker_id).count()
+    return Response({"total_bookings": total_bookings}, status=status.HTTP_200_OK)
+
