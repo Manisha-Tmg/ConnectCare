@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../css/dashboard.css";
+import "../css/dashboard.css";
 import Cookies from "js-cookie";
 import {
   FaCalendarCheck,
@@ -8,7 +8,7 @@ import {
   FaChartLine,
 } from "react-icons/fa";
 import { API } from "../../env";
-import CaretakerSidebar from "../../User/components/side";
+import CaretakerSidebar from "../Components/side";
 
 const CaretakerDashboard = () => {
   const [data, setdata] = useState();

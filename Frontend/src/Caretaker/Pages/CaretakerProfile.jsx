@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import "../../css/profile.css";
+import "../css/profile.css";
 import Cookies from "js-cookie";
-import { API } from "../../../env";
-import CaretakerSidebar from "../../components/side";
+import { API } from "../../env";
+import CaretakerSidebar from "../Components/side";
 
 const CaretakerProfile = () => {
   const [data, setData] = useState(null);

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "../../css/login.css";
+import "../css/login.css";
 import { Link, useNavigate } from "react-router-dom";
-import { API } from "../../../env";
-import InputField from "../../components/Input";
-import Footer from "../../components/Footer";
+import { API } from "../../env";
+import InputField from "../../User/components/Input";
+import Footer from "../../User/components/Footer";
 import Cookies from "js-cookie";
 
 const CaretakerLogin = () => {

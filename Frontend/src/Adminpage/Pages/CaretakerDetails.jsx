@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../../css/deatisl.css";
+import "../css/deatisl.css";
 import Cookies from "js-cookie";
 import { useParams } from "react-router-dom";
 import { API } from "../../env";

@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { API } from "../../../env";
 import Cookies from "js-cookie";
-import "../../css/Booking.css";
-import CaretakerSidebar from "../../components/side";
+import { API } from "../../env";
+import "../../css/CaretakerDashboard.css";
 import {
-  MapPin,
-  Phone,
   CheckCircle,
   XCircle,
   User,
-  Notebook,
+  MapPin,
+  Phone,
+  DollarSign,
 } from "lucide-react";
 
-const CaretakerBookingPortal = () => {
+const CaretakerDashboardss = () => {
   const [bookings, setBookings] = useState([]);
+  const [earnings, setEarnings] = useState(0);
 
   useEffect(() => {
-    const token = Cookies.get("accessToken");
-
-    const fetchBooking = async () => {
+    const fetchBookings = async () => {
+      const token = Cookies.get("accessToken");
       try {
         const res = await fetch(`${API}api/caretaker/bookings/`, {
           method: "GET",
@@ -27,35 +26,18 @@ const CaretakerBookingPortal = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-
         if (!res.ok) throw new Error("Failed to fetch bookings");
-
         const data = await res.json();
         setBookings(data);
       } catch (error) {
         console.error("Error fetching bookings:", error);
       }
     };
-
-    fetchBooking();
+    fetchBookings();
   }, []);
 
   const updateBookingStatus = async (id, action) => {
     const token = Cookies.get("accessToken");
-
-    // Convert "Approved" -> "accept", "Rejected" -> "reject"
-    const actionMap = {
-      Approved: "accept",
-      Rejected: "reject",
-    };
-
-    const formattedAction = actionMap[action];
-
-    if (!formattedAction) {
-      console.error("Invalid action provided");
-      return;
-    }
-
     try {
       const res = await fetch(`${API}caretaker/bookings/${id}/action/`, {
         method: "POST",
@@ -63,17 +45,14 @@ const CaretakerBookingPortal = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ action: formattedAction }),
+        body: JSON.stringify({ action }),
       });
-
       if (res.ok) {
         setBookings((prev) =>
           prev.map((booking) =>
             booking.id === id ? { ...booking, status: action } : booking
           )
         );
-      } else {
-        console.error("Failed to update booking status");
       }
     } catch (error) {
       console.error("Error updating booking status:", error);
@@ -81,55 +60,53 @@ const CaretakerBookingPortal = () => {
   };
 
   return (
-    <div className="bookings-container">
-      <CaretakerSidebar />
-      <div className="booking-content">
-        <h2 className="booking-title">Booking Requests</h2>
-        {bookings.length === 0 ? (
-          <p className="no-bookings">No new requests.</p>
-        ) : (
-          <div className="booking-list">
-            {bookings.map((request) => (
+    <div className="caretaker-dashboard">
+      <div className="sidebar">
+        <h2>ConnectCare</h2>
+        <ul>
+          <li>Dashboard</li>
+          <li>Bookings</li>
+          <li>Earnings</li>
+          <li>Profile</li>
+        </ul>
+      </div>
+      <div className="dashboard-content">
+        <h2>Dashboard</h2>
+        <div className="stats">
+          <div className="stat-box">
+            <DollarSign size={24} />
+            <p>Earnings: ${earnings}</p>
+          </div>
+        </div>
+        <h3>Booking Requests</h3>
+        <div className="booking-list">
+          {bookings.length === 0 ? (
+            <p>No new requests.</p>
+          ) : (
+            bookings.map((request) => (
               <div key={request.id} className="booking-card">
                 <div className="user-info">
-                  <div className="user-avatar">
-                    <User size={20} color="white" />
-                  </div>
-                  <div>
-                    <h3></h3>
-                    <p className="booking-type">
-                      Name • {request.first_name} {request.last_name}
-                    </p>
-                  </div>
+                  <User size={20} />
+                  <h3>
+                    {request.first_name} {request.last_name}
+                  </h3>
                 </div>
-
-                <div className="booking-details">
-                  <p>
-                    <MapPin size={16} /> <strong>From:</strong>
-                    {request.location}
-                  </p>
-
-                  <p>
-                    <Notebook size={16} />
-                    <strong>Special Needs:</strong> {request.note}
-                  </p>
-
-                  <p>
-                    <Phone size={16} /> <strong>Contact:</strong>{" "}
-                    {request.number}
-                  </p>
-                </div>
-
+                <p>
+                  <MapPin size={16} /> {request.location}
+                </p>
+                <p>
+                  <Phone size={16} /> {request.number}
+                </p>
                 <div className="booking-actions">
                   {request.status === "Pending" ? (
                     <>
                       <button
                         className="approve-btn"
                         onClick={() =>
-                          updateBookingStatus(request.id, "Approved")
+                          updateBookingStatus(request.id, "Accepted")
                         }
                       >
-                        <CheckCircle size={16} /> Approve
+                        <CheckCircle size={16} /> Accept
                       </button>
                       <button
                         className="decline-btn"
@@ -137,7 +114,7 @@ const CaretakerBookingPortal = () => {
                           updateBookingStatus(request.id, "Rejected")
                         }
                       >
-                        <XCircle size={16} /> Decline
+                        <XCircle size={16} /> Reject
                       </button>
                     </>
                   ) : (
@@ -147,12 +124,12 @@ const CaretakerBookingPortal = () => {
                   )}
                 </div>
               </div>
-            ))}
-          </div>
-        )}
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-export default CaretakerBookingPortal;
+export default CaretakerDashboardss;

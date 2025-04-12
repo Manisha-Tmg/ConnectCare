@@ -13,9 +13,9 @@ import {
 import "../css/side.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
-import Logos from "../Pages/Caretaker/Components/Logo";
 import { API } from "../../env";
 import { useEffect } from "react";
+import Logos from "./Logo";
 
 const CaretakerSidebar = () => {
   const navigate = useNavigate();

@@ -13,7 +13,7 @@ import {
 } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
-import Logos from "../../User/Pages/Caretaker/Components/Logo";
+import Logos from "../../Caretaker/Components/Logo";
 
 const Sidebar = () => {
   const navigate = useNavigate();

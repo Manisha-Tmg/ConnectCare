@@ -8,13 +8,9 @@ import BlogDetail from "./User/Pages/BlogDetails";
 import Login from "./User/Pages/login";
 import Signup from "./User/Pages/signup";
 import { Toaster } from "react-hot-toast";
-import CaretakerLogin from "./User/Pages/Caretaker/CaretakerLogin";
 import Profile from "./User/Pages/profile";
 import ChangePassword from "./User/Pages/Changepassword";
 import BookingDetails from "./User/Pages/MyBookings";
-import CaretakerProfile from "./User/Pages/Caretaker/CaretakerProfile";
-import CaretakerBookingPortal from "./User/Pages/Caretaker/Caretakermybooking";
-import BookCaretakerViewDetails from "./User/Pages/BookCaretakerViewDetails";
 import Addcaretaker from "./Adminpage/Pages/Addcaretaker";
 import AdminLogin from "./Adminpage/Pages/AdminLogin";
 import BookCaretakerdetails from "./User/Pages/BookCaretakerViewDetails";
@@ -29,6 +25,10 @@ import UserDetails from "./Adminpage/Pages/UserDetails.jsx";
 import Adduser from "./Adminpage/Pages/Useradd.jsx";
 import TotalBookingPanel from "./Adminpage/Pages/TotalBooking.jsx";
 import CaretakerDashboard from "./Caretaker/Pages/CaretakerDashboard.jsx";
+import CaretakerProfile from "./Caretaker/Pages/CaretakerProfile.jsx";
+import CaretakerLogin from "./Caretaker/Pages/CaretakerLogin.jsx";
+import CaretakerBookingPortal from "./Caretaker/Pages/Caretakermybooking.jsx";
+import CaretakerSignup from "./Caretaker/Pages/Caretakersignup.jsx";
 
 function App() {
   return (
@@ -56,22 +56,16 @@ function App() {
         {/* Caretaker */}
         <Route path="/login/caretaker" element={<CaretakerLogin />} />
         <Route path="/dashboard/:id" element={<CaretakerDashboard />} />
-
-        {/* <Route path="/dashboard/:caretaker_id" element={<Dashboard />} /> */}
-        <Route path="/viewDetails" element={<BookCaretakerViewDetails />} />
+        <Route path="/register" element={<CaretakerSignup />} />
         <Route path="/booking/" element={<CaretakerBookingPortal />} />
-        {/* <Route path="/notification" element={<CaretakerDashboard />} /> */}
         <Route path="/caretaker/profile" element={<CaretakerProfile />} />
-        {/* <Route path="/caretaker/mybooking/:id" element={<BookingDetails />} /> */}
 
         {/* Admin */}
         <Route path="api/admin/login/" element={<AdminLogin />} />
         <Route path="/admin/Addcaretaker" element={<Addcaretaker />} />
         <Route path="/admin/Adduser" element={<Adduser />} />
         <Route path="/admin/Dashboard" element={<Admindash />} />
-        {/*  */}
         <Route path="/admin/Users" element={<UserPanel />} />
-        {/* <Route path="/admin/user/delete:id" element={<UserPanel />} /> */}
         <Route path="/admin/Caretaker" element={<CaretakerPanel />} />
         <Route path="/admin/bookings" element={<TotalBookingPanel />} />
         <Route path="/caretakers/:id" element={<CaretakerDetails />} />

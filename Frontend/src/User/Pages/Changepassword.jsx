@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Header from "../components/Header";
-import Sidebar from "../components/Sidebaruser";
 import "../css/setting.css";
 import toast from "react-hot-toast";
 import { API } from "../../env";

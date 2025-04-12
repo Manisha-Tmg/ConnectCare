@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "../css/setting.css";
 import Header from "../components/Header";
-import Sidebar from "../components/Sidebaruser";
+
 import { API } from "../../env";
 import Cookies from "js-cookie";
 
