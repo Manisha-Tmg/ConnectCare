@@ -10,6 +10,7 @@ from .models import Caretaker
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.hashers import check_password
+import re
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -98,6 +99,18 @@ class CaretakerSerializer(serializers.ModelSerializer):
             'password': {'write_only': True},
         }
 
+    def validate_username(self, value):
+        if ' '  in value:
+            raise serializers.ValidationError('no space allowed')
+        if re.search('r[@#$%^&*!()]',value):
+            raise serializers.ValidationError('special characters not allowed')
+        return value
+
+    def validate_password(self, value):
+        if ' '  in value :
+            raise serializers.ValidationError('No space allowed')
+        return value
+    
     def create(self, validated_data):
         validated_data['password'] = make_password(validated_data['password'])
         return super().create(validated_data)

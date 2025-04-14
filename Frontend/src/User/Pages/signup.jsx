@@ -32,8 +32,6 @@ const Signup = () => {
       !password ||
       !profilePictureFile
     ) {
-      toast.error("Please fill all required fields");
-      return;
     }
 
     const formData = new FormData();
