@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../env";
 import Cookies from "js-cookie";
+import { Polygon } from "recharts";
 
 const CaretakerSignup = () => {
   const [name, setName] = useState("");
@@ -30,6 +31,42 @@ const CaretakerSignup = () => {
 
     if (!token) {
       toast.error("Unauthorized: No token found");
+      return;
+    }
+    if (username.includes(" ")) {
+      toast.error("Spaces not allowed");
+      return;
+    }
+
+    if (password.includes(" ")) {
+      toast.error("Spaces not allowed");
+      return;
+    }
+
+    if (
+      !name ||
+      !email ||
+      !gender ||
+      !phone ||
+      !address ||
+      !experience ||
+      !specialty ||
+      !hourly_rate ||
+      !languages_spoken ||
+      !bio ||
+      !username ||
+      !password ||
+      !profile_picture_url ||
+      !police_clearance_url ||
+      !certification_docs_url ||
+      !gov_id_url
+    ) {
+      toast.error("Fill the require filled");
+    }
+
+    const usernameRegex = /^[a-zA-Z0-9_]+$/;
+    if (!usernameRegex.test()) {
+      toast.error("Dont use the special characters");
       return;
     }
 

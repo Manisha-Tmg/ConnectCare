@@ -173,6 +173,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('Special characeter are not allowed')
         return value
 
+
 # changepass for user
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True, write_only=True)
