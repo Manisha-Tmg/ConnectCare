@@ -58,7 +58,7 @@ const CaretakerDashboard = () => {
               <FaTasks className="card-icon" />
             </div>
             <h2>Pending Tasks</h2>
-            <p className="task-count">{data?.pending_tasks || 0}</p>
+            <p className="task-count">{data?.total_pending || 0}</p>
           </div>
           <div className="card">
             <div className="card-icon-wrapper">

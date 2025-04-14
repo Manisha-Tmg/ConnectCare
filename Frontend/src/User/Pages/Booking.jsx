@@ -8,15 +8,15 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const BookingFormPreview = () => {
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const [note, setNote] = useState("");
   const [location, setLocation] = useState("");
   const [number, setNumber] = useState(null);
   const [caretaker, setCaretaker] = useState(null);
-  const [user, setUser] = useState(null); // Store user details
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // Fetch caretaker details
   useEffect(() => {
     const fetchCaretaker = async () => {
       try {
@@ -35,7 +35,6 @@ const BookingFormPreview = () => {
     fetchCaretaker();
   }, [id]);
 
-  // Fetch user details
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -56,7 +55,7 @@ const BookingFormPreview = () => {
         });
 
         const userData = await response.json();
-        setUser(userData); // Store user details in state
+        setUser(userData);
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
@@ -74,18 +73,20 @@ const BookingFormPreview = () => {
         return;
       }
 
-      const dateObj = new Date(date);
-      const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}-${dateObj.getDate().toString().padStart(2, "0")}`;
+      if (!date || !time) {
+        toast.error("Please select both date and time.");
+        return;
+      }
+
+      const dateTimeString = `${date}T${time}:00`; // combine date t and time- 2025-04-14T21:00:00
 
       const requestBody = {
-        location: location,
-        note: note,
-        number: number,
+        location,
+        note,
+        number,
         caretaker_id: caretaker?.id,
-        booking_date: formattedDate,
-        name: name,
+        booking_date: dateTimeString,
+        name: user?.name || "",
         status: "Pending",
       };
 
@@ -118,7 +119,7 @@ const BookingFormPreview = () => {
         <h2 className="headh2">Book Your Caretaker</h2>
         <div className="form-section">
           <h3>Booking Details</h3>
-          {/* Caretaker Name (Read-Only) */}
+
           {caretaker && (
             <div className="form-group">
               <label className="label">Caretaker Name</label>
@@ -130,6 +131,7 @@ const BookingFormPreview = () => {
               />
             </div>
           )}
+
           {user && (
             <div className="form-group">
               <label className="label">User Name</label>
@@ -143,6 +145,14 @@ const BookingFormPreview = () => {
             className="input"
             onChange={(e) => setDate(e.target.value)}
             value={date}
+          />
+
+          <label className="label">Time</label>
+          <input
+            type="time"
+            className="input"
+            onChange={(e) => setTime(e.target.value)}
+            value={time}
           />
 
           <label className="label">Number</label>
@@ -166,6 +176,7 @@ const BookingFormPreview = () => {
           onChange={(e) => setLocation(e.target.value)}
           value={location}
         />
+
         <label className="label">Additional Note</label>
         <input
           type="text"

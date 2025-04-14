@@ -9,6 +9,7 @@ from rest_framework import serializers
 from .models import Caretaker
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.hashers import check_password
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -61,7 +62,7 @@ class LoginSerializer(serializers.Serializer):
         email = data.get('email')
         password = data.get('password')
 
-        # Try authenticating as CustomUser first
+        # Try authenticating the email  pass as CustomUser first
         if email:
             user = authenticate(email=email, password=password)
         else:
@@ -82,7 +83,6 @@ class LoginSerializer(serializers.Serializer):
         return {"user": user}
 
   
-from django.contrib.auth.hashers import check_password
 
 # caretaker
 class CaretakerSerializer(serializers.ModelSerializer):

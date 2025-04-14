@@ -12,7 +12,6 @@ from django.contrib.auth import get_user_model
 
 
 
-
 class CareRegistrationView(APIView):
    
     permission_classes = [AllowAny]  # To allow anyone to log in
@@ -139,5 +138,9 @@ def booking_count_api(request, caretaker_id):
         return Response({"error": "Caretaker ID is required"}, status=status.HTTP_400_BAD_REQUEST)
 
     total_bookings = Booking.objects.filter(caretaker_id=caretaker_id).count()
-    return Response({"total_bookings": total_bookings}, status=status.HTTP_200_OK)
+    total_pending = Booking.objects.filter(caretaker_id=caretaker_id).count()
+    completed_tasks = Booking.objects.filter(caretaker_id=caretaker_id).count()
+
+    return Response({"total_bookings": total_bookings,"total_pending": total_pending,"completed_task":completed_tasks}, status=status.HTTP_200_OK)
+
 

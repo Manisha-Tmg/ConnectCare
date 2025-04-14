@@ -22,7 +22,6 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    // Validate form fields
     if (
       !name ||
       !gender ||

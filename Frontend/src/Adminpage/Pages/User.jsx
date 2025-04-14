@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 const UserPanel = () => {
   const [users, setUsers] = useState([]);
   const [datas, setdata] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   async function userdetail() {
     const token = Cookies.get("accessToken");
@@ -88,7 +89,9 @@ const UserPanel = () => {
       console.error(error);
     }
   }
-
+  const filteredUsers = users.filter((ct) =>
+    ct.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
     <div className="user-panel">
       <Sidebar />
@@ -98,7 +101,14 @@ const UserPanel = () => {
           <button className="add-user-btn">+ Add User</button>
         </Link>
       </div>
-
+      <div className="search-filter-container">
+        <input
+          type="text"
+          placeholder="Search users..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
       <div className="users-table-container">
         <table className="users-table">
           <thead>

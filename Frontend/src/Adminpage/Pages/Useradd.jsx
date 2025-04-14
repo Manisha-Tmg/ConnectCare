@@ -4,6 +4,7 @@ import "../css/adduser.css";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../env";
 import toast from "react-hot-toast";
+import Sidebar from "../components/AdminSidebar";
 
 const Adduser = () => {
   const [name, setName] = useState("");
@@ -47,7 +48,7 @@ const Adduser = () => {
   };
   return (
     <div>
-      <Header />
+      <Sidebar />
       <div className="user-form-container">
         <h2>User Registration</h2>
         <p className="user-form-subtitle">
@@ -162,7 +163,6 @@ const Adduser = () => {
           </p>
         </form>
       </div>
-      <Footer />
     </div>
   );
 };

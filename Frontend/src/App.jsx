@@ -53,6 +53,7 @@ function App() {
           path="/booking-details/:booking_id"
           element={<BookingDetails />}
         />
+
         {/* Caretaker */}
         <Route path="/login/caretaker" element={<CaretakerLogin />} />
         <Route path="/dashboard/:id" element={<CaretakerDashboard />} />

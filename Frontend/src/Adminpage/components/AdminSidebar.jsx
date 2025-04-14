@@ -66,7 +66,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="caretaker-sidebar">
+    <div className="admin-sidebar">
       <div className="sidebar-logo">
         <Logos />
       </div>
