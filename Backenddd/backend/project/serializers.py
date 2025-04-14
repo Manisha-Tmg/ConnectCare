@@ -161,9 +161,17 @@ class CustomUserSerializer(serializers.ModelSerializer):
             return f"https://res.cloudinary.com/ddh1i3vod/{field}"# for image url
         return None
 
+    def validate_password(self, value):
+        if ' ' in value:
+            raise serializers.ValidationError('No space allowed')
+        return value
 
-
-
+    def validate_username(self, value):
+        if ' ' in value:
+            raise serializers.ValidationError('no spaces allowed')
+        if re.search('r[!@#$%^&*()]',value):
+            raise serializers.ValidationError('Special characeter are not allowed')
+        return value
 
 # changepass for user
 class ChangePasswordSerializer(serializers.Serializer):
