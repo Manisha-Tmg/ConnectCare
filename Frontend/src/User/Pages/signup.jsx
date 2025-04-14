@@ -32,6 +32,25 @@ const Signup = () => {
       !password ||
       !profilePictureFile
     ) {
+      toast.error("Please fill all required fields");
+      return;
+    }
+
+    if (username.includes(" ")) {
+      toast.error("Space not allowed");
+      return;
+    }
+    const usernameRegex = /^[a-zA-Z0-9_]+$/;
+    if (!usernameRegex.test(username)) {
+      toast.error(
+        "Username can only contain letters, numbers, and underscores."
+      );
+      return;
+    }
+
+    if (password.includes(" ")) {
+      toast.error("Space not allowed");
+      return;
     }
 
     const formData = new FormData();
