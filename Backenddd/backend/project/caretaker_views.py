@@ -118,7 +118,7 @@ def booking_action(request, booking_id):
     # Create Notification for the user who made the booking
     Notification.objects.create(
         user=booking.user,
-        message=message,
+        message=message.em,
         is_read=False  # default, but good to be explicit
 
     )

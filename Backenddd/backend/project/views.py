@@ -131,6 +131,7 @@ def get_user(request,user_id=None):
 
 
 # Booking the caretakerfrom datetime import datetime, timedelta
+from django.core.mail import send_mail
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -173,6 +174,19 @@ def book_caretaker(request):
         note=note
     )
     booking.save()
+
+    send_mail(
+        subject="New Booking Request",
+        message=f"Hello {caretaker.name},\n\nYou have received a new booking request from {request.user.name}.\n\n"
+                f"Date & Time: {booking_date.strftime('%Y-%m-%d %H:%M')}\n"
+                f"Location: {location}\n"
+                f"Phone: {number}\n"
+                f"Note: {note or 'N/A'}\n\n"
+                f"Please check your dashboard to accept or reject the booking.",
+        from_email=None,  
+        recipient_list=[caretaker.email],
+        fail_silently=False
+    )
 
     return Response({"booking_id": booking.id, **BookingSerializer(booking).data}, status=status.HTTP_201_CREATED)
 

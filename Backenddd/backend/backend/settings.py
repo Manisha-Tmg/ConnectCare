@@ -119,12 +119,15 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # import cloudinary.uploader
 # import cloudinary.api
 
+# email configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'manshaa4545@gmail.com'
+EMAIL_HOST_PASSWORD = 'qyah qznl nyeq mwop'  
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': 'ddh1i3vod',
-#     'API_KEY': '853555928432793',
-#     'API_SECRET': 'CnycpEU9TwVCwZcH_TnfMhs-scU',
-# }
 
 import cloudinary
 import cloudinary.uploader
