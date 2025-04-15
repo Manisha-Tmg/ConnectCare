@@ -3,7 +3,7 @@ from .serializers import CaretakerSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework.response import Response
-from .models import Booking,Notification
+from .models import Booking,CustomUser
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import CaretakerSerializer,BookingSerializer,LoginSerializer
@@ -92,6 +92,7 @@ def get_CaretakerBooking(request, caretaker_id=None, booking_id=None):
 
 
 from django.core.mail import send_mail
+from django.conf import settings
 # Caretaker accepting portal
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -120,7 +121,7 @@ def booking_action(request, booking_id):
     send_mail (
         subject="Booking update ",
         message=message,
-        from_email=None,  
+        from_email=settings.DEFAULT_FROM_EMAIL,  
         recipient_list=[booking.user.email],
         fail_silently=False
     )
