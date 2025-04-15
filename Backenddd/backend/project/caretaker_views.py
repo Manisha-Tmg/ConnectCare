@@ -91,7 +91,7 @@ def get_CaretakerBooking(request, caretaker_id=None, booking_id=None):
         return Response(serializer.data, status=200)
 
 
-
+from django.core.mail import send_mail
 # Caretaker accepting portal
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -116,13 +116,15 @@ def booking_action(request, booking_id):
     booking.save()
 
     # Create Notification for the user who made the booking
-    Notification.objects.create(
-        user=booking.user,
-        message=message.em,
-        is_read=False  # default, but good to be explicit
-
+   
+    send_mail (
+        subject="Booking update ",
+        message=message,
+        from_email=None,  
+        recipient_list=[booking.user.email],
+        fail_silently=False
     )
-
+    
 
     return Response({"message": f"Booking {booking.status} successfully"}, status=status.HTTP_200_OK)
 
