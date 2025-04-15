@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router-dom";
 import "../css/Details.css";
 import Header from "../components/Header";
 import { API } from "../../env";
-import Cookies from "js-cookie";
 
 import { MdEmail, MdLanguage } from "react-icons/md";
 import { FaPhone, FaRegCalendarDays } from "react-icons/fa6";

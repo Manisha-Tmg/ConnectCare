@@ -11,10 +11,7 @@ import NotificationDropdown from "./NotificationDropd";
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const notificationRef = useRef(null);
-  const [notifications, setNotifications] = useState([]);
   const [data, setData] = useState("");
 
   const navigate = useNavigate();
@@ -76,11 +73,6 @@ const Header = () => {
     setIsNotificationOpen(false); // Close notifications if profile dropdown is open
   };
 
-  const toggleNotificationDropdown = () => {
-    setIsNotificationOpen(!isNotificationOpen);
-    setIsDropdownOpen(false); // Close profile dropdown if notifications are open
-  };
-
   return (
     <header className="header">
       <div>
@@ -91,15 +83,7 @@ const Header = () => {
         {isLoggedIn ? (
           <div className="nav-avatar-container relative" ref={dropdownRef}>
             <div className="nav-avatar-wrapper">
-              <IoNotificationsOutline
-                className="iconnnnn"
-                onClick={toggleNotificationDropdown}
-              />
-              <div
-                className="nav-avatar"
-                onClick={toggleDropdown}
-                ref={notificationRef}
-              >
+              <div className="nav-avatar" onClick={toggleDropdown}>
                 <img
                   src={data?.profile_picture_url}
                   alt="Img"
@@ -107,9 +91,6 @@ const Header = () => {
                 />
               </div>
             </div>
-
-            {/* Notification Dropdown */}
-            {isNotificationOpen && <NotificationDropdown />}
 
             {/* Profile Dropdown */}
             {isDropdownOpen && (

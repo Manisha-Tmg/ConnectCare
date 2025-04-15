@@ -55,21 +55,19 @@ const BookCaretakerdetails = () => {
         <div className="user-caretaker-grid">
           {caretakers.map((caretaker) => (
             <div key={caretaker.id} className="user-caretaker-card">
-              <div className="verified-badge">
-                {caretaker.is_approved ? "Verified " : "Not Verified "}
-              </div>
-              {/* //     <MdVerified className="icon-verified" />
-              //   ) : (
-              //     <ImCross className="icon-verified" />
-              //   )}
-              // </div> */}
-
               <img
                 src={caretaker.profile_picture_url}
                 alt={caretaker.name}
                 className="caretaker-image"
               />
-              <h2 className="user-caretaker-name">{caretaker.name}</h2>
+              <h1 className="caretaker-name">
+                {caretaker.name}
+                {caretaker.is_approved ? (
+                  <MdVerified className="Details-verified-icon" />
+                ) : (
+                  <ImCross className="Details-verified-icon" />
+                )}
+              </h1>{" "}
               <div className="user-caretaker-languages">
                 {caretaker.languages_spoken
                   ? caretaker.languages_spoken.split(",").map((lang, index) => (
@@ -80,7 +78,6 @@ const BookCaretakerdetails = () => {
                     ))
                   : "Not specified"}
               </div>
-
               <div className="location-tags">
                 <span className="tag">
                   {caretaker.address
