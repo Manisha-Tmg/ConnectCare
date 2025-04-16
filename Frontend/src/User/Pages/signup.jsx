@@ -48,8 +48,13 @@ const Signup = () => {
       return;
     }
 
+    if (email.includes(" ")) {
+      toast.error("Space not allowed in password");
+      return;
+    }
+
     if (password.includes(" ")) {
-      toast.error("Space not allowed");
+      toast.error("Space not allowed in password");
       return;
     }
 

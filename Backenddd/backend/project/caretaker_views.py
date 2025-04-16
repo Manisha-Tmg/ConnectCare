@@ -3,7 +3,9 @@ from .serializers import CaretakerSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework.response import Response
-from .models import Booking,CustomUser
+from .models import Booking
+from django.core.mail import send_mail
+from django.conf import settings
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import CaretakerSerializer,BookingSerializer,LoginSerializer
@@ -91,8 +93,8 @@ def get_CaretakerBooking(request, caretaker_id=None, booking_id=None):
         return Response(serializer.data, status=200)
 
 
-from django.core.mail import send_mail
-from django.conf import settings
+
+
 # Caretaker accepting portal
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -101,7 +103,7 @@ def booking_action(request, booking_id):
         booking = Booking.objects.get(id=booking_id, caretaker_id=request.user.id)
         # ipdb.set_trace()
     except Booking.DoesNotExist:
-        return Response({"error": "Booking not found or unauthorized"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"error": "Booking not found or you don't have permission to access it."}, status=status.HTTP_404_NOT_FOUND)
 
     action = request.data.get("action")
 
@@ -116,7 +118,7 @@ def booking_action(request, booking_id):
 
     booking.save()
 
-    # Create Notification for the user who made the booking
+    # Create email notification for the user who made the booking
    
     send_mail (
         subject="Booking update ",
@@ -132,7 +134,6 @@ def booking_action(request, booking_id):
 
 
 # count booking
-
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def booking_count_api(request, caretaker_id):

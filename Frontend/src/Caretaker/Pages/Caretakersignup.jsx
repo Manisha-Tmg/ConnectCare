@@ -37,7 +37,10 @@ const CaretakerSignup = () => {
       toast.error("Spaces not allowed");
       return;
     }
-
+    if (username.includes(" ")) {
+      toast.error("Spaces not allowed");
+      return;
+    }
     if (password.includes(" ")) {
       toast.error("Spaces not allowed");
       return;

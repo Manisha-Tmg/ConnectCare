@@ -148,7 +148,7 @@ def book_caretaker(request):
     except Caretaker.DoesNotExist:
         return Response({"detail": "Caretaker does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
-    # Parse full datetime (with time, not just date)
+    # Parse full datetime 
     try:
         booking_date = datetime.strptime(booking_date, "%Y-%m-%dT%H:%M:%S")
     except ValueError:

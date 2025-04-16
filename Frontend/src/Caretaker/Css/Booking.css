@@ -86,7 +86,8 @@
 }
 
 .approve-btn {
-  background: #4f46e5;
+  border: 2px solid #008080;
+  background-color: #008080;
   color: white;
   border: none;
   padding: 8px 15px;
@@ -100,13 +101,12 @@
 }
 
 .approve-btn:hover {
-  background: #4338ca;
+  background-color: #006262;
 }
 
 .decline-btn {
-  background: white;
-  color: #6c757d;
-  border: 1px solid #d1d5db;
+  background: rgb(155, 21, 21);
+  color: #ffffff;
   padding: 8px 15px;
   border-radius: 5px;
   font-size: 14px;

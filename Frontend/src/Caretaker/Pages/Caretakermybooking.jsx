@@ -15,6 +15,27 @@ import CaretakerSidebar from "../Components/side";
 const CaretakerBookingPortal = () => {
   const [bookings, setBookings] = useState([]);
 
+  async function userdetails() {
+    try {
+      const res = await fetch(`${API}api/users/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch profile data");
+      }
+
+      const result = await res.json();
+      setData(result);
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    }
+  }
+
   useEffect(() => {
     const token = Cookies.get("accessToken");
 
@@ -92,14 +113,10 @@ const CaretakerBookingPortal = () => {
             {bookings.map((request) => (
               <div key={request.id} className="booking-card">
                 <div className="user-info">
-                  <div className="user-avatar">
-                    <User size={20} color="white" />
-                  </div>
+                  <div className="user-avatar">{request.profile_url} </div>
                   <div>
                     <h3></h3>
-                    <p className="booking-type">
-                      Name • {request.first_name} {request.last_name}
-                    </p>
+                    <p className="booking-type">Name • {request.name}</p>
                   </div>
                 </div>
 
@@ -115,13 +132,13 @@ const CaretakerBookingPortal = () => {
                   </p>
 
                   <p>
-                    <Phone size={16} /> <strong>Contact:</strong>{" "}
+                    <Phone size={16} /> <strong>Contact:</strong>
                     {request.number}
                   </p>
                 </div>
 
                 <div className="booking-actions">
-                  {request.status === "Pending" ? (
+                  {request.status === "pending" ? (
                     <>
                       <button
                         className="approve-btn"
