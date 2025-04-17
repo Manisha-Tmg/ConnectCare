@@ -72,8 +72,6 @@ const Signup = () => {
       const res = await fetch(`${API}api/register/`, {
         method: "POST",
         body: formData,
-        // Don't set Content-Type header when using FormData
-        // The browser will automatically set the correct boundary
       });
 
       const data = await res.json();

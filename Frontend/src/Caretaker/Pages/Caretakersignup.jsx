@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../env";
 import Cookies from "js-cookie";
-import { Polygon } from "recharts";
 
 const CaretakerSignup = () => {
   const [name, setName] = useState("");
@@ -27,51 +26,12 @@ const CaretakerSignup = () => {
 
   async function handleCaretaker(e) {
     e.preventDefault();
-    const token = Cookies.get("accessToken");
+    // const token = Cookies.get("accessToken");
 
-    if (!token) {
-      toast.error("Unauthorized: No token found");
-      return;
-    }
-    if (username.includes(" ")) {
-      toast.error("Spaces not allowed");
-      return;
-    }
-    if (username.includes(" ")) {
-      toast.error("Spaces not allowed");
-      return;
-    }
-    if (password.includes(" ")) {
-      toast.error("Spaces not allowed");
-      return;
-    }
-
-    if (
-      !name ||
-      !email ||
-      !gender ||
-      !phone ||
-      !address ||
-      !experience ||
-      !specialty ||
-      !hourly_rate ||
-      !languages_spoken ||
-      !bio ||
-      !username ||
-      !password ||
-      !profile_picture_url ||
-      !police_clearance_url ||
-      !certification_docs_url ||
-      !gov_id_url
-    ) {
-      toast.error("Fill the require filled");
-    }
-
-    const usernameRegex = /^[a-zA-Z0-9_]+$/;
-    if (!usernameRegex.test()) {
-      toast.error("Dont use the special characters");
-      return;
-    }
+    // if (!token) {
+    //   toast.error("Unauthorized: No token found");
+    //   return;
+    // }
 
     const formData = new FormData();
     formData.append("name", name);
@@ -86,16 +46,16 @@ const CaretakerSignup = () => {
     formData.append("bio", bio);
     formData.append("username", username);
     formData.append("password", password);
-    formData.append("profile_picture", profile_picture_url);
-    formData.append("certificate", certification_docs_url);
-    formData.append("govId", gov_id_url);
-    formData.append("police_clearance", police_clearance_url);
+    // formData.append("profile_picture", profile_picture_url);
+    // formData.append("certificate", certification_docs_url);
+    // formData.append("govId", gov_id_url);
+    // formData.append("police_clearance", police_clearance_url);
 
     try {
       const res = await fetch(`${API}caretakers/register/`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
         body: formData,
       });
@@ -104,7 +64,7 @@ const CaretakerSignup = () => {
 
       if (res.ok) {
         toast.success("Caretaker Registration was successful");
-        navigate("/dashboard");
+        navigate("/login/caretaker");
       } else {
         toast.error(data.message || "Error creating the caretaker");
       }

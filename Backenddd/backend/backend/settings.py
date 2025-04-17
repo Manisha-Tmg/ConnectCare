@@ -119,7 +119,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # import cloudinary.uploader
 # import cloudinary.api
 
-# email configuration
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  
 EMAIL_PORT = 587

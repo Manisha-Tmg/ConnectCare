@@ -57,7 +57,7 @@ function App() {
         {/* Caretaker */}
         <Route path="/login/caretaker" element={<CaretakerLogin />} />
         <Route path="/dashboard/:id" element={<CaretakerDashboard />} />
-        <Route path="/register" element={<CaretakerSignup />} />
+        <Route path="/caretaker/register" element={<CaretakerSignup />} />
         <Route path="/booking/" element={<CaretakerBookingPortal />} />
         <Route path="/caretaker/profile" element={<CaretakerProfile />} />
 
