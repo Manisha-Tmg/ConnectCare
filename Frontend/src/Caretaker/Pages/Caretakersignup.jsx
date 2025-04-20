@@ -46,10 +46,10 @@ const CaretakerSignup = () => {
     formData.append("bio", bio);
     formData.append("username", username);
     formData.append("password", password);
-    formData.append("profile_picture", profile_picture_url);
-    formData.append("certificate", certification_docs_url);
-    formData.append("govId", gov_id_url);
-    formData.append("police_clearance", police_clearance_url);
+    // formData.append("profile_picture", profile_picture_url);
+    // formData.append("certificate", certification_docs_url);
+    // formData.append("govId", gov_id_url);
+    // formData.append("police_clearance", police_clearance_url);
 
     try {
       const res = await fetch(`${API}caretakers/register/`, {
