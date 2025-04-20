@@ -30,6 +30,9 @@ dist-ssr/
 .env
 .settings.py
 
+.tailwind.config.js
+.postcss.config.js
+
 # Package files (optional to ignore these)
 # Only ignore lock files if you don't want to track dependency versions
 # Uncomment if needed:
