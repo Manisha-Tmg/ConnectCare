@@ -15,7 +15,7 @@ from .serializers import ChangePasswordSerializer
 from django.shortcuts import get_object_or_404
 from .models import Caretaker,Booking,CustomUser,Notification
 from django.contrib.auth import get_user_model
-from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer,NotificationSerializer
+from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer,NotificationSerializer,ReviewSerializer
 import ipdb
 
 
@@ -257,3 +257,15 @@ class NotificationViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         # Automatically assign the logged-in user to the notification
         serializer.save(user=self.request.user)
+
+
+# to add reivew to caretaker
+class ReviewView(generics.CreateAPIView):
+    serializer_class = ReviewSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        caretaker_id = self.kwargs['caretaker_id']  # Get caretaker from URL
+
+        serializer.save(user=self.request.user,caretaker_id=caretaker_id)
+

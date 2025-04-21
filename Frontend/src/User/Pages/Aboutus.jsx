@@ -11,10 +11,7 @@ const AboutUs = () => {
       <div className="about-us-container">
         <section className="about-us-introduction">
           <div className="about-us-content">
-            <h2 className="about">
-              <Previous />
-              About Us
-            </h2>
+            <h2 className="about">About Us</h2>
             <p>
               Welcome to ConnectCare, your trusted partner in fostering
               relationships, empowering communities, and inspiring

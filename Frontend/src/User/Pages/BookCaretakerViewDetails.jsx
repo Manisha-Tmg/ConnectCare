@@ -7,11 +7,10 @@ import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Previous from "../components/Previous";
-import { MdVerified } from "react-icons/md";
-import { ImCross } from "react-icons/im";
 
 const BookCaretakerdetails = () => {
   const [caretakers, setCaretakers] = useState([]);
+  const [favorites, setFavorites] = useState({});
   const navigate = useNavigate();
 
   const bookLogin = () => {
@@ -22,6 +21,13 @@ const BookCaretakerdetails = () => {
     } else {
       navigate("/bookcaretaker");
     }
+  };
+
+  const toggleFavorite = (id) => {
+    setFavorites((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
   useEffect(() => {
@@ -55,49 +61,57 @@ const BookCaretakerdetails = () => {
         <div className="user-caretaker-grid">
           {caretakers.map((caretaker) => (
             <div key={caretaker.id} className="user-caretaker-card">
-              <img
-                src={caretaker.profile_picture_url}
-                alt={caretaker.name}
-                className="caretaker-image"
-              />
-              <h1 className="caretaker-name">
-                {caretaker.name}
-                {caretaker.is_approved ? (
-                  <MdVerified className="Details-verified-icon" />
-                ) : (
-                  <ImCross className="Details-verified-icon" />
-                )}
-              </h1>{" "}
-              <div className="user-caretaker-languages">
+              <div className="caretaker-header">
+                <img
+                  src={caretaker.profile_picture_url}
+                  alt={caretaker.name}
+                  className="caretaker-image"
+                />
+                <div className="caretaker-header-info">
+                  <div className="caretaker-name-container">
+                    <h2 className="caretaker-name">{caretaker.name}</h2>
+                  </div>
+                  <div className="caretaker-stats">
+                    <span>
+                      {caretaker.experience || "0"} years experience |
+                      <span className="star-rating">★</span>
+                      {caretaker.rating || "4.0"}
+                    </span>
+                    <span>{caretaker.hourly_rate || "Rs. 300"}/hr</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="language-tags-container">
                 {caretaker.languages_spoken
                   ? caretaker.languages_spoken.split(",").map((lang, index) => (
                       <span key={index} className="language-tag">
-                        {/* to separate the strings given by the user */}
-                        {lang.trim()}{" "}
+                        {lang.trim()}
                       </span>
                     ))
-                  : "Not specified"}
+                  : "Languages not specified"}
               </div>
-              <div className="location-tags">
-                <span className="tag">
-                  {caretaker.address
-                    ? caretaker.address.split(",").map((lang, index) => (
-                        <span key={index} className="location-tag">
-                          {/* to separate the strings given by the user */}
-                          {lang.trim()}
-                        </span>
-                      ))
-                    : "Not specified"}
-                </span>
+
+              <div className="location-tags-container">
+                {caretaker.address
+                  ? caretaker.address.split(",").map((addr, index) => (
+                      <span key={index} className="location-tag">
+                        {addr.trim()}
+                      </span>
+                    ))
+                  : "Address not specified"}
               </div>
-              <p className="user-caretaker-bio">
+
+              <p className="caretaker-bio">
                 {caretaker.bio?.length > 100
-                  ? `${caretaker.bio.substring(0, 135)}................`
-                  : caretaker.bio}
+                  ? `${caretaker.bio.substring(0, 135)}...`
+                  : caretaker.bio || "No bio provided"}
               </p>
+
               <Link
                 to={`/caretakerDetails/${caretaker.id}`}
                 style={{ textDecoration: "none" }}
+                className="view-details-link"
               >
                 <button className="view-details-btn">View Details</button>
               </Link>

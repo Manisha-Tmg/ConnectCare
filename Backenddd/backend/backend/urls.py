@@ -2,10 +2,10 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from project.views import UserViewSet, UserRegistrationView,LoginView,NotificationViewSet,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking
+from project.views import UserViewSet, UserRegistrationView,LoginView,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,ReviewView
 from project.caretaker_views import  CareRegistrationView,CareLoginView,booking_action,get_CaretakerBooking,booking_count_api
 from project.admin_views import  AdminLoginView,admin_dashboard,change_caretaker_status,change_user_status,delete_user,caretaker_delete,get_all_bookings
-
+ 
 # Initialize the router
 router = DefaultRouter()
 router.register('user', UserViewSet, basename='user')
@@ -25,17 +25,14 @@ urlpatterns = [
     path('auth/api/login/', LoginView.as_view(), name='user_login'),
     path('api/changepassword/', ChangePasswordView.as_view(), name='changepassword'),
    
-    # notification
-    path('api/users/notification/', 
-        NotificationViewSet.as_view({'get': 'list'}), name='notification-list'),
-    
     #User list 
     path('api/users/',get_user,name='ger_user'),
     path('api/users/<int:user_id>',get_user,name='ger_user'),    
     
 
 
-   
+#    review
+    path('caretakers/<int:caretaker_id>/reviews/', ReviewView.as_view(), name='create-review'),
     
 
     # Caretaker list and api
@@ -48,7 +45,6 @@ urlpatterns = [
 
 
   
-
 
     # Booking
     path('api/book_caretaker/', book_caretaker, name='book_caretaker'),

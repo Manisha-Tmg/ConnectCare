@@ -43,7 +43,7 @@ const Sidebar = () => {
   const menuItems = [
     {
       path: "/admin/Dashboard",
-      icon: <FaHome className="icon" />,
+      icon: <FaHome className="menu-icon" />,
       label: "Dashboard",
     },
 
@@ -60,34 +60,43 @@ const Sidebar = () => {
     },
     {
       path: "/admin/bookings",
-      icon: <FaCog className="icon" />,
+      icon: <FaCalendarAlt className="menu-icon" />,
       label: "Bookings",
     },
   ];
 
   return (
     <div className="admin-sidebar">
-      <div className="sidebar-logo">
-        <Logos />
+      <div className="admin-sidebar-header">
+        <div className="header-content">
+          <h2 className="user-name">{data.role}</h2>
+        </div>
       </div>
 
-      <h2 className="admin-title">Admin</h2>
+      <div className="sidebar-content">
+        <nav className="sidebar-nav">
+          <ul className="menu-list">
+            {menuItems.map((item, index) => (
+              <li key={index} className="menu-item">
+                <Link
+                  to={item.path}
+                  className={`menu-link ${isActive(item.path) ? "active" : ""}`}
+                >
+                  <span className="icon-wrapper">{item.icon}</span>
+                  <span className="menu-label">{item.label}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
 
-      <ul className="sidebar-menu">
-        {menuItems.map((item) => (
-          <Link to={item.path} key={item.path} className="sidebar-link">
-            <li className={isActive(item.path) ? "active-menu-item" : ""}>
-              {item.icon}
-              <span className="sidebar-menu2">{item.label}</span>
-            </li>
-          </Link>
-        ))}
-
-        <li className="logout-item" onClick={handleLogout}>
-          <FaSignOutAlt className="icon" />
-          <span className="sidebar-menu2">Logout</span>
-        </li>
-      </ul>
+      <div className="sidebar-footer">
+        <button onClick={handleLogout} className="logout-button">
+          <FaSignOutAlt className="menu-icon" />
+          <span className="logout-text">Log Out</span>
+        </button>
+      </div>
     </div>
   );
 };

@@ -58,11 +58,11 @@ const CaretakerProfile = () => {
       <CaretakerSidebar />
       <div className="profile-container">
         <div className="profile-card">
-          <div className="profile-header">
+          <div className="caretaker-profile-header">
             <img
               src={data.profile_picture_url}
               alt="Profile"
-              className="profile-pic"
+              className="caretaker-profile-pic"
             />
             <h2>{data.name}</h2>
             <p className="bio">{data.bio}</p>

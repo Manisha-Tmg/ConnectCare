@@ -7,6 +7,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import RegexValidator
+from django.conf import settings
 
 
 
@@ -167,3 +168,13 @@ class Notification(models.Model):
         return  f"message{self.user.email} -{self.message[:20]}"
     
 
+
+
+class Review(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)  # Link to User
+    caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE, related_name="reviews")
+    rating = models.IntegerField()  
+    comment = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"Review by {self.user.email} for {self.caretaker.name}"

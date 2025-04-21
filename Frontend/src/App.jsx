@@ -29,7 +29,6 @@ import CaretakerProfile from "./Caretaker/Pages/CaretakerProfile.jsx";
 import CaretakerLogin from "./Caretaker/Pages/CaretakerLogin.jsx";
 import CaretakerBookingPortal from "./Caretaker/Pages/Caretakermybooking.jsx";
 import CaretakerSignup from "./Caretaker/Pages/Caretakersignup.jsx";
-import Hello from "./Caretaker/Pages/hello.jsx";
 
 function App() {
   return (
@@ -72,7 +71,6 @@ function App() {
         <Route path="/admin/bookings" element={<TotalBookingPanel />} />
         <Route path="/caretakers/:id" element={<CaretakerDetails />} />
         <Route path="/users/:id" element={<UserDetails />} />
-        <Route path="/hello" element={<Hello />} />
       </Routes>
     </BrowserRouter>
   );
