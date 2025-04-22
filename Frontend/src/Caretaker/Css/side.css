@@ -49,8 +49,7 @@
 .menu-item {
   width: 100%;
 }
-
-.menu-link {
+.menu-item .menu-link {
   width: 100%;
   display: flex;
   align-items: center;
@@ -61,13 +60,12 @@
 }
 
 .menu-link:hover {
-  background-color: #eff6ff;
   color: #3b82f6;
+  background-color: #e3e7ea;
   border-left: 4px solid #3b82f6;
 }
 
 .menu-link.active {
-  background-color: #eff6ff;
   color: #3b82f6;
   border-left: 4px solid #3b82f6;
 }

@@ -265,7 +265,6 @@ class ReviewView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
-        caretaker_id = self.kwargs['caretaker_id']  # Get caretaker from URL
-
+        caretaker_id = self.kwargs['caretaker_id']
         serializer.save(user=self.request.user,caretaker_id=caretaker_id)
 
