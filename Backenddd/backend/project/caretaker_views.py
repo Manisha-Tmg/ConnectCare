@@ -8,9 +8,13 @@ from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import CaretakerSerializer,BookingSerializer,LoginSerializer
+from .serializers import CaretakerSerializer,BookingSerializer,LoginSerializer,CaretakerChangePasswordSerializer
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
+from .models import Caretaker  
+from django.contrib.auth.models import update_last_login
+from django.contrib.auth.hashers import check_password, make_password
+
 
 
 
@@ -148,3 +152,35 @@ def booking_count_api(request, caretaker_id):
     return Response({"total_bookings": total_bookings,"total_pending": total_pending,"completed_task":completed_tasks}, status=status.HTTP_200_OK)
 
 
+
+
+class CaretakerChangePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, caretaker_id):
+        try:
+            caretaker = Caretaker.objects.get(id=caretaker_id)
+        except Caretaker.DoesNotExist:
+            return Response({"error": "Caretaker not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = CaretakerChangePasswordSerializer(data=request.data)
+
+        if serializer.is_valid():
+            old_password = serializer.validated_data['old_password']
+            new_password = serializer.validated_data['new_password']
+            confirm_password = serializer.validated_data['confirm_password']
+
+            if new_password != confirm_password:
+                return Response({"error": "Passwords do not match"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Check old password
+            if not check_password(old_password, caretaker.password):
+                return Response({"error": "Old password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Set new password
+            caretaker.password = make_password(new_password)
+            caretaker.save()
+
+            return Response({"message": "Password changed successfully"}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

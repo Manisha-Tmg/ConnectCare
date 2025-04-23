@@ -3,7 +3,7 @@ from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
 from project.views import UserViewSet, UserRegistrationView,LoginView,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,ReviewView
-from project.caretaker_views import  CareRegistrationView,CareLoginView,booking_action,get_CaretakerBooking,booking_count_api
+from project.caretaker_views import  CareRegistrationView,CareLoginView,booking_action,get_CaretakerBooking,booking_count_api,CaretakerChangePasswordView
 from project.admin_views import  AdminLoginView,admin_dashboard,change_caretaker_status,change_user_status,delete_user,caretaker_delete,get_all_bookings
  
 # Initialize the router
@@ -42,10 +42,10 @@ urlpatterns = [
     path('api/caretakers/', get_caretakers, name='get_caretakers'),
     path('api/caretakers/<int:caretaker_id>', get_caretakers, name='get_caretakers'),
     path('caretakers/register/', CareRegistrationView.as_view(), name='caretaker-register'),
+    path('caretakers/changepassword/<int:caretaker_id>/', CaretakerChangePasswordView.as_view(), name='caretaker-change-password'),
 
 
   
-
     # Booking
     path('api/book_caretaker/', book_caretaker, name='book_caretaker'),
 

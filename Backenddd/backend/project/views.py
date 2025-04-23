@@ -268,3 +268,7 @@ class ReviewView(generics.CreateAPIView):
         caretaker_id = self.kwargs['caretaker_id']
         serializer.save(user=self.request.user,caretaker_id=caretaker_id)
 
+
+
+
+

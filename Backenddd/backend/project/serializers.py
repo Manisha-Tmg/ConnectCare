@@ -190,6 +190,21 @@ class ChangePasswordSerializer(serializers.Serializer):
 
 
 
+# changepass for caretaker
+class CaretakerChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True, write_only=True)
+    new_password = serializers.CharField(required=True, write_only=True)
+    confirm_password = serializers.CharField(required=True, write_only=True)
+
+    def validate(self, data):
+        if data['new_password'] != data['confirm_password']:
+            raise serializers.ValidationError({"confirm_password": "New passwords do not match."})
+
+        validate_password(data['new_password'])
+
+        return data
+
+
 
 
 # notification

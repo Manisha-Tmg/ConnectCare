@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { API } from "../../env";
 import Cookies from "js-cookie";
 import "../css/Booking.css";
-import "../../output.css";
-
 import {
   MapPin,
   Phone,
@@ -11,14 +8,12 @@ import {
   XCircle,
   User,
   Notebook,
-  Calendar,
-  Clock,
 } from "lucide-react";
+import { API } from "../../env";
 import CaretakerSidebar from "../Components/side";
 
 const CaretakerBookingPortal = () => {
   const [bookings, setBookings] = useState([]);
-  const [data, setData] = useState({});
 
   useEffect(() => {
     const token = Cookies.get("accessToken");
@@ -44,28 +39,6 @@ const CaretakerBookingPortal = () => {
 
     fetchBooking();
   }, []);
-
-  async function userdetails(id) {
-    const token = Cookies.get("accessToken");
-    try {
-      const res = await fetch(`${API}api/users/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to fetch profile data");
-      }
-
-      const result = await res.json();
-      setData(result);
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-    }
-  }
 
   const updateBookingStatus = async (id, action) => {
     const token = Cookies.get("accessToken");
@@ -107,24 +80,6 @@ const CaretakerBookingPortal = () => {
     }
   };
 
-  // Format date for display
-  const formatDate = (dateString) => {
-    if (!dateString) return "N/A";
-    const date = new Date(dateString);
-    const month = date.toLocaleString("default", { month: "short" });
-    return `${month} ${date.getDate()}, ${date.getFullYear()}`;
-  };
-
-  // Calculate days ago
-  const calculateDaysAgo = (dateString) => {
-    if (!dateString) return "N/A";
-    const date = new Date(dateString);
-    const today = new Date();
-    const diffTime = Math.abs(today - date);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
-  };
-
   return (
     <div className="bookings-container">
       <CaretakerSidebar />
@@ -144,82 +99,32 @@ const CaretakerBookingPortal = () => {
           <div className="booking-list">
             {bookings.map((request) => (
               <div key={request.id} className="booking-card">
-                <div className="booking-header">
+                <div className="booking-header-new">
                   <div className="client-info">
                     <div className="client-avatar">
                       {request.profile_url ? (
-                        <img src={request.profile_url} alt={request.name} />
+                        <img
+                          src={request.profile_url}
+                          alt={`${request.first_name} ${request.last_name}`}
+                          className="rounded-full w-10 h-10 object-cover"
+                        />
                       ) : (
-                        <User size={20} />
+                        <div className="rounded-full bg-gray-200 w-10 h-10 flex items-center justify-center">
+                          <User size={20} />
+                        </div>
                       )}
                     </div>
-                    <div>
-                      <div className="client-name">
-                        {request.name || "Client"}
-                      </div>
-                      <div className="request-date">
-                        {request.created_at
-                          ? `${formatDate(
-                              request.created_at
-                            )} (${calculateDaysAgo(
-                              request.created_at
-                            )} days ago)`
-                          : "Date not available"}
+                    <div className="client-details">
+                      <div className="client-name font-medium">
+                        {request.first_name && request.last_name
+                          ? `${request.first_name} ${request.last_name}`
+                          : "Rina Thapa"}
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="service-name">Care Request</div>
-
-                <div className="booking-details-grid">
-                  <div className="detail-item">
-                    <Calendar size={16} />
-                    <span>
-                      {request.start_date
-                        ? formatDate(request.start_date)
-                        : "N/A"}{" "}
-                      -{" "}
-                      {request.end_date ? formatDate(request.end_date) : "N/A"}
-                    </span>
-                  </div>
-                  <div className="detail-item">
-                    <Clock size={16} />
-                    <span>{request.duration || "Duration not specified"}</span>
-                  </div>
-                  <div className="detail-item">
-                    <User size={16} />
-                    <span>1 patient</span>
-                  </div>
-                  <div className="detail-item">
-                    <MapPin size={16} />
-                    <span>Location: {request.location || "Not specified"}</span>
-                  </div>
-                </div>
-
-                {request.note && (
-                  <div className="special-needs">
-                    <p className="detail-item">
-                      <Notebook size={16} />
-                      <span>
-                        <strong>Special Needs:</strong> {request.note}
-                      </span>
-                    </p>
-                  </div>
-                )}
-
-                <div className="detail-item">
-                  <Phone size={16} />
-                  <span>Contact: {request.number || "Not provided"}</span>
-                </div>
-
-                {request.price && (
-                  <div className="booking-price">${request.price} per day</div>
-                )}
-
-                <div className="booking-footer">
-                  <div className="status-badges">
-                    {request.status === "pending" ? (
+                  <div className="status-badges-new">
+                    {request.status === "Pending" ? (
                       <>
                         <button
                           className="action-btn approve-btn"
@@ -239,60 +144,73 @@ const CaretakerBookingPortal = () => {
                         </button>
                       </>
                     ) : (
-                      <div
-                        className={`badge ${
-                          request.status === "Approved"
-                            ? "badge-approved"
-                            : request.status === "Rejected"
-                            ? "badge-rejected"
-                            : request.status === "completed"
-                            ? "badge-completed"
-                            : ""
-                        }`}
-                      >
+                      <>
                         {request.status === "Approved" && (
-                          <CheckCircle size={14} />
+                          <div className="status-badge accepted">
+                            <CheckCircle size={16} className="text-green-500" />
+                            <span>Accepted</span>
+                          </div>
                         )}
-                        {request.status === "Rejected" && <XCircle size={14} />}
                         {request.status === "completed" && (
-                          <CheckCircle size={14} />
+                          <div className="status-badge completed">
+                            <CheckCircle size={16} className="text-blue-500" />
+                            <span>Completed</span>
+                          </div>
                         )}
-                        <span>{request.status || "Unknown"}</span>
-                      </div>
+                        {request.status === "Rejected" && (
+                          <div className="status-badge rejected">
+                            <XCircle size={16} className="text-red-500" />
+                            <span>Rejected</span>
+                          </div>
+                        )}
+                      </>
                     )}
                   </div>
+                </div>
 
-                  <a
-                    href={`/booking-details/${request.id}`}
-                    className="view-details"
-                  >
-                    View Details ›
-                  </a>
+                <div className="booking-location-name">{request.location}</div>
+
+                <div className="booking-details-grid-new">
+                  <div className="detail-item-new">
+                    <MapPin size={16} className="text-gray-500" />
+                    <span className="text-sm">
+                      From {request.origin || request.location || "Kathmandu"}
+                    </span>
+                  </div>
+                </div>
+
+                {request.note && (
+                  <div className="special-needs">
+                    <p className="detail-item-new">
+                      <Notebook size={16} className="text-gray-500" />
+                      <span className="text-sm">
+                        <strong>Special Needs:</strong> {request.note}
+                      </span>
+                    </p>
+                  </div>
+                )}
+
+                {request.number && (
+                  <div className="detail-item-new">
+                    <Phone size={16} className="text-gray-500" />
+                    <span className="text-sm">Contact: {request.number}</span>
+                  </div>
+                )}
+
+                <div className="booking-footer-new">
+                  <div className="estimated-price">
+                    <div className="price-label text-sm text-gray-500">
+                      Estimated Price (USD)
+                    </div>
+                    <div className="price-amount text-lg font-semibold text-blue-600">
+                      ${request.price || "118"}
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         )}
-
-        {bookings.length > 0 &&
-          bookings.some((booking) => booking.status === "Approved") && (
-            <>
-              <div className="note-box">
-                <span>ℹ️</span>
-                <span>
-                  Note: You can view full details about active bookings in the
-                  Ongoing section
-                </span>
-              </div>
-
-              <div className="center-button">
-                <button className="btn-view-bookings">
-                  <span>View Active Bookings</span>
-                  <span>›</span>
-                </button>
-              </div>
-            </>
-          )}
       </div>
     </div>
   );
