@@ -143,7 +143,7 @@ class Booking(models.Model):
     )   
     location = models.CharField(max_length=20, null=True, blank=True)
     note = models.TextField(null=True, blank=True)
-    Price = models.IntegerField(null=True, blank=True)
+    price = models.IntegerField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending') 
 
     def save(self, *args, **kwargs):

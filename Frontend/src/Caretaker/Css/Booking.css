@@ -199,3 +199,46 @@
   cursor: pointer;
   border: none;
 }
+
+/* Buttons */
+.booking-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.approve-btn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.approve-btn:hover {
+  background: #4338ca;
+}
+
+.decline-btn {
+  background: white;
+  color: #6c757d;
+  border: 1px solid #d1d5db;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.decline-btn:hover {
+  background: #f3f4f6;
+}

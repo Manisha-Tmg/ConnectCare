@@ -12,6 +12,7 @@ const BookingFormPreview = () => {
   const [note, setNote] = useState("");
   const [location, setLocation] = useState("");
   const [number, setNumber] = useState(null);
+  const [price, setPrice] = useState(null);
   const [caretaker, setCaretaker] = useState(null);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -84,6 +85,7 @@ const BookingFormPreview = () => {
         location,
         note,
         number,
+        price,
         caretaker_id: caretaker?.id,
         booking_date: dateTimeString,
         name: user?.name || "",
@@ -161,6 +163,13 @@ const BookingFormPreview = () => {
             className="input"
             onChange={(e) => setNumber(e.target.value)}
             value={number}
+          />
+          <label className="label">Price</label>
+          <input
+            type="number"
+            className="input"
+            onChange={(e) => setPrice(e.target.value)}
+            value={price}
           />
         </div>
       </div>

@@ -166,8 +166,6 @@ const CaretakerBookingPortal = () => {
                   </div>
                 </div>
 
-                <div className="booking-location-name">{request.location}</div>
-
                 <div className="booking-details-grid-new">
                   <div className="detail-item-new">
                     <MapPin size={16} className="text-gray-500" />
@@ -196,14 +194,41 @@ const CaretakerBookingPortal = () => {
                 )}
 
                 <div className="booking-footer-new">
-                  {/* <div className="estimated-price">
+                  <div className="estimated-price">
                     <div className="price-label text-sm text-gray-500">
                       Estimated Price (USD)
                     </div>
                     <div className="price-amount text-lg font-semibold text-blue-600">
                       ${request.price || "118"}
                     </div>
-                  </div> */}
+                  </div>
+                </div>
+
+                <div className="booking-actions">
+                  {request.status === "pending" ? (
+                    <>
+                      <button
+                        className="approve-btn"
+                        onClick={() =>
+                          updateBookingStatus(request.id, "Approved")
+                        }
+                      >
+                        <CheckCircle size={16} /> Approve
+                      </button>
+                      <button
+                        className="decline-btn"
+                        onClick={() =>
+                          updateBookingStatus(request.id, "Rejected")
+                        }
+                      >
+                        <XCircle size={16} /> Decline
+                      </button>
+                    </>
+                  ) : (
+                    <span className={`status ${request.status.toLowerCase()}`}>
+                      {request.status}
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
