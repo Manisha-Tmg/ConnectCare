@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import { API } from "../../env";
 import "../../User/css/ChangePassword.css";
+import CaretakerSidebar from "../Components/side";
 
 const CaretakerChangepassword = () => {
   const [old_password, setOldPassword] = useState("");
   const [new_Password, setNewPassword] = useState("");
   const [confirm_Password, setConfirmPassword] = useState("");
   const navigate = useNavigate();
+  // const { id } = useParams;
 
   async function passwordChange(e) {
     e.preventDefault();
 
     const token = Cookies.get("accessToken");
+    const id = Cookies.get("caretaker_id");
 
     if (!token) {
       toast.error("Please login! Your token has expired");
@@ -30,7 +33,7 @@ const CaretakerChangepassword = () => {
     }
 
     try {
-      const res = await fetch(`${API}api/changepassword/`, {
+      const res = await fetch(`${API}caretakers/changepassword/${id}/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

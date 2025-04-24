@@ -49,36 +49,30 @@
 
 /* Avatar */
 .nav-avatar-container {
-  margin-right: 2rem;
+  margin-right: 1rem;
   position: relative;
   display: inline-block;
 }
 
-.nav-avatar-wrapper {
+.nav-avatar-wrapperr {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.iconnnnn {
-  font-size: 25px;
-  cursor: pointer;
-}
-.nav-avatar {
+.nav-avatarr {
   margin-right: 7rem;
-  width: 10px;
-  height: 10px;
   margin-top: 0.3rem;
   display: flex;
   align-items: center;
 }
 
-.nav-img {
-  width: 60px;
-  height: auto;
+.nav-imgg {
+  height: 55px;
+  width: 55px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid #15382a;
+  border: 1px solid #000000;
 }
 /* Dropdown Menu */
 .dropdown-menu {

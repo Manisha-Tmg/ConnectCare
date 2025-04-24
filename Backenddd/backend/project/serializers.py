@@ -139,7 +139,7 @@ class BookingSerializer(serializers.ModelSerializer):
     caretaker_name = serializers.CharField(source='caretaker.name', read_only=True)
     class Meta:
         model = Booking
-        fields = ['id','user','caretaker','booking_date',"status",'location','number','note','name',"caretaker_name"]
+        fields = ['id','user','caretaker','booking_date',"status",'location','number','price','note','name',"caretaker_name"]
         
 
 

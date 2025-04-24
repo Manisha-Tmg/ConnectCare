@@ -116,9 +116,7 @@ const CaretakerBookingPortal = () => {
                     </div>
                     <div className="client-details">
                       <div className="client-name font-medium">
-                        {request.first_name && request.last_name
-                          ? `${request.first_name} ${request.last_name}`
-                          : "Rina Thapa"}
+                        {request.name ? request.name : "Rina Thapa"}
                       </div>
                     </div>
                   </div>
@@ -198,14 +196,14 @@ const CaretakerBookingPortal = () => {
                 )}
 
                 <div className="booking-footer-new">
-                  <div className="estimated-price">
+                  {/* <div className="estimated-price">
                     <div className="price-label text-sm text-gray-500">
                       Estimated Price (USD)
                     </div>
                     <div className="price-amount text-lg font-semibold text-blue-600">
                       ${request.price || "118"}
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             ))}

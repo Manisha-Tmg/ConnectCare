@@ -204,7 +204,7 @@ const CaretakerSidebar = () => {
       label: "Profile",
     },
     {
-      path: "/settings",
+      path: `/caretaker/changepassword/${id}`,
       icon: <FaCog className="menu-icon" />,
       label: "Settings",
     },

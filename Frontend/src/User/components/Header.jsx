@@ -4,9 +4,7 @@ import Logo from "./Logo";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { API } from "../../env";
-import { IoNotificationsOutline } from "react-icons/io5";
 import Li from "./navli";
-import NotificationDropdown from "./NotificationDropd";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -82,12 +80,12 @@ const Header = () => {
       <div className="nav-profile-section">
         {isLoggedIn ? (
           <div className="nav-avatar-container relative" ref={dropdownRef}>
-            <div className="nav-avatar-wrapper">
-              <div className="nav-avatar" onClick={toggleDropdown}>
+            <div className="nav-avatar-wrapperr">
+              <div className="nav-avatarr" onClick={toggleDropdown}>
                 <img
                   src={data?.profile_picture_url}
                   alt="Img"
-                  className="nav-img"
+                  className="nav-imgg"
                 />
               </div>
             </div>

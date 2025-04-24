@@ -143,12 +143,12 @@ class Booking(models.Model):
     )   
     location = models.CharField(max_length=20, null=True, blank=True)
     note = models.TextField(null=True, blank=True)
+    Price = models.IntegerField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending') 
 
     def save(self, *args, **kwargs):
         if self.user:
-            self.first_name = self.user.first_name
-            self.last_name = self.user.last_name
+            self.name = self.user.name
         super().save(*args, **kwargs)
 
     def __str__(self):

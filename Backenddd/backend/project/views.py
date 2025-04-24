@@ -141,6 +141,7 @@ def book_caretaker(request):
     location = request.data.get('location')  
     number = request.data.get('number')
     note = request.data.get('note')
+    price = request.data.get('price')
 
     # Validate caretaker exists       
     try:
@@ -171,7 +172,8 @@ def book_caretaker(request):
         status="pending",
         location=location,
         number=number,
-        note=note
+        note=note,
+        price=price
     )
     booking.save()
 
