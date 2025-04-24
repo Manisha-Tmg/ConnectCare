@@ -170,7 +170,7 @@ const CaretakerBookingPortal = () => {
                   <div className="detail-item-new">
                     <MapPin size={16} className="text-gray-500" />
                     <span className="text-sm">
-                      From {request.origin || request.location || "Kathmandu"}
+                      From {request.location || "Kathmandu"}
                     </span>
                   </div>
                 </div>
