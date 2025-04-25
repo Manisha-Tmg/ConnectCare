@@ -87,29 +87,43 @@ const Signup = () => {
   return (
     <div>
       <Header />
-      <div className="user-form-container">
+      <div className="users-form-container">
         <h2>User Registration</h2>
-        <p className="user-form-subtitle">
+        <p className="users-form-subtitle">
           Fill out the form carefully for registration
         </p>
         <form onSubmit={handleSignup}>
-          <div className="user-form-group">
-            <label>Name:</label>
-            <input
-              type="text"
-              className="user-select"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
+          <div className="users-form-row">
+            <div className="users-form-group">
+              <label>Name:</label>
+              <input
+                type="text"
+                className="users-select"
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="users-form-group">
+              <label>Profile Picture:</label>
+              <input
+                type="file"
+                accept="image/*"
+                className="users-select"
+                name="profile_picture"
+                required
+                onChange={(e) => setProfilePictureFile(e.target.files[0])}
+              />
+            </div>
           </div>
-          <div className="user-form-row">
-            <div className="user-form-group">
+          <div className="users-form-row">
+            <div className="users-form-group">
               <label>Gender:</label>
               <select
                 name="gender"
-                className="user-select"
+                className="users-select"
                 value={gender}
                 required
                 onChange={(e) => setGender(e.target.value)}
@@ -121,10 +135,10 @@ const Signup = () => {
               </select>
             </div>
 
-            {/* <div className="user-form-group">
+            {/* <div className="users-form-group">
               <label>Phone:</label>
               <input
-                className="user-select"
+                className="users-select"
                 type="text"
                 name="phone"
                 value={phone}
@@ -133,56 +147,45 @@ const Signup = () => {
                 maxLength="10"
               />
             </div> */}
+            <div className="users-form-group">
+              <label>Email:</label>
+              <input
+                type="email"
+                className="users-select"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
           </div>
-          <div className="user-form-group">
-            <label>Email:</label>
-            <input
-              type="email"
-              className="user-select"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          {/* <div className="user-form-group">
+          {/* <div className="users-form-group">
             <label>Address:</label>
             <input
               name="address"
               required
-              className="user-select"
+              className="users-select"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
           </div> */}
-          <div className="form-group">
-            <label>Profile Picture:</label>
-            <input
-              type="file"
-              accept="image/*"
-              className="user-select"
-              name="profile_picture"
-              required
-              onChange={(e) => setProfilePictureFile(e.target.files[0])}
-            />
-          </div>
-          <div className="user-form-row">
-            <div className="user-form-group">
+          <div className="users-form-row">
+            <div className="users-form-group">
               <label>Username:</label>
               <input
                 type="text"
                 name="username"
-                className="user-select"
+                className="users-select"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
-            <div className="user-form-group">
+            <div className="users-form-group">
               <label>Password:</label>
               <input
                 type="password"
-                className="user-select"
+                className="users-select"
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -190,7 +193,7 @@ const Signup = () => {
               />
             </div>
           </div>
-          <button type="submit" className="user-auth-button-signup">
+          <button type="submit" className="users-auth-button-signup">
             Sign Up
           </button>
           <p className="account">
