@@ -62,8 +62,8 @@ const Signup = () => {
     formData.append("name", name);
     formData.append("gender", gender);
     formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("address", address);
+    // formData.append("phone", phone);
+    // formData.append("address", address);
     formData.append("username", username);
     formData.append("password", password);
     formData.append("profile_picture", profilePictureFile);
@@ -124,7 +124,7 @@ const Signup = () => {
               </select>
             </div>
 
-            <div className="user-form-group">
+            {/* <div className="user-form-group">
               <label>Phone:</label>
               <input
                 className="user-select"
@@ -135,7 +135,7 @@ const Signup = () => {
                 required
                 maxLength="10"
               />
-            </div>
+            </div> */}
           </div>
           <div className="user-form-group">
             <label>Email:</label>
@@ -148,7 +148,7 @@ const Signup = () => {
               required
             />
           </div>
-          <div className="user-form-group">
+          {/* <div className="user-form-group">
             <label>Address:</label>
             <input
               name="address"
@@ -157,7 +157,7 @@ const Signup = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
-          </div>
+          </div> */}
           <div className="form-group">
             <label>Profile Picture:</label>
             <input

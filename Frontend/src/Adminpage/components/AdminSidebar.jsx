@@ -21,17 +21,38 @@ const Sidebar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!Cookies.get("accessToken"));
   const [data, setData] = useState(!!Cookies.get("accessToken"));
 
-  const handleLogout = async () => {
-    const confirmLogout = window.confirm("Are you sure you want to log out?");
-    if (confirmLogout) {
-      // Remove cookies
-      Cookies.remove("accessToken", { path: "/" });
-      Cookies.remove("role", { path: "/" });
+  const handleLogout = () => {
+    toast((t) => (
+      <span className="flex flex-col space-y-2">
+        Are you sure you want to log out?
+        <div className="flex gap-2">
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
 
-      // Update state
-      setIsLoggedIn(false);
-      navigate("/api/admin/login");
-    }
+              // Logout logic here
+              Cookies.remove("accessToken", { path: "/" });
+              Cookies.remove("role", { path: "/" });
+
+              // to Update state
+              setIsLoggedIn(false);
+              navigate("/api/admin/login"); // Redirect to home
+
+              toast.success("You have been logged out.");
+            }}
+            className="bg-red-500 text-white px-3 py-1 rounded"
+          >
+            Yes
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="bg-gray-300 px-3 py-1 rounded"
+          >
+            No
+          </button>
+        </div>
+      </span>
+    ));
   };
 
   // Check if current path matches the link path
@@ -68,22 +89,24 @@ const Sidebar = () => {
   return (
     <div className="admin-sidebar">
       <div className="admin-sidebar-header">
-        <div className="header-content">
-          <h2 className="user-name">{data.role}</h2>
+        <div className="admin-header-content">
+          <h2 className="admin-user-name">{data.role ?? "Mishu"}</h2>
         </div>
       </div>
 
-      <div className="sidebar-content">
-        <nav className="sidebar-nav">
-          <ul className="menu-list">
+      <div className="admin-sidebar-content">
+        <nav className="admin-sidebar-nav">
+          <ul className="admin-menu-list">
             {menuItems.map((item, index) => (
-              <li key={index} className="menu-item">
+              <li key={index} className="admin-menu-item">
                 <Link
                   to={item.path}
-                  className={`menu-link ${isActive(item.path) ? "active" : ""}`}
+                  className={`admin-menu-link ${
+                    isActive(item.path) ? "active" : ""
+                  }`}
                 >
-                  <span className="icon-wrapper">{item.icon}</span>
-                  <span className="menu-label">{item.label}</span>
+                  <span className="admin-icon-wrapper">{item.icon}</span>
+                  <span className="admin-menu-label">{item.label}</span>
                 </Link>
               </li>
             ))}

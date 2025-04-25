@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { API } from "../../env";
 import Li from "./navli";
+import toast from "react-hot-toast";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -52,23 +53,43 @@ const Header = () => {
   }, []);
 
   const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to log out?");
-    if (confirmLogout) {
-      Cookies.remove("accessToken", { path: "/" }); // to remove the cookies data that is saved
-      Cookies.remove("role", { path: "/" });
-      Cookies.remove("user_id", { path: "/" });
-      Cookies.remove("booking_id", { path: "/" });
+    toast((t) => (
+      <span className="flex flex-col space-y-2">
+        Are you sure you want to log out?
+        <div className="flex gap-2">
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
 
-      setIsLoggedIn(false);
-      setIsDropdownOpen(false);
-      setNotifications([]);
-      navigate("/"); // Redirect to home
-    }
+              // Logout logic here
+              Cookies.remove("accessToken", { path: "/" }); // to remove the cookies data that is saved
+              Cookies.remove("role", { path: "/" });
+              Cookies.remove("user_id", { path: "/" });
+              Cookies.remove("booking_id", { path: "/" });
+
+              setIsLoggedIn(false);
+              setIsDropdownOpen(false);
+              navigate("/"); // Redirect to home
+
+              toast.success("You have been logged out.");
+            }}
+            className="bg-red-500 text-white px-3 py-1 rounded"
+          >
+            Yes
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="bg-gray-300 px-3 py-1 rounded"
+          >
+            No
+          </button>
+        </div>
+      </span>
+    ));
   };
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
-    setIsNotificationOpen(false); // Close notifications if profile dropdown is open
   };
 
   return (

@@ -30,6 +30,7 @@ import CaretakerLogin from "./Caretaker/Pages/CaretakerLogin.jsx";
 import CaretakerBookingPortal from "./Caretaker/Pages/Caretakermybooking.jsx";
 import CaretakerSignup from "./Caretaker/Pages/Caretakersignup.jsx";
 import CaretakerChangepassword from "./Caretaker/Pages/CaretakerChangepassword.jsx";
+import Forgotpassword from "./User/Pages/Forgotpassword.jsx";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
         {/* <Route path="/notification" element={< />} /> */}
         <Route path="/BookCaretaker/:id" element={<BookingFormPreview />} />
         <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="/forgot-password" element={<Forgotpassword />} />
         <Route path="/caretakerDetails/:id" element={<Details />} />
         <Route
           path="/booking-details/:booking_id"

@@ -18,10 +18,10 @@ const CaretakerSignup = () => {
   const [bio, setBio] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [profile_picture_url, setProfilePicture] = useState("");
-  const [gov_id_url, setGovId] = useState("");
-  const [certification_docs_url, setCertDocs] = useState("");
-  const [police_clearance_url, setPoliceClearance] = useState("");
+  const [profile_picture_url, setProfilePicture] = useState(null);
+  const [gov_id_url, setGovId] = useState(null);
+  const [certification_docs_url, setCertDocs] = useState(null);
+  const [police_clearance_url, setPoliceClearance] = useState(null);
   const navigate = useNavigate();
 
   async function handleCaretaker(e) {
@@ -46,10 +46,10 @@ const CaretakerSignup = () => {
     formData.append("bio", bio);
     formData.append("username", username);
     formData.append("password", password);
-    // formData.append("profile_picture", profile_picture_url);
-    // formData.append("certificate", certification_docs_url);
-    // formData.append("govId", gov_id_url);
-    // formData.append("police_clearance", police_clearance_url);
+    formData.append("profile_picture", profile_picture_url);
+    formData.append("certificate", certification_docs_url);
+    formData.append("govId", gov_id_url);
+    formData.append("police_clearance", police_clearance_url);
 
     try {
       const res = await fetch(`${API}caretakers/register/`, {
@@ -190,16 +190,17 @@ const CaretakerSignup = () => {
             ></textarea>
           </div>
           <div className="form-group">
-            <label>Profile Picture URL:</label>
+            <label>Profile Picture :</label>
             <input
               type="file"
               accept="image/*"
               name="profile_picture"
+              required
               onChange={(e) => setProfilePicture(e.target.files[0])}
             />
           </div>
           <div className="form-group">
-            <label>Gov ID URL:</label>
+            <label>Gov ID :</label>
             <input
               type="file"
               accept="image/*"
@@ -209,7 +210,7 @@ const CaretakerSignup = () => {
             />
           </div>
           <div className="form-group">
-            <label>Certification Docs URL:</label>
+            <label>Certification Docs :</label>
             <input
               type="file"
               accept="image/*"
