@@ -11,8 +11,7 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
+
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [profilePictureFile, setProfilePictureFile] = useState(null);
@@ -26,8 +25,6 @@ const Signup = () => {
       !name ||
       !gender ||
       !email ||
-      !phone ||
-      !address ||
       !username ||
       !password ||
       !profilePictureFile
