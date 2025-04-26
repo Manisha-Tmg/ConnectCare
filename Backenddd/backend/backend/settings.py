@@ -129,6 +129,9 @@ EMAIL_HOST_PASSWORD = 'qyah qznl nyeq mwop'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api

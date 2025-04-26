@@ -61,11 +61,13 @@ const ChangePassword = () => {
   return (
     <div>
       <Header />
-      {/* <Sidebar /> */}
-      <div className="change-password-container">
-        <h2>Change Password</h2>
+      <div className="change-password-containerr">
+        <h2 className="change-password-title">Change Password</h2>
+        <p className="change-password-subtitle">
+          Update your password to keep your account secure
+        </p>
         <form onSubmit={passwordChange}>
-          <label>Current Password</label>
+          <label className="labelss">Current Password</label>
           <input
             type="password"
             value={old_password}
@@ -73,7 +75,7 @@ const ChangePassword = () => {
             required
           />
 
-          <label>New Password</label>
+          <label className="labelss">New Password</label>
           <input
             type="password"
             value={new_Password}
@@ -81,7 +83,7 @@ const ChangePassword = () => {
             required
           />
 
-          <label>Confirm New Password</label>
+          <label className="labelss">Confirm New Password</label>
           <input
             type="password"
             value={confirm_Password}

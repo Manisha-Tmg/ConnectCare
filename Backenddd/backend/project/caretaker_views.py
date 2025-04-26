@@ -6,12 +6,12 @@ from rest_framework.response import Response
 from .models import Booking
 from django.core.mail import send_mail
 from django.conf import settings
-from rest_framework import status
+from rest_framework import status,generics,permissions
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import CaretakerSerializer,BookingSerializer,LoginSerializer,CaretakerChangePasswordSerializer
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
-from .models import Caretaker  
+from .models import Caretaker,CustomUser
 from django.contrib.auth.models import update_last_login
 from django.contrib.auth.hashers import check_password, make_password
 
@@ -184,3 +184,15 @@ class CaretakerChangePasswordView(APIView):
             return Response({"message": "Password changed successfully"}, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+# to edit the user details
+class CaretakerProfileView(generics.RetrieveAPIView):
+    serializer_class = Caretaker
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+    

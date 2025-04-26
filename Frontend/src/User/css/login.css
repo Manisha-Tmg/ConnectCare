@@ -80,13 +80,14 @@ input {
   text-decoration: none;
   color: #666;
 }
-.auth-image {
+.auth-imagee {
   flex: 1;
-  max-width: 30%;
-  height: 63.2%;
+  max-width: 40%;
+  height: 75%;
   background-size: cover;
   background-position: center;
 }
+/* auth-image login-imagee */
 
 .auth-img {
   flex: 1;

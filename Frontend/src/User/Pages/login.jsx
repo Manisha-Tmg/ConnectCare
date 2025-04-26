@@ -86,7 +86,7 @@ const Login = () => {
             </Link>
           </p>
         </div>
-        <div className="auth-image login-imagee"></div>
+        <div className="auth-imagee login-imagee"></div>
       </div>
       <Footer />
     </div>

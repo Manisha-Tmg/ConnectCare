@@ -98,7 +98,7 @@ const Signup = () => {
               <label>Name:</label>
               <input
                 type="text"
-                className="users-select"
+                className="users-select1"
                 name="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -111,7 +111,7 @@ const Signup = () => {
               <input
                 type="file"
                 accept="image/*"
-                className="users-select"
+                className="users-select2"
                 name="profile_picture"
                 required
                 onChange={(e) => setProfilePictureFile(e.target.files[0])}
@@ -123,7 +123,7 @@ const Signup = () => {
               <label>Gender:</label>
               <select
                 name="gender"
-                className="users-select"
+                className="users-select3"
                 value={gender}
                 required
                 onChange={(e) => setGender(e.target.value)}
@@ -151,7 +151,7 @@ const Signup = () => {
               <label>Email:</label>
               <input
                 type="email"
-                className="users-select"
+                className="users-select4"
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -175,7 +175,7 @@ const Signup = () => {
               <input
                 type="text"
                 name="username"
-                className="users-select"
+                className="users-select5"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -185,7 +185,7 @@ const Signup = () => {
               <label>Password:</label>
               <input
                 type="password"
-                className="users-select"
+                className="users-select6"
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

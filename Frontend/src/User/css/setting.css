@@ -71,40 +71,28 @@ input {
 }
 
 /* change passwod css */
-.change-password-container {
+.change-password-containerr {
   padding: 30px;
+  width: 100%;
   max-width: 500px;
-  margin: auto 27rem;
-  margin-top: 7rem;
+  margin: auto 25rem;
+  margin-top: 6rem;
   background: #fff;
   border-radius: 8px;
 }
 
-label {
+.labelss {
   display: block;
   margin: 10px 0 5px;
   font-weight: bold;
 }
 
-input {
+.inputs {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
-}
-
-button {
-  padding: 10px;
-  background: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #218838;
 }
 
 /* Booking css */
