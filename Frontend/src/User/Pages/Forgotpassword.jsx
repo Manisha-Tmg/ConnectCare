@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../css/forgotpassword.css";
 import Forgot from "../../assets/Forgot password-amico.png";
+import Conormation from "../components/Conormation";
 
 const Forgotpassword = () => {
   const [email, setEmail] = useState("");
@@ -61,30 +62,7 @@ const Forgotpassword = () => {
 
 // Confirmation Screen
 function ForgotPasswordConfirmation({ email }) {
-  return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <div className="auth-logo">
-          <img src="/api/placeholder/100/40" alt="Logo" />
-        </div>
-        <div className="confirm-icon">✓</div>
-        <h1 className="auth-title">Check Your Email</h1>
-        <p className="auth-description">
-          We've sent a password reset link to:
-          <br />
-          <strong>{email}</strong>
-        </p>
-        <p className="sub-description">
-          If you don't see it in your inbox, please check your spam folder.
-        </p>
-        <div className="auth-links">
-          <a href="/login" className="link">
-            Back to Login
-          </a>
-        </div>
-      </div>
-    </div>
-  );
+  return <Conormation />;
 }
 
 export default Forgotpassword;
