@@ -22,7 +22,8 @@ class CustomUser(AbstractUser):
         ('Other', 'Other'),
     ]
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True, blank=True)
-    
+    reset_token = models.CharField(max_length=255, blank=True, null=True)
+
     profile_picture = CloudinaryField('Upload Profile Picture', null=True, blank=True)
 
     # Contact Information
@@ -178,3 +179,5 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"Review by {self.user.email} for {self.caretaker.name}"
+
+

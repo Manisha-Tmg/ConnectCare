@@ -32,7 +32,8 @@ h2 {
 p {
   font-size: 14px;
   color: #666;
-  margin-bottom: 15px;
+  margin-top: 8px;
+  gap: 2px;
 }
 
 input {
@@ -83,7 +84,7 @@ input {
 .auth-imagee {
   flex: 1;
   max-width: 40%;
-  height: 75%;
+  height: 70%;
   background-size: cover;
   background-position: center;
 }

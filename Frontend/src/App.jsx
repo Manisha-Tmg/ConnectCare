@@ -69,7 +69,7 @@ function App() {
         />
 
         {/* Admin */}
-        <Route path="api/admin/login/" element={<AdminLogin />} />
+        <Route path="/admin/login/" element={<AdminLogin />} />
         <Route path="/admin/Addcaretaker" element={<Addcaretaker />} />
         <Route path="/admin/Adduser" element={<Adduser />} />
         <Route path="/admin/Dashboard" element={<Admindash />} />

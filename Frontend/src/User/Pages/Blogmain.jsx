@@ -56,10 +56,7 @@ const Blogmain = () => {
       <Header />
       <div className="blog-container">
         <div className="blog-header">
-          <h1>
-            <Previous />
-            Blog
-          </h1>
+          <h1>Blog</h1>
           <p>Insights and updates on caregiving and wellness.</p>
         </div>
 

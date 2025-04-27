@@ -271,7 +271,60 @@ class ReviewView(generics.CreateAPIView):
         serializer.save(user=self.request.user,caretaker_id=caretaker_id)
 
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.utils.crypto import get_random_string
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 
 
-    
+User = get_user_model()
+
+@method_decorator(csrf_exempt, name='dispatch')
+class RequestPasswordResetView(APIView):
+    # permission_classes [AllowAny]
+    def post(self, request):
+        email = request.data.get('email')
+        user = get_object_or_404(User, email=email)
+
+        token = get_random_string(length=64)
+        user.reset_token = token
+        user.save()
+
+        reset_link = f"{settings.FRONTEND_URL}/reset-password/{token}/"
+        html_message = render_to_string('email/reset_password_email.html', {
+            'user': user,
+            'reset_link': reset_link,
+        })
+
+        send_mail(
+            subject="Reset Your Password",
+            message="Please use an HTML compatible email viewer.",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[user.email],
+            html_message=html_message,
+        )
+
+        return Response({'message': 'Password reset email sent.'}, status=status.HTTP_200_OK)
+
+
+class ResetPasswordView(APIView):
+    def post(self, request):
+        token = request.data.get('token')
+        new_password = request.data.get('new_password')
+
+        user = get_object_or_404(User, reset_token=token)
+        user.set_password(new_password)
+        user.reset_token = None
+        user.save()
+
+        return Response({'message': 'Password reset successful.'}, status=status.HTTP_200_OK)
+
+

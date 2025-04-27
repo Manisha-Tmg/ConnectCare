@@ -9,6 +9,7 @@
 
 .blog-header {
   text-align: start;
+
   margin-bottom: 2rem;
 }
 
@@ -38,12 +39,6 @@
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.blog-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .blog-image {
@@ -81,8 +76,8 @@
   width: 100%;
   font-weight: bold;
   padding: 10px;
-  border: 2px solid #1abc9c;
-  background-color: #1abc9c;
+  border: 2px solid #008080;
+  background-color: #008080;
   /* background-color: #f5b7b1; */
   color: #ffffff;
 
@@ -93,8 +88,7 @@
 }
 
 .blog-button:hover {
-  border: 2px solid #0c5847;
-  background-color: #0c5847;
+  background-color: #008080;
   color: #ffffff;
 }
 
