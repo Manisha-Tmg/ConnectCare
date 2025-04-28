@@ -64,6 +64,8 @@ def register_caretaker(request):
             'caretaker_id': user.id,
             'refresh': str(refresh),
             'access_token': str(refresh.access_token),
+            'csrf_token': get_token(request), 
+
             'username': user.username,
             'email': user.email,
             'role': user.role
@@ -271,6 +273,8 @@ class ReviewView(generics.CreateAPIView):
         serializer.save(user=self.request.user,caretaker_id=caretaker_id)
 
 
+
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -283,48 +287,220 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
-
+import jwt
+from datetime import datetime, timedelta
 
 User = get_user_model()
 
 @method_decorator(csrf_exempt, name='dispatch')
 class RequestPasswordResetView(APIView):
-    # permission_classes [AllowAny]
+    permission_classes = [AllowAny]
     def post(self, request):
+     
         email = request.data.get('email')
-        user = get_object_or_404(User, email=email)
 
-        token = get_random_string(length=64)
-        user.reset_token = token
-        user.save()
+       
+        try:
+            user = User.objects.get(email=email)
+            
+            # Generate JWT token with 24-hour expiration
+            payload = {
+                'user_id': user.id,
+                'email': user.email,
+                'exp': datetime.utcnow() + timedelta(minutes=5),
+                'iat': datetime.utcnow()
+            }
+            
+            token = jwt.encode(
+                payload,
+                settings.SECRET_KEY,
+                algorithm='HS256'
+            )
 
-        reset_link = f"{settings.FRONTEND_URL}/reset-password/{token}/"
-        html_message = render_to_string('email/reset_password_email.html', {
-            'user': user,
-            'reset_link': reset_link,
-        })
+            print("token", token)
+            
+            # Create reset URL to be included in email
+            reset_url = f"http://localhost:5173/reset-password?t={token}"
+            
+            html_message = f"""
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Your Password</title>
+    <style>
+        body {{
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }}
+        .container {{
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 20px;
+            border: 1px solid #dddddd;
+        }}
+        .header {{
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eeeeee;
+            margin-bottom: 20px;
+        }}
+        .btn {{
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white !important;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 20px 0;
+        }}
+        .footer {{
+            margin-top: 20px;
+            font-size: 12px;
+            text-align: center;
+            color: #777777;
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Password Reset Request</h2>
+        </div>
+        
+        <p>Hello,</p>
+        <p>We received a request to reset your password. Click the button below to create a new password:</p>
+        
+        <div style="text-align: center;">
+            <a href="{reset_url}" class="btn">Reset Password</a>
+        </div>
+        
+        <p>If you didn't request a password reset, you can safely ignore this email.</p>
+        
+        <p>The password reset link will expire in 24 hours.</p>
+        
+        <p>If the button doesn't work, copy and paste this link into your browser:</p>
+        <p style="word-break: break-all;"><a href="{reset_url}">Click Here</a></p>
+    </div>
+    
+    <div class="footer">
+        <p>This is an automated message, please do not reply to this email.</p>
+    </div>
+</body>
+</html>
+"""
+           
+            # Send email with reset link
+            send_mail(
+                subject="Reset Your Password",
+                message=f"Click the link to reset your password: {reset_url}",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[user.email],
+                html_message=html_message,
+            )
+        except User.DoesNotExist:
+            # Don't reveal if the email exists in the system
+            pass
+            
+        # Always return success regardless of whether email exists
+        return Response(
+            {'message': 'If an account with this email exists, a password reset link has been sent.',
+             'success': True}, 
+                        status=status.HTTP_200_OK,
+            
+                        )
 
-        send_mail(
-            subject="Reset Your Password",
-            message="Please use an HTML compatible email viewer.",
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[user.email],
-            html_message=html_message,
-        )
-
-        return Response({'message': 'Password reset email sent.'}, status=status.HTTP_200_OK)
 
 
-class ResetPasswordView(APIView):
+@method_decorator(csrf_exempt, name='dispatch')
+class ResetNewPassword(APIView):
+    permission_classes = [AllowAny]
     def post(self, request):
         token = request.data.get('token')
-        new_password = request.data.get('new_password')
+        password = request.data.get("password")
 
-        user = get_object_or_404(User, reset_token=token)
-        user.set_password(new_password)
-        user.reset_token = None
-        user.save()
+        print("token", token, password)
+        
+        if not token or not password:
+            return Response(
+                {'error': 'Token and password are required'}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            # Decode the JWT token
+            payload = jwt.decode(
+                token,
+                settings.SECRET_KEY,
+                algorithms=['HS256']
+            )
 
-        return Response({'message': 'Password reset successful.'}, status=status.HTTP_200_OK)
+            
+            # Extract user information from the payload
+            user_id = payload.get('user_id')
+            email = payload.get('email')
+            
+            # Find the user
+            user = User.objects.get(id=user_id, email=email)
+            
+            # Set the new password
+            user.set_password(password)
+            user.save()
+
+            message ="Your password has been successfully changed"
+            
+            send_mail (
+                subject="Change password Update",
+                message=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,  
+                recipient_list=[user.email],
+                fail_silently=False
+        )
+            
+            return Response(
+                {'message': 'Password has been reset successfully',
+                 'success': True
+                 }, 
+                status=status.HTTP_200_OK,
+               
+            )
+            
+        except jwt.ExpiredSignatureError:
+            return Response(
+                {'error': 'Password reset link has expired',
+                 'success': False}, 
+                status=status.HTTP_400_BAD_REQUEST,
+                
+            )
+        except jwt.InvalidTokenError:
+            return Response(
+                {'error': 'Invalid token',
+                 'success': False}, 
+                status=status.HTTP_400_BAD_REQUEST,
+               
+
+            )
+        except User.DoesNotExist:
+            return Response(
+                {'error': 'User not found',
+                 'success': False}, 
+                status=status.HTTP_404_NOT_FOUND,
+               
+
+            )
+        except Exception as e:
+            return Response(
+                {'error': f'An error occurred: {str(e)}',
+                 'success': True}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                
+
+            )
 
 
