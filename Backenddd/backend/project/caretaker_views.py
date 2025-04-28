@@ -196,3 +196,39 @@ class CaretakerProfileView(generics.RetrieveAPIView):
     def get_object(self):
         return self.request.user
     
+
+
+from django.utils.decorators import  method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime,timedelta
+import jwt
+# forgot password
+
+user = get_user_model()
+@method_decorator(csrf_exempt,'dispatch')
+class RequestResetPasswordView(APIView):
+    permission_classes[AllowAny]
+
+    def post(self,request):
+
+        email = request.data.get('email')
+
+        try:
+            user = User.objects.get(email=email)
+
+            payload = {
+                'user_id' :user.id,
+                'email' :user.id,
+                'exp': datetime.utcnow() + timedelta(minutes=5),
+                'iat': datetime.utcnow()
+            }
+
+            token = jwt.encode(
+                payload,
+                settings.SECRET_KEY,
+                algorithm='HS256'
+            )
+
+            url=f"http://localhost:5173/reset-passwords?t={token}"
+
+        except:

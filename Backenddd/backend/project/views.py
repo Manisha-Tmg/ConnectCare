@@ -6,7 +6,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status, permissions,generics
-from django.shortcuts import render
+from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+import jwt
+from datetime import datetime, timedelta
 from django.middleware.csrf import get_token
 from django.http import JsonResponse
 from datetime import datetime
@@ -274,24 +281,9 @@ class ReviewView(generics.CreateAPIView):
 
 
 
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from django.utils.crypto import get_random_string
-from django.template.loader import render_to_string
-from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404
-from django.contrib.auth import get_user_model
-from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-
-import jwt
-from datetime import datetime, timedelta
+# reset password
 
 User = get_user_model()
-
 @method_decorator(csrf_exempt, name='dispatch')
 class RequestPasswordResetView(APIView):
     permission_classes = [AllowAny]
@@ -317,84 +309,83 @@ class RequestPasswordResetView(APIView):
                 algorithm='HS256'
             )
 
-            print("token", token)
             
             # Create reset URL to be included in email
             reset_url = f"http://localhost:5173/reset-password?t={token}"
             
             html_message = f"""
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Your Password</title>
-    <style>
-        body {{
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333333;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }}
-        .container {{
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            padding: 20px;
-            border: 1px solid #dddddd;
-        }}
-        .header {{
-            text-align: center;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eeeeee;
-            margin-bottom: 20px;
-        }}
-        .btn {{
-            display: inline-block;
-            background-color: #4CAF50;
-            color: white !important;
-            text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 4px;
-            font-weight: bold;
-            margin: 20px 0;
-        }}
-        .footer {{
-            margin-top: 20px;
-            font-size: 12px;
-            text-align: center;
-            color: #777777;
-        }}
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h2>Password Reset Request</h2>
-        </div>
-        
-        <p>Hello,</p>
-        <p>We received a request to reset your password. Click the button below to create a new password:</p>
-        
-        <div style="text-align: center;">
-            <a href="{reset_url}" class="btn">Reset Password</a>
-        </div>
-        
-        <p>If you didn't request a password reset, you can safely ignore this email.</p>
-        
-        <p>The password reset link will expire in 24 hours.</p>
-        
-        <p>If the button doesn't work, copy and paste this link into your browser:</p>
-        <p style="word-break: break-all;"><a href="{reset_url}">Click Here</a></p>
-    </div>
-    
-    <div class="footer">
-        <p>This is an automated message, please do not reply to this email.</p>
-    </div>
-</body>
-</html>
-"""
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>Reset Your Password</title>
+                            <style>
+                                body {{
+                                    font-family: Arial, sans-serif;
+                                    line-height: 1.6;
+                                    color: #333333;
+                                    max-width: 600px;
+                                    margin: 0 auto;
+                                    padding: 20px;
+                                }}
+                                .container {{
+                                    background-color: #f9f9f9;
+                                    border-radius: 5px;
+                                    padding: 20px;
+                                    border: 1px solid #dddddd;
+                                }}
+                                .header {{
+                                    text-align: center;
+                                    padding-bottom: 15px;
+                                    border-bottom: 1px solid #eeeeee;
+                                    margin-bottom: 20px;
+                                }}
+                                .btn {{
+                                    display: inline-block;
+                                    background-color: #4CAF50;
+                                    color: white !important;
+                                    text-decoration: none;
+                                    padding: 12px 24px;
+                                    border-radius: 4px;
+                                    font-weight: bold;
+                                    margin: 20px 0;
+                                }}
+                                .footer {{
+                                    margin-top: 20px;
+                                    font-size: 12px;
+                                    text-align: center;
+                                    color: #777777;
+                                }}
+                            </style>
+                        </head>
+                        <body>
+                            <div class="container">
+                                <div class="header">
+                                    <h2>Password Reset Request</h2>
+                                </div>
+                                
+                                <p>Hello,</p>
+                                <p>We received a request to reset your password. Click the button below to create a new password:</p>
+                                
+                                <div style="text-align: center;">
+                                    <a href="{reset_url}" class="btn">Reset Password</a>
+                                </div>
+                                
+                                <p>If you didn't request a password reset, you can safely ignore this email.</p>
+                                
+                                <p>The password reset link will expire in 24 hours.</p>
+                                
+                                <p>If the button doesn't work, copy and paste this link into your browser:</p>
+                                <p style="word-break: break-all;"><a href="{reset_url}">Click Here</a></p>
+                            </div>
+                            
+                            <div class="footer">
+                                <p>This is an automated message, please do not reply to this email.</p>
+                            </div>
+                        </body>
+                        </html>
+            """
            
             # Send email with reset link
             send_mail(

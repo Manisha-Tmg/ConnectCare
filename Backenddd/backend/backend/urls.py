@@ -51,6 +51,7 @@ urlpatterns = [
     path('api/book_caretaker/', book_caretaker, name='book_caretaker'),
 
 
+
     path('password-reset/', RequestPasswordResetView.as_view(), name='password_reset'),
     path('reset-password/', ResetNewPassword.as_view(), name='reset-password'),
 
