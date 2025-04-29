@@ -5,6 +5,7 @@ import { API } from "../../env";
 import InputField from "../../User/components/Input";
 import Footer from "../../User/components/Footer";
 import Cookies from "js-cookie";
+import Header from "../../User/components/Header";
 
 const CaretakerLogin = () => {
   const [email, setemail] = useState("");
@@ -63,7 +64,7 @@ const CaretakerLogin = () => {
 
   return (
     <div>
-      {/* <Header /> */}
+      <Header />
       <div className="auth-container">
         <div className="auth-box">
           <h2>Welcome Back</h2>
@@ -80,7 +81,7 @@ const CaretakerLogin = () => {
             type="password"
             placeholder="Enter your password"
           />
-          <Link to="/forgot-password" className="forgot-link">
+          <Link to="/caretaker/forgot-passwords" className="forgot-link">
             Forgot password?
           </Link>
           <button className="auth-button" onClick={handleLogin}>

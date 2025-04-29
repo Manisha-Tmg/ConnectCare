@@ -55,7 +55,7 @@ const BookCaretakerdetails = () => {
       <Header />
       <div className="user-container">
         <h1 className="user-title">
-          <Previous />
+          {/* <Previous /> */}
           Book a Caretaker
         </h1>
         <div className="user-caretaker-grid">

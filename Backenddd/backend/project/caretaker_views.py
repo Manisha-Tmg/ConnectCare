@@ -1,4 +1,4 @@
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password,make_password
 from .serializers import CaretakerSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny,IsAuthenticated
@@ -123,14 +123,87 @@ def booking_action(request, booking_id):
     booking.save()
 
     # Create email notification for the user who made the booking
-   
-    send_mail (
-        subject="Booking update ",
-        message=message,
-        from_email=settings.DEFAULT_FROM_EMAIL,  
-        recipient_list=[booking.user.email],
-        fail_silently=False
-    )
+    html_message = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Booking Update</title>
+        <style>
+            body {{
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f2f2f2;
+                padding: 20px;
+                color: #333;
+            }}
+            .container {{
+                max-width: 600px;
+                margin: auto;
+                background-color: #ffffff;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }}
+            .header {{
+                text-align: center;
+                border-bottom: 2px solid #4CAF50;
+                padding-bottom: 15px;
+                margin-bottom: 20px;
+            }}
+            .header h2 {{
+                color: #4CAF50;
+            }}
+            .content {{
+                font-size: 16px;
+                line-height: 1.6;
+            }}
+            .footer {{
+                margin-top: 30px;
+                font-size: 12px;
+                text-align: center;
+                color: #999;
+            }}
+            .highlight {{
+                background-color: #e8f5e9;
+                padding: 10px;
+                border-left: 4px solid #4CAF50;
+                margin: 15px 0;
+            }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h2>Booking Update</h2>
+            </div>
+            <div class="content">
+                <p>Hi {booking.user.first_name},</p>
+                <p>We wanted to let you know that your booking has been <strong>updated</strong>. Below is a summary of the update:</p>
+                
+                <div class="highlight">
+                    <p>{message}</p>
+                </div>
+
+                <p>If you have any questions or concerns, feel free to reply or contact our support team.</p>
+
+                <p>Thank you for choosing us!</p>
+            </div>
+            <div class="footer">
+                <p>This is an automated message. Please do not reply directly to this email.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+"""
+
+    send_mail(
+    subject="Booking Update Notification",
+    message=message,
+    from_email=settings.DEFAULT_FROM_EMAIL,
+    recipient_list=[booking.user.email],
+    html_message=html_message,
+    fail_silently=False
+)
     
 
     return Response({"message": f"Booking {booking.status} successfully"}, status=status.HTTP_200_OK)
@@ -146,8 +219,8 @@ def booking_count_api(request, caretaker_id):
         return Response({"error": "Caretaker ID is required"}, status=status.HTTP_400_BAD_REQUEST)
 
     total_bookings = Booking.objects.filter(caretaker_id=caretaker_id).count()
-    total_pending = Booking.objects.filter(caretaker_id=caretaker_id).count()
-    completed_tasks = Booking.objects.filter(caretaker_id=caretaker_id).count()
+    total_pending = Booking.objects.filter(caretaker_id=caretaker_id, status='pending').count()
+    completed_tasks = Booking.objects.filter(caretaker_id=caretaker_id, status='completed').count()
 
     return Response({"total_bookings": total_bookings,"total_pending": total_pending,"completed_task":completed_tasks}, status=status.HTTP_200_OK)
 
@@ -202,23 +275,24 @@ from django.utils.decorators import  method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime,timedelta
 import jwt
-# forgot password
 
-user = get_user_model()
-@method_decorator(csrf_exempt,'dispatch')
+
+# forgot password
+# user = get_user_model()
+@method_decorator(csrf_exempt,name='dispatch')
 class RequestResetPasswordView(APIView):
-    permission_classes[AllowAny]
+    permission_classes = [AllowAny]
 
     def post(self,request):
 
         email = request.data.get('email')
 
         try:
-            user = User.objects.get(email=email)
+            caretaker = Caretaker.objects.get(email=email)
 
             payload = {
-                'user_id' :user.id,
-                'email' :user.id,
+                'caretaker_id' :caretaker.id,
+                'email' :caretaker.email,
                 'exp': datetime.utcnow() + timedelta(minutes=5),
                 'iat': datetime.utcnow()
             }
@@ -230,5 +304,228 @@ class RequestResetPasswordView(APIView):
             )
 
             url=f"http://localhost:5173/reset-passwords?t={token}"
+            html_msg = f"""
+                <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>Reset Your Password</title>
+                            <style>
+                                body {{
+                                    font-family: Arial, sans-serif;
+                                    line-height: 1.6;
+                                    color: #333333;
+                                    max-width: 600px;
+                                    margin: 0 auto;
+                                    padding: 20px;
+                                }}
+                                .container {{
+                                    background-color: #f9f9f9;
+                                    border-radius: 5px;
+                                    padding: 20px;
+                                    border: 1px solid #dddddd;
+                                }}
+                                .header {{
+                                    text-align: center;
+                                    padding-bottom: 15px;
+                                    border-bottom: 1px solid #eeeeee;
+                                    margin-bottom: 20px;
+                                }}
+                                .btn {{
+                                    display: inline-block;
+                                    background-color: #4CAF50;
+                                    color: white !important;
+                                    text-decoration: none;
+                                    padding: 12px 24px;
+                                    border-radius: 4px;
+                                    font-weight: bold;
+                                    margin: 20px 0;
+                                }}
+                                .footer {{
+                                    margin-top: 20px;
+                                    font-size: 12px;
+                                    text-align: center;
+                                    color: #777777;
+                                }}
+                            </style>
+                        </head>
+                        <body>
+                            <div class="container">
+                                <div class="header">
+                                    <h2>Password Reset Request</h2>
+                                </div>
+                                
+                                <p>Hello,</p>
+                                <p>We received a request to reset your password. Click the button below to create a new password:</p>
+                                
+                                <div style="text-align: center;">
+                                    <a href="{url}" class="btn">Reset Password</a>
+                                </div>
+                                
+                                <p>If you didn't request a password reset, you can safely ignore this email.</p>
+                                
+                                <p>The password reset link will expire in 24 hours.</p>
+                                
+                                <p>If the button doesn't work, copy and paste this link into your browser:</p>
+                                <p style="word-break: break-all;"><a href="{url}">Click Here</a></p>
+                            </div>
+                            
+                            <div class="footer">
+                                <p>This is an automated message, please do not reply to this email.</p>
+                            </div>
+                        </body>
+                        </html>
+                        """ 
+            
+            send_mail(
+                        subject="Reset you password",
+                        message=f"Click the link to reset you password:",
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        recipient_list=[caretaker.email],
+                        html_message=html_msg,
+                )
 
-        except:
+        except Caretaker.DoesNotExist:
+            return('Caretaker not found')
+
+
+        return Response({"message" : 'Email send',
+                         'success':True },status=status.HTTP_200_OK)
+    
+
+
+@method_decorator(csrf_exempt,name='dispatch')
+class NewPasswordReset(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self,request):
+        token = request.data.get('token')
+        password =  request.data.get('password')
+
+        if not token or not password:
+            return Response({"error":'Token and password not found'},status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            payload = jwt.decode(
+                token,
+                settings.SECRET_KEY,
+                algorithms=['HS256']
+            )
+            caretaker_id = payload.get('caretaker_id')
+            email = payload.get('email')
+
+            caretaker = Caretaker.objects.get(id=caretaker_id,email=email)
+            caretaker.password = make_password(password)
+            caretaker.save()
+
+            message = "Your password has been successfully changed."
+
+            html_message = f"""
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <title>Password Changed</title>
+                <style>
+                    body {{
+                        font-family: Arial, sans-serif;
+                        color: #333;
+                        background-color: #f4f4f4;
+                        padding: 20px;
+                    }}
+                    .container {{
+                        max-width: 600px;
+                        margin: auto;
+                        background-color: #ffffff;
+                        border-radius: 8px;
+                        padding: 30px;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    }}
+                    .header {{
+                        text-align: center;
+                        padding-bottom: 20px;
+                    }}
+                    .header h2 {{
+                        color: #4CAF50;
+                    }}
+                    .content {{
+                        font-size: 16px;
+                        line-height: 1.6;
+                    }}
+                    .footer {{
+                        margin-top: 30px;
+                        text-align: center;
+                        font-size: 12px;
+                        color: #888;
+                    }}
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h2>Password Successfully Changed</h2>
+                    </div>
+                    <div class="content">
+                        <p>Hi {caretaker.name},</p>
+                        <p>This is a confirmation that your password was successfully changed. If this wasn’t you, please contact our support team immediately.</p>
+                        <p>If you did change your password, no further action is needed.</p>
+                    </div>
+                    <div class="footer">
+                        <p>This is an automated message — please do not reply.</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+            """
+
+            send_mail(
+                subject="Your Password Was Successfully Changed",
+                message=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[caretaker.email],
+                html_message=html_message,
+                fail_silently=False
+
+             )
+            
+            return Response(
+                {'message': 'Password has been reset successfully',
+                 'success': True
+                 }, 
+                status=status.HTTP_200_OK,
+               
+            )
+            
+        except jwt.ExpiredSignatureError:
+            return Response(
+                {'error': 'Password reset link has expired',
+                 'success': False}, 
+                status=status.HTTP_400_BAD_REQUEST,
+                
+            )
+        except jwt.InvalidTokenError:
+            return Response(
+                {'error': 'Invalid token',
+                 'success': False}, 
+                status=status.HTTP_400_BAD_REQUEST,
+               
+
+            )
+        except Caretaker.DoesNotExist:
+            return Response(
+                {'error': 'Caretaker not found',
+                 'success': False}, 
+                status=status.HTTP_404_NOT_FOUND,
+               
+
+            )
+        except Exception as e:
+            return Response(
+                {'error': f'An error occurred: {str(e)}',
+                 'success': True}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                
+
+            )
+

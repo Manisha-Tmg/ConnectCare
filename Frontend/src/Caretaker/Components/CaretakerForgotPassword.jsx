@@ -19,7 +19,7 @@ const CaretakerForgotPassword = () => {
     }
     try {
       setLoading(true);
-      const response = await fetch(`${API}password-reset/`, {
+      const response = await fetch(`${API}caretaker/password-reset/`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -90,7 +90,10 @@ const CaretakerForgotPassword = () => {
           </button>
         </form>
         <div className="forgot-back-login">
-          <div onClick={() => navigate("/login")} className="forgot-login-link">
+          <div
+            onClick={() => navigate("/login/caretaker")}
+            className="forgot-login-link"
+          >
             Back to Login
           </div>
         </div>

@@ -129,10 +129,10 @@ const Details = () => {
               <IoDocumentAttachSharp />
               Government ID
             </a>
-            <a href={caretaker.certification_docs_url} className="doc">
+            {/* <a href={caretaker.certification_docs_url} className="doc">
               <IoDocumentAttachSharp />
               Certification Documents
-            </a>
+            </a> */}
             <a href={caretaker.police_clearance_url} className="doc">
               <IoDocumentAttachSharp />
               Police Clearance

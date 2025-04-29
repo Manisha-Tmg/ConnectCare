@@ -20,7 +20,7 @@ const CaretakerResetPasswordComponent = () => {
     }
     try {
       setLoading(true);
-      const response = await fetch(`${API}reset-password/`, {
+      const response = await fetch(`${API}caretaker/reset-password/`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

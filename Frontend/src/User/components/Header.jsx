@@ -46,10 +46,15 @@ const Header = () => {
       }
     }
 
-    if (Cookies.get("accessToken")) {
+    const token = Cookies.get("accessToken");
+    const id = Cookies.get("user_id");
+    if (token && id) {
       setIsLoggedIn(true);
+      fetchProfile();
+    } else {
+      setIsLoggedIn(false);
     }
-    fetchProfile();
+    // fetchProfile();
   }, []);
 
   const handleLogout = () => {

@@ -24,7 +24,7 @@ const CaretakerChangepassword = () => {
       Cookies.remove("accessToken");
       Cookies.remove("role");
       Cookies.remove("caretaker_id");
-      navigate("/login");
+      navigate("/login/caretaker");
     }
 
     if (new_Password !== confirm_Password) {

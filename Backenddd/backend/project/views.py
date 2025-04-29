@@ -22,7 +22,7 @@ from .serializers import ChangePasswordSerializer
 from django.shortcuts import get_object_or_404
 from .models import Caretaker,Booking,CustomUser,Notification
 from django.contrib.auth import get_user_model
-from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer,NotificationSerializer,ReviewSerializer
+from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer,NotificationSerializer,ReviewSerializer,UserProfileSerializer
 import ipdb
 
 
@@ -416,7 +416,6 @@ class ResetNewPassword(APIView):
         token = request.data.get('token')
         password = request.data.get("password")
 
-        print("token", token, password)
         
         if not token or not password:
             return Response(
@@ -444,15 +443,75 @@ class ResetNewPassword(APIView):
             user.set_password(password)
             user.save()
 
-            message ="Your password has been successfully changed"
-            
-            send_mail (
-                subject="Change password Update",
+            message = "Your password has been successfully changed."
+
+            html_message = f"""
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <title>Password Changed</title>
+                <style>
+                    body {{
+                        font-family: Arial, sans-serif;
+                        color: #333;
+                        background-color: #f4f4f4;
+                        padding: 20px;
+                    }}
+                    .container {{
+                        max-width: 600px;
+                        margin: auto;
+                        background-color: #ffffff;
+                        border-radius: 8px;
+                        padding: 30px;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    }}
+                    .header {{
+                        text-align: center;
+                        padding-bottom: 20px;
+                    }}
+                    .header h2 {{
+                        color: #4CAF50;
+                    }}
+                    .content {{
+                        font-size: 16px;
+                        line-height: 1.6;
+                    }}
+                    .footer {{
+                        margin-top: 30px;
+                        text-align: center;
+                        font-size: 12px;
+                        color: #888;
+                    }}
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h2>Password Successfully Changed</h2>
+                    </div>
+                    <div class="content">
+                        <p>Hi {user.name},</p>
+                        <p>This is a confirmation that your password was successfully changed. If this wasn’t you, please contact our support team immediately.</p>
+                        <p>If you did change your password, no further action is needed.</p>
+                    </div>
+                    <div class="footer">
+                        <p>This is an automated message — please do not reply.</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+            """
+
+            send_mail(
+                subject="Your Password Was Successfully Changed",
                 message=message,
-                from_email=settings.DEFAULT_FROM_EMAIL,  
+                from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[user.email],
+                html_message=html_message,
                 fail_silently=False
-        )
+
+             )
             
             return Response(
                 {'message': 'Password has been reset successfully',
@@ -495,3 +554,29 @@ class ResetNewPassword(APIView):
             )
 
 
+
+
+class EditProfile(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self,request,user_id):
+        try:
+            user = CustomUser.objects.get(id=user_id)
+        except CustomUser.DoesNotExist:
+            return Response ({'message': 'User not found try again',
+                              'Success':False},
+                              status=status.HTTP_400_BAD_REQUEST)
+        
+        if request.user != user:
+            return  Response({'message':'Unauthorized'},
+                             status=status.HTTP_401_UNAUTHORIZED)
+        
+
+        serializer = UserProfileSerializer(user,data=request.data,partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response ({'message':'Profile updated easily','Success':True},
+                             status=status.HTTP_200_OK)
+        
+        return Response({'Message':'Error updating the details . Try again','success':False},status=status.HTTP_400_BAD_REQUEST)

@@ -221,3 +221,29 @@ class ReviewSerializer(serializers.ModelSerializer):
         model : Review
         fields = ['id','user','caretaker','rating','comment' ,'created_at']
         read_only_fields = ['id','user','created_at']
+
+
+
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    profile_picture_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'name','profile_picture_url']
+
+    def get_profile_picture_url(self, obj):
+        return self.get_cloudinary_url(obj.profile_picture)
+
+    def get_cloudinary_url(self, field):
+        if field:
+            return f"https://res.cloudinary.com/ddh1i3vod/{field}"
+        return None
+
+    def validate_username(self, value):
+        if ' ' in value:
+            raise serializers.ValidationError('No spaces allowed')
+        if re.search(r'[!@#$%^&*()]', value):
+            raise serializers.ValidationError('Special characters are not allowed')
+        return value

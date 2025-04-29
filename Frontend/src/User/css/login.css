@@ -83,20 +83,20 @@ input {
 }
 .auth-imagee {
   flex: 1;
-  max-width: 40%;
-  height: 70%;
+  max-width: 35%;
+  height: 65%;
   background-size: cover;
   background-position: center;
 }
 /* auth-image login-imagee */
 
-.auth-img {
+/* .authh-img {
   flex: 1;
   max-width: 30%;
-  height: 60%;
+  height: 59%;
   background-size: cover;
   background-position: center;
-}
+} */
 
 .login-imagee {
   background-image: url("../../assets/login.jpg");

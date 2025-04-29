@@ -16,7 +16,6 @@ import AdminLogin from "./Adminpage/Pages/AdminLogin";
 import BookCaretakerdetails from "./User/Pages/BookCaretakerViewDetails";
 import BookingFormPreview from "./User/Pages/Booking";
 import Details from "./User/Pages/Details";
-// import CaretakerDashboard from "./User/Pages/Caretaker/Notification";
 import Admindash from "./Adminpage/Pages/Admindash";
 import CaretakerPanel from "./Adminpage/Pages/Caretaker";
 import CaretakerDetails from "./Adminpage/Pages/CaretakerDetails";
@@ -32,6 +31,8 @@ import CaretakerSignup from "./Caretaker/Pages/Caretakersignup.jsx";
 import CaretakerChangepassword from "./Caretaker/Pages/CaretakerChangepassword.jsx";
 import Forgotpassword from "./User/Pages/Forgotpassword.jsx";
 import ResetPassword from "./User/Pages/ResetPassword.jsx";
+import CaretakerForgotPassword from "./Caretaker/Components/CaretakerForgotPassword.jsx";
+import CaretakerResetPasswordComponent from "./Caretaker/Components/CaretakerResetPasswordComponent.jsx";
 
 function App() {
   return (
@@ -65,6 +66,14 @@ function App() {
         <Route path="/caretaker/register" element={<CaretakerSignup />} />
         <Route path="/booking/" element={<CaretakerBookingPortal />} />
         <Route path="/caretaker/profile" element={<CaretakerProfile />} />
+        <Route
+          path="/caretaker/forgot-passwords"
+          element={<CaretakerForgotPassword />}
+        />
+        <Route
+          path="/reset-passwords"
+          element={<CaretakerResetPasswordComponent />}
+        />
         <Route
           path="/caretaker/changepassword/:id"
           element={<CaretakerChangepassword />}

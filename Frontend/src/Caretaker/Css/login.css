@@ -80,18 +80,18 @@ input {
   text-decoration: none;
   color: #666;
 }
-.auth-image {
+/* .auth-image {
   flex: 1;
   max-width: 30%;
   height: 63.2%;
   background-size: cover;
   background-position: center;
-}
+} */
 
 .auth-img {
   flex: 1;
   max-width: 30%;
-  height: 60%;
+  height: 66%;
   background-size: cover;
   background-position: center;
 }
