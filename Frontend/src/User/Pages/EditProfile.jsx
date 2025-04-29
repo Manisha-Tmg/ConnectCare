@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../css/setting.css";
+import "../css/edit-profile.css";
 import Header from "../components/Header";
 
 import { API } from "../../env";
@@ -56,7 +56,7 @@ const EditProfile = () => {
     }
 
     try {
-      const res = await fetch(`${API}api/users/${id}/`, {
+      const res = await fetch(`${API}edit-profile/${id}/`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -87,7 +87,6 @@ const EditProfile = () => {
             value={formData.name}
             onChange={handleChange}
           />
-
           <label>Email:</label>
           <input
             type="email"
@@ -96,7 +95,7 @@ const EditProfile = () => {
             onChange={handleChange}
             disabled
           />
-
+          {/* 
           <label>Phone:</label>
           <input
             type="text"
@@ -104,23 +103,26 @@ const EditProfile = () => {
             value={formData.phone}
             onChange={handleChange}
             disabled
-          />
-
+          /> */}
           <label>Gender:</label>
-          <select name="gender" value={formData.gender} onChange={handleChange}>
+          <select
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            disabled
+          >
             <option value="">Select</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-
+          {/* 
           <label>Address:</label>
           <input
             type="text"
             name="address"
             value={formData.address}
             onChange={handleChange}
-          />
-
+          /> */}
           <label>Profile Picture:</label>
           <input
             type="file"
@@ -128,8 +130,14 @@ const EditProfile = () => {
             onChange={handleChange}
             accept="image/*"
           />
-
-          <button type="submit">Save Changes</button>
+          <div className="div-btn">
+            <button className="btn11" type="submit">
+              Cancel
+            </button>
+            <button className="btn12" type="submit">
+              Save
+            </button>
+          </div>
         </form>
       </div>
     </div>
