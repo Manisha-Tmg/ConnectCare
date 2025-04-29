@@ -4,9 +4,12 @@ import Header from "../components/Header";
 
 import { API } from "../../env";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [data, setData] = useState(null);
+  const navigate = useNavigate();
+  const id = Cookies.get("user_id");
 
   useEffect(() => {
     async function fetchProfile() {
@@ -57,6 +60,13 @@ const Profile = () => {
       <div className="profile-container-main">
         <div className="p-container">
           <div className="p-card">
+            {" "}
+            <button
+              className="edit-button"
+              onClick={() => navigate(`/profile-edit/${id}`)}
+            >
+              Edit
+            </button>
             <div className="p-header">
               <img
                 src={data.profile_picture_url}
@@ -73,12 +83,12 @@ const Profile = () => {
               <div className="p-info">
                 <strong>Email:</strong> {data.email}
               </div>
-              <div className="p-info">
+              {/* <div className="p-info">
                 <strong>Phone:</strong> {data.phone}
               </div>
               <div className="p-info">
                 <strong>Address:</strong> {data.address}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

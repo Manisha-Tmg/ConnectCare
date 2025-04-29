@@ -1,228 +1,135 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import "../css/setting.css";
+import Header from "../components/Header";
+
 import { API } from "../../env";
 import Cookies from "js-cookie";
-import InputField from "../../User/components/Input";
-import Footer from "../../User/components/Footer";
-import "../css/edit-profile.css";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EditProfile = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
-  const [profileData, setProfileData] = useState({
+  const [formData, setFormData] = useState({
     name: "",
-    email: "",
-    phone: "",
-    address: "",
-    bio: "",
+
+    username: "",
+    profile_picture: "",
   });
-  const [avatar, setAvatar] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState("");
 
   useEffect(() => {
-    const fetchProfileData = async () => {
-      setIsLoading(true);
+    const fetchProfile = async () => {
       try {
-        const id = Cookies.get("user_id");
         const token = Cookies.get("accessToken");
-
-        if (!caretakerId || !token) {
-          navigate("/login");
-          return;
-        }
-
-        const response = await fetch(`${API}edit-profile/${id}/`, {
+        const res = await fetch(`${API}api/users/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
         });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch profile data");
-        }
-
-        const data = await response.json();
-        setProfileData({
-          name: data.name || "",
-          email: data.email || "",
-          phone: data.phone || "",
-          address: data.address || "",
-          bio: data.bio || "",
-        });
-
-        if (data.avatar) {
-          setPreviewUrl(data.avatar);
-        }
-      } catch (error) {
-        console.error("Error fetching profile data:", error);
-      } finally {
-        setIsLoading(false);
+        const data = await res.json();
+        setFormData(data);
+      } catch (err) {
+        console.error("Failed to fetch user data", err);
       }
     };
 
-    fetchProfileData();
-  }, [navigate]);
+    fetchProfile();
+  }, [id]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProfileData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setAvatar(file);
-      setPreviewUrl(URL.createObjectURL(file));
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (files) {
+      setFormData({ ...formData, [name]: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const token = Cookies.get("accessToken");
+    const payload = new FormData();
+
+    for (const key in formData) {
+      payload.append(key, formData[key]);
+    }
+
     try {
-      const caretakerId = Cookies.get("caretaker_id");
-      const token = Cookies.get("accessToken");
+      const res = await fetch(`${API}api/users/${id}/`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: payload,
+      });
 
-      const formData = new FormData();
-      for (const key in profileData) {
-        formData.append(key, profileData[key]);
-      }
-
-      if (avatar) {
-        formData.append("avatar", avatar);
-      }
-
-      const response = await fetch(
-        `${API}api/caretaker/${caretakerId}/update`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to update profile");
-      }
+      if (!res.ok) throw new Error("Failed to update");
 
       alert("Profile updated successfully!");
-      // Optionally redirect or refresh data
-    } catch (error) {
-      console.error("Error updating profile:", error);
-      alert("Failed to update profile. Please try again.");
+      navigate(`/profile`);
+    } catch (err) {
+      console.error("Update failed", err);
+      alert("Something went wrong");
     }
   };
 
-  if (isLoading) {
-    return <div className="loading">Loading profile...</div>;
-  }
-
   return (
-    <div className="edit-profile-container">
-      <div className="edit-profile-card">
-        <h2>Edit Profile</h2>
-        <p>Update your personal information</p>
+    <div>
+      <Header />
+      <div className="edit-profile-container">
+        <form className="edit-form" onSubmit={handleSubmit}>
+          <h2>Edit Profile</h2>
+          <label>Name:</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
 
-        <div className="avatar-section">
-          <div className="avatar-preview">
-            {previewUrl ? (
-              <img src={previewUrl} alt="Profile" />
-            ) : (
-              <div className="avatar-placeholder">
-                {profileData.name
-                  ? profileData.name.charAt(0).toUpperCase()
-                  : "U"}
-              </div>
-            )}
-          </div>
-          <div className="avatar-upload">
-            <label htmlFor="avatar-input" className="upload-btn">
-              Change Photo
-            </label>
-            <input
-              type="file"
-              id="avatar-input"
-              accept="image/*"
-              onChange={handleAvatarChange}
-              style={{ display: "none" }}
-            />
-          </div>
-        </div>
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            disabled
+          />
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Full Name</label>
-            <InputField
-              type="text"
-              name="name"
-              value={profileData.name}
-              onChange={handleInputChange}
-              placeholder="Your full name"
-            />
-          </div>
+          <label>Phone:</label>
+          <input
+            type="text"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            disabled
+          />
 
-          <div className="form-group">
-            <label>Email Address</label>
-            <InputField
-              type="email"
-              name="email"
-              value={profileData.email}
-              onChange={handleInputChange}
-              placeholder="Your email address"
-              disabled
-            />
-            <span className="field-hint">Email cannot be changed</span>
-          </div>
+          <label>Gender:</label>
+          <select name="gender" value={formData.gender} onChange={handleChange}>
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
 
-          <div className="form-group">
-            <label>Phone Number</label>
-            <InputField
-              type="tel"
-              name="phone"
-              value={profileData.phone}
-              onChange={handleInputChange}
-              placeholder="Your phone number"
-            />
-          </div>
+          <label>Address:</label>
+          <input
+            type="text"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+          />
 
-          <div className="form-group">
-            <label>Address</label>
-            <InputField
-              type="text"
-              name="address"
-              value={profileData.address}
-              onChange={handleInputChange}
-              placeholder="Your address"
-            />
-          </div>
+          <label>Profile Picture:</label>
+          <input
+            type="file"
+            name="profile_picture"
+            onChange={handleChange}
+            accept="image/*"
+          />
 
-          <div className="form-group">
-            <label>Bio</label>
-            <textarea
-              name="bio"
-              value={profileData.bio}
-              onChange={handleInputChange}
-              placeholder="Tell us about yourself"
-              rows="4"
-            />
-          </div>
-
-          <div className="action-buttons">
-            <button
-              type="button"
-              className="cancel-button"
-              onClick={() => navigate(-1)}
-            >
-              Cancel
-            </button>
-            <button type="submit" className="save-button">
-              Save Changes
-            </button>
-          </div>
+          <button type="submit">Save Changes</button>
         </form>
       </div>
     </div>
