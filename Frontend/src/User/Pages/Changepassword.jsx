@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { API } from "../../env";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const ChangePassword = () => {
   const [old_password, setOldPassword] = useState("");
@@ -94,6 +95,7 @@ const ChangePassword = () => {
           <button type="submit">Change Password</button>
         </form>
       </div>
+      <Footer />
     </div>
   );
 };

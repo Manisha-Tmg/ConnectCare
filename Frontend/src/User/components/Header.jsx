@@ -66,7 +66,7 @@ const Header = () => {
             onClick={() => {
               toast.dismiss(t.id);
 
-              // Logout logic here
+              // Logout \
               Cookies.remove("accessToken", { path: "/" }); // to remove the cookies data that is saved
               Cookies.remove("role", { path: "/" });
               Cookies.remove("user_id", { path: "/" });

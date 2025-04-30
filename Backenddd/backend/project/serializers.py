@@ -224,14 +224,12 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 
-
-
 class UserProfileSerializer(serializers.ModelSerializer):
     profile_picture_url = serializers.SerializerMethodField()
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'name','profile_picture_url']
+        fields = ['username', 'name', 'profile_picture', 'profile_picture_url']
 
     def get_profile_picture_url(self, obj):
         return self.get_cloudinary_url(obj.profile_picture)
@@ -247,3 +245,70 @@ class UserProfileSerializer(serializers.ModelSerializer):
         if re.search(r'[!@#$%^&*()]', value):
             raise serializers.ValidationError('Special characters are not allowed')
         return value
+
+
+
+class CaretakerProfileSerializer(serializers.ModelSerializer):
+    profile_picture_url = serializers.SerializerMethodField()
+    gov_id_url = serializers.SerializerMethodField()
+    police_clearance_url = serializers.SerializerMethodField()
+
+    profile_picture = serializers.ImageField(required=False, allow_null=True)
+    gov_id = serializers.ImageField(required=False, allow_null=True)
+    police_clearance = serializers.ImageField(required=False, allow_null=True)
+    class Meta:
+        model = Caretaker
+        fields = [
+            'id',
+            'name',
+            'bio',
+            'gender',
+            'email',
+            'phone',
+            'address',
+            'specialty',
+            'experience',
+            'hourly_rate',
+            'languages_spoken',
+            'profile_picture',  
+            'gov_id',
+            'police_clearance',
+            'profile_picture_url',  
+            'gov_id_url',
+            'police_clearance_url',]       
+        extra_kwargs = {
+            'password': {'write_only': True},
+        }
+
+    def validate_username(self, value):
+        if ' '  in value:
+            raise serializers.ValidationError('no space allowed')
+        if re.search('r[@#$%^&*!()]',value):
+            raise serializers.ValidationError('special characters not allowed')
+        return value
+
+    def validate_password(self, value):
+        if ' '  in value :
+            raise serializers.ValidationError('No space allowed')
+        return value
+    
+    def create(self, validated_data):
+        validated_data['password'] = make_password(validated_data['password'])
+        return super().create(validated_data)
+
+    def get_profile_picture_url(self, obj):
+        return self.get_cloudinary_url(obj.profile_picture)
+
+    def get_gov_id_url(self, obj):
+        return self.get_cloudinary_url(obj.gov_id)
+
+    def get_certification_docs_url(self, obj):
+        return self.get_cloudinary_url(obj.certification_docs)
+
+    def get_police_clearance_url(self, obj):
+        return self.get_cloudinary_url(obj.police_clearance)
+
+    def get_cloudinary_url(self, field):
+        if field and hasattr(field, 'url'):
+            return field.url
+        return None

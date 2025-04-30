@@ -3,10 +3,13 @@ import "../css/profile.css";
 import Cookies from "js-cookie";
 import { API } from "../../env";
 import CaretakerSidebar from "../Components/side";
+import { useNavigate } from "react-router-dom";
 
 const CaretakerProfile = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const id = Cookies.get("caretaker_id");
 
   useEffect(() => {
     async function fetchCaretakerProfile() {
@@ -58,6 +61,12 @@ const CaretakerProfile = () => {
       <CaretakerSidebar />
       <div className="profile-container">
         <div className="profile-card">
+          <button
+            className="edit-button"
+            onClick={() => navigate(`/caretaker/edit-profile/${id}`)}
+          >
+            Edit
+          </button>
           <div className="caretaker-profile-header">
             <img
               src={data.profile_picture_url}
@@ -92,9 +101,9 @@ const CaretakerProfile = () => {
             <div className="profile-info">
               <strong>Experience:</strong> {data.experience} years
             </div>
-            <div className="profile-info">
+            {/* <div className="profile-info">
               <strong>Previous Experience:</strong> {data.previous_experience}
-            </div>
+            </div> */}
             <div className="profile-info">
               <strong>Hourly Rate:</strong> ${data.hourly_rate}/hr
             </div>
@@ -113,14 +122,14 @@ const CaretakerProfile = () => {
             >
               Government ID
             </a>
-            <a
+            {/* <a
               href={data.certification_docs_url}
               target="_blank"
               rel="noopener noreferrer"
               className="doc-link"
             >
               Certification Documents
-            </a>
+            </a> */}
             <a
               href={data.police_clearance_url}
               target="_blank"

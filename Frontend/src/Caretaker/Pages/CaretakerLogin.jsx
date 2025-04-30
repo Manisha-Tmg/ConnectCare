@@ -6,6 +6,7 @@ import InputField from "../../User/components/Input";
 import Footer from "../../User/components/Footer";
 import Cookies from "js-cookie";
 import Header from "../../User/components/Header";
+import toast from "react-hot-toast";
 
 const CaretakerLogin = () => {
   const [email, setemail] = useState("");
@@ -54,11 +55,11 @@ const CaretakerLogin = () => {
         }
       } else {
         console.log("Login failed:", data.error || "Invalid credentials");
-        alert(data.error || "Invalid credentials");
+        toast.error(data.error || "Invalid credentials");
       }
     } catch (error) {
       console.error("Error logging in:", error);
-      alert("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     }
   };
 

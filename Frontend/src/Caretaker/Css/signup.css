@@ -9,7 +9,9 @@
 .form-container {
   max-width: 1500px;
   margin: auto;
+  margin-top: 5rem;
   margin-left: 15rem;
+  margin-right: 15rem;
   padding: 40px;
   background-color: #fff;
   border-radius: 10px;

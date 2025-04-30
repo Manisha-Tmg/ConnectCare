@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import { API } from "../../env";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const Profile = () => {
   const [data, setData] = useState(null);
@@ -60,7 +61,6 @@ const Profile = () => {
       <div className="profile-container-main">
         <div className="p-container">
           <div className="p-card">
-            {" "}
             <button
               className="edit-button"
               onClick={() => navigate(`/profile-edit/${id}`)}
@@ -93,6 +93,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

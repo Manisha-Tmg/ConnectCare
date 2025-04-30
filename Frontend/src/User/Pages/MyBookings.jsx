@@ -3,6 +3,7 @@ import "../css/setting.css";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { API } from "../../env";
+import Footer from "../components/Footer";
 
 const BookingPanel = () => {
   const [bookings, setBookings] = useState([]);
@@ -74,6 +75,7 @@ const BookingPanel = () => {
           </table>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

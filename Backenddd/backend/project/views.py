@@ -24,6 +24,8 @@ from .models import Caretaker,Booking,CustomUser,Notification
 from django.contrib.auth import get_user_model
 from .serializers import UserRegistrationSerializer,LoginSerializer,CaretakerSerializer,BookingSerializer,CustomUserSerializer,NotificationSerializer,ReviewSerializer,UserProfileSerializer
 import ipdb
+from rest_framework.parsers import MultiPartParser, FormParser
+
 
 
 # User ViewSet for CRUD operations
@@ -558,6 +560,7 @@ class ResetNewPassword(APIView):
 
 class EditProfile(APIView):
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser] 
 
     def patch(self,request,user_id):
         try:

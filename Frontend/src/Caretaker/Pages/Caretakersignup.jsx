@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../env";
 import Cookies from "js-cookie";
+import Header from "../../User/components/Header";
+import Footer from "../../User/components/Footer";
 
 const CaretakerSignup = () => {
   const [name, setName] = useState("");
@@ -75,28 +77,42 @@ const CaretakerSignup = () => {
 
   return (
     <div>
+      <Header />
       <div className="form-container">
         <h2>Caretaker Registration</h2>
         <p className="form-subtitle">
           Fill out the form carefully for registration
         </p>
         <form>
-          <div className="form-group">
-            <label>Name:</label>
-            <input
-              type="text"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
+          <div className="form-row">
+            <div className="form-group">
+              <label>Name:</label>
+              <input
+                type="text"
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Address:</label>
+              <input
+                name="address"
+                value={address}
+                required
+                onChange={(e) => setAddress(e.target.value)}
+              ></input>
+            </div>
           </div>
+
           <div className="form-row">
             <div className="form-group">
               <label>Gender:</label>
               <select
                 name="gender"
                 value={gender}
+                required
                 onChange={(e) => setGender(e.target.value)}
               >
                 <option value="">Please Select</option>
@@ -117,24 +133,6 @@ const CaretakerSignup = () => {
               />
             </div>
           </div>
-          <div className="form-group">
-            <label>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Address:</label>
-            <input
-              name="address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            ></input>
-          </div>
           <div className="form-row">
             <div className="form-group">
               <label>Experience (Years):</label>
@@ -151,6 +149,7 @@ const CaretakerSignup = () => {
               <select
                 name="specialty"
                 value={specialty}
+                required
                 onChange={(e) => setSpecialty(e.target.value)}
               >
                 <option value="">Please Select</option>
@@ -162,30 +161,35 @@ const CaretakerSignup = () => {
               </select>
             </div>
           </div>
-          <div className="form-group">
-            <label>Hourly Rate:</label>
-            <input
-              type="number"
-              name="hourly_rate"
-              value={hourly_rate}
-              onChange={(e) => setHourlyRate(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Languages Spoken:</label>
-            <input
-              type="text"
-              name="languages_spoken"
-              value={languages_spoken}
-              onChange={(e) => setLanguagesSpoken(e.target.value)}
-            />
+          <div className="form-row">
+            <div className="form-group">
+              {" "}
+              <label>Hourly Rate:</label>
+              <input
+                type="number"
+                name="hourly_rate"
+                value={hourly_rate}
+                onChange={(e) => setHourlyRate(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Languages Spoken:</label>
+              <input
+                type="text"
+                required
+                name="languages_spoken"
+                value={languages_spoken}
+                onChange={(e) => setLanguagesSpoken(e.target.value)}
+              />
+            </div>
           </div>
           <div className="form-group">
             <label>Bio:</label>
             <textarea
               name="bio"
               value={bio}
+              required
               onChange={(e) => setBio(e.target.value)}
             ></textarea>
           </div>
@@ -209,7 +213,7 @@ const CaretakerSignup = () => {
               required
             />
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label>Certification Docs :</label>
             <input
               type="file"
@@ -218,8 +222,8 @@ const CaretakerSignup = () => {
               onChange={(e) => setCertDocs(e.target.files[0])}
               required
             />
-          </div>
-          {/* <div className="form-group">
+          </div> */}
+          <div className="form-group">
             <label>Police Clearance URL:</label>
             <input
               type="file"
@@ -229,7 +233,7 @@ const CaretakerSignup = () => {
               onChange={(e) => setPoliceClearance(e.target.value)}
               required
             />
-          </div> */}
+          </div>
           <div className="form-row">
             <div className="form-group">
               <label>Username:</label>
@@ -257,6 +261,7 @@ const CaretakerSignup = () => {
           </button>
         </form>
       </div>
+      <Footer />
     </div>
   );
 };

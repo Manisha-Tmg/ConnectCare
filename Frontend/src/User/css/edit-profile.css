@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   margin-top: 90px;
+  margin-bottom: 50px;
 }
 
 .edit-form {
@@ -9,7 +10,7 @@
   padding: 25px 30px;
   border-radius: 10px;
   width: 100%;
-  max-width: 500px;
+  max-width: 700px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "../css/edit-profile.css";
 import Header from "../components/Header";
-
+import Footer from "../components/Footer";
 import { API } from "../../env";
 import Cookies from "js-cookie";
 import { useNavigate, useParams } from "react-router-dom";
@@ -11,7 +11,6 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
-
     username: "",
     profile_picture: "",
   });
@@ -56,7 +55,7 @@ const EditProfile = () => {
     }
 
     try {
-      const res = await fetch(`${API}edit-profile/${id}/`, {
+      const res = await fetch(`${API}edit-profile/${id}`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -131,7 +130,11 @@ const EditProfile = () => {
             accept="image/*"
           />
           <div className="div-btn">
-            <button className="btn11" type="submit">
+            <button
+              className="btn11"
+              type="button"
+              onClick={() => navigate(`/profile`)}
+            >
               Cancel
             </button>
             <button className="btn12" type="submit">
@@ -140,6 +143,7 @@ const EditProfile = () => {
           </div>
         </form>
       </div>
+      <Footer />
     </div>
   );
 };

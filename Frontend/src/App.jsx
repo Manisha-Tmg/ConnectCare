@@ -34,6 +34,7 @@ import ResetPassword from "./User/Pages/ResetPassword.jsx";
 import CaretakerForgotPassword from "./Caretaker/Components/CaretakerForgotPassword.jsx";
 import CaretakerResetPasswordComponent from "./Caretaker/Components/CaretakerResetPasswordComponent.jsx";
 import EditProfile from "./User/Pages/EditProfile.jsx";
+import CaretakerEditProfile from "./Caretaker/Pages/EditProfile.jsx";
 
 function App() {
   return (
@@ -68,6 +69,10 @@ function App() {
         <Route path="/caretaker/register" element={<CaretakerSignup />} />
         <Route path="/booking/" element={<CaretakerBookingPortal />} />
         <Route path="/caretaker/profile" element={<CaretakerProfile />} />
+        <Route
+          path="/caretaker/edit-profile/:id"
+          element={<CaretakerEditProfile />}
+        />
         <Route
           path="/caretaker/forgot-passwords"
           element={<CaretakerForgotPassword />}

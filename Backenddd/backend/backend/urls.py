@@ -4,7 +4,7 @@ from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
 from project.views import UserViewSet, UserRegistrationView,LoginView,ChangePasswordView,get_caretakers,book_caretaker,get_user,get_Booking,ReviewView,RequestPasswordResetView, ResetNewPassword,EditProfile
-from project.caretaker_views import  CareRegistrationView,CareLoginView,booking_action,get_CaretakerBooking,booking_count_api,CaretakerChangePasswordView,CaretakerProfileView,RequestResetPasswordView,NewPasswordReset
+from project.caretaker_views import  CareRegistrationView,CareLoginView,booking_action,get_CaretakerBooking,booking_count_api,CaretakerChangePasswordView,ProfileEdit,RequestResetPasswordView,NewPasswordReset
 from project.admin_views import  AdminLoginView,admin_dashboard,change_caretaker_status,change_user_status,delete_user,caretaker_delete,get_all_bookings
  
 # Initialize the router
@@ -51,12 +51,12 @@ urlpatterns = [
     path('api/book_caretaker/', book_caretaker, name='book_caretaker'),
 
 
-# users restpassword
+    # users restpassword
     path('password-reset/', RequestPasswordResetView.as_view(), name='password_reset'),
     path('reset-password/', ResetNewPassword.as_view(), name='reset-password'),
 
 
-# Caretaker restpassword
+    # Caretaker restpassword
     path('caretaker/password-reset/', RequestResetPasswordView.as_view(), name='password_reset'),
     path('caretaker/reset-password/', NewPasswordReset.as_view(), name='reset-password'),
 
@@ -67,11 +67,13 @@ urlpatterns = [
     path('api/bookings/', get_Booking, name='book_caretakerlist'),
     path('api/caretaker/bookings/', get_CaretakerBooking, name='listofbook_caretaker'),
    
-    # edit details Caretaker
-    path('edit/profile/', CaretakerProfileView.as_view(), name='edit-profile'),
 
- # edit details User
-    path('edit-profile/<int:user_id>/', EditProfile.as_view(), name='edit-profile'),
+    # edit details Caretaker
+    path('profile-edit/<int:caretaker_id>', ProfileEdit.as_view(), name='edit-profile'),
+
+
+    # edit details User
+    path('edit-profile/<int:user_id>', EditProfile.as_view(), name='edit-profile'),
 
 
 
