@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import { API } from "../../env";
-import "../../User/css/ChangePassword.css";
+import "../css/ChangePassword.css";
 import CaretakerSidebar from "../Components/side";
 
 const CaretakerChangepassword = () => {
