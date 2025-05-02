@@ -5,14 +5,20 @@
   margin: 0;
   padding: 0;
 }
-
-body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: var(--text-color);
-  background-color: var(--light-bg);
+.admin-layoutt {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+.dashboardd-container {
+  padding: 24px;
+  margin-left: 50px;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  flex: 1;
 }
 
-/* caretaker Panel Container */
+/* caretaker Panel Container
 .caretaker-panel {
   max-width: 1050px;
   margin: auto;
@@ -21,7 +27,7 @@ body {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
+} */
 
 /* Panel Header */
 .panel-header {

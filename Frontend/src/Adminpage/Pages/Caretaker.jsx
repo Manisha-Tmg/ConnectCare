@@ -95,9 +95,10 @@ const CaretakerPanel = () => {
   );
 
   return (
-    <div>
+    <div className="admin-layoutt">
       <Sidebar />
-      <div className="caretaker-panel">
+      <div className="dashboarddd-containerr">
+        {/* <div className="caretaker-panel"> */}
         <div className="panel-header">
           <h1>Caretaker Management</h1>
           <Link to="/admin/Addcaretaker">
@@ -176,6 +177,7 @@ const CaretakerPanel = () => {
         </div>
       </div>
     </div>
+    // </div>
   );
 };
 

@@ -127,6 +127,7 @@ const CaretakerSignup = () => {
                 type="text"
                 name="email"
                 value={phone}
+                className="phone"
                 onChange={(e) => setPhone(e.target.value)}
                 required
                 maxLength="10"
@@ -149,6 +150,7 @@ const CaretakerSignup = () => {
               <select
                 name="specialty"
                 value={specialty}
+                className="specialty"
                 required
                 onChange={(e) => setSpecialty(e.target.value)}
               >

@@ -1,9 +1,14 @@
-/* Main Container */
-.dashboard-container {
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+.dashboard-containerr {
   padding: 24px;
-  margin-left: 270px;
+  margin-left: 20px;
   background-color: #f8fafc;
   min-height: 100vh;
+  flex: 1;
 }
 
 /* Dashboard Header */

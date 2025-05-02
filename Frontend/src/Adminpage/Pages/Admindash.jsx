@@ -29,9 +29,9 @@ const Admindash = () => {
   }, []);
 
   return (
-    <div>
+    <div className="admin-layout">
       <Sidebar />
-      <div className="dashboard-container">
+      <div className="dashboard-containerr">
         <h2 className="dashboard-header">Dashboard</h2>
         <section className="overview">
           <div className="card">
