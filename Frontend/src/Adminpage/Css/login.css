@@ -80,7 +80,7 @@ input {
   text-decoration: none;
   color: #666;
 }
-.auth-image {
+.login-imageee {
   flex: 1;
   max-width: 30%;
   height: 63.2%;
@@ -88,15 +88,15 @@ input {
   background-position: center;
 }
 
-.auth-img {
+.auth-img1 {
   flex: 1;
   max-width: 30%;
-  height: 60%;
+  height: 59%;
   background-size: cover;
   background-position: center;
 }
 
-.login-imagee {
+.login-imageee {
   background-image: url("../../assets/login.jpg");
 }
 

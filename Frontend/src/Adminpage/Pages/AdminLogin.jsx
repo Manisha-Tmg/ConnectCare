@@ -79,7 +79,7 @@ const AdminLogin = () => {
             Log In
           </button>
         </div>
-        <div className="auth-img login-imagee"></div>
+        <div className="auth-img1 login-imageee"></div>
       </div>
       <Footer />
     </div>
