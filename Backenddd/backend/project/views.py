@@ -494,7 +494,7 @@ class ResetNewPassword(APIView):
                     </div>
                     <div class="content">
                         <p>Hi {user.name},</p>
-                        # <p>This is a confirmation that your password was successfully changed. If this wasn’t you, please contact our support team immediately.</p>
+                        <p>This is a confirmation that your password was successfully changed. If this wasn’t you, please contact our support team immediately.</p>
                         <p>If you did change your password, no further action is needed.</p>
                     </div>
                     <div class="footer">
