@@ -93,77 +93,81 @@ const UserPanel = () => {
     ct.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   return (
-    <div className="user-panel">
+    <div>
       <Sidebar />
-      <div className="panel-header">
-        <h1>User Management</h1>
-        <Link to={"/admin/Adduser"}>
-          <button className="add-user-btn">+ Add User</button>
-        </Link>
-      </div>
-      <div className="search-filter-container">
-        <input
-          type="text"
-          placeholder="Search users..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
-      <div className="users-table-container">
-        <table className="users-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Username</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>
-                  <span className={`role-badge ${user.role}`}>{user.role}</span>
-                </td>
-                <td>
-                  <span className={`status-badge ${user.is_approved}`}>
-                    {user.is_approved ? "Verified" : "Rejected"}
-                  </span>
-                </td>
-                <td>{user.username}</td>
-                <td className="actions">
-                  <Link to={`/users/${user.id}`}>
-                    <button className="edit-btn">
-                      <FaEye />
-                    </button>
-                  </Link>
-
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDelete(user.id)}
-                  >
-                    <MdDelete />
-                  </button>
-
-                  <button
-                    className={`status-btnn ${
-                      user.is_approved ? "verify" : "Reject"
-                    }`}
-                    onClick={() =>
-                      handleStatusChange(user.id, user.is_approved)
-                    }
-                  >
-                    {user.is_approved ? "Reject" : "Verify"}
-                  </button>
-                </td>
+      <div className="user-panel">
+        <div className="panel-header">
+          <h1>User Management</h1>
+          <Link to={"/admin/Adduser"}>
+            <button className="add-user-btn">+ Add User</button>
+          </Link>
+        </div>
+        <div className="search-filter-container">
+          <input
+            type="text"
+            placeholder="Search users..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <div className="users-table-container">
+          <table className="users-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Username</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user.id}>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    <span className={`role-badge ${user.role}`}>
+                      {user.role}
+                    </span>
+                  </td>
+                  <td>
+                    <span className={`status-badge ${user.is_approved}`}>
+                      {user.is_approved ? "Verified" : "Rejected"}
+                    </span>
+                  </td>
+                  <td>{user.username}</td>
+                  <td className="actions">
+                    <Link to={`/users/${user.id}`}>
+                      <button className="edit-btn">
+                        <FaEye />
+                      </button>
+                    </Link>
+
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(user.id)}
+                    >
+                      <MdDelete />
+                    </button>
+
+                    <button
+                      className={`status-btnn ${
+                        user.is_approved ? "verify" : "Reject"
+                      }`}
+                      onClick={() =>
+                        handleStatusChange(user.id, user.is_approved)
+                      }
+                    >
+                      {user.is_approved ? "Reject" : "Verify"}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

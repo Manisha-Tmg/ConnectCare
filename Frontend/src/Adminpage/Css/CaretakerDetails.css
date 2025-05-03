@@ -8,11 +8,12 @@
 .admin-layoutt {
   display: flex;
   min-height: 100vh;
+  margin-left: 80px;
+
   background-color: #f8fafc;
 }
 .dashboardd-container {
   padding: 24px;
-  margin-left: 50px;
   background-color: #f8fafc;
   min-height: 100vh;
   flex: 1;

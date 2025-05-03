@@ -1,115 +1,113 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
-.auth-container {
+.user-auth-container {
   display: flex;
-  margin-top: 2rem;
-  height: 100vh;
+  min-height: 90vh;
   justify-content: center;
   align-items: center;
-  background-color: #f9f9f9;
+  background-color: #f5f6fa;
+  padding: 2rem;
+  margin-top: 3rem;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
-.auth-box {
-  width: 400px;
-  background: white;
-  padding: 30px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+.user-auth-box {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
   text-align: center;
-  z-index: 2;
 }
 
-h2 {
-  margin: 10px 0;
-  font-size: 22px;
+.user-auth-box h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
   color: #333;
 }
 
-p {
-  font-size: 14px;
+.user-auth-box p {
   color: #666;
-  margin-top: 8px;
-  gap: 2px;
+  margin-bottom: 1.5rem;
 }
 
-input {
+.user-auth-box input {
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
 }
 
-.auth-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
+.user-forgot-link {
+  display: block;
+  text-align: right;
+  font-size: 0.9rem;
+  color: #2c7be5;
+  margin-bottom: 1rem;
+  text-decoration: none;
+}
+
+.user-forgot-link:hover {
+  text-decoration: underline;
+}
+
+.user-auth-button {
   border: 2px solid #008080;
   background-color: #008080;
-
   color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
   cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
 }
 
-.auth-button:hover {
+.user-auth-button:hover {
   background-color: #016b6b;
-  /* border: 2px solid #008080; */
 }
 
-.forgot-link {
-  display: flex;
-  margin: 5px;
-  color: #666;
+.user-create-account {
+  color: #2c7be5;
   text-decoration: none;
-  font-size: 14px;
+  margin-left: 0.3rem;
 }
 
-.forgot-link:hover {
+.user-create-account:hover {
   text-decoration: underline;
-  color: #333;
 }
-
-.create-account {
-  text-decoration: none;
-  color: #666;
-}
+/* 
 .auth-imagee {
   flex: 1;
-  max-width: 35%;
-  height: 65%;
+  min-height: 300px;
   background-size: cover;
   background-position: center;
+  border-radius: 12px;
 }
-/* auth-image login-imagee */
-
-/* .authh-img {
-  flex: 1;
-  max-width: 30%;
-  height: 59%;
-  background-size: cover;
-  background-position: center;
-} */
 
 .login-imagee {
-  background-image: url("../../assets/login.jpg");
-}
+  background-image: url("https://images.unsplash.com/photo-1588776814546-b66f18b13a15?auto=format&fit=crop&w=800&q=80");
+  max-width: 450px;
+  width: 100%;
+  height: 100%;
+} */
 
 @media (max-width: 768px) {
   .auth-container {
-    flex-direction: column;
+    flex-direction: column-reverse;
+    align-items: center;
   }
 
-  .auth-image {
+  .auth-box {
+    width: 100%;
+    max-width: 90%;
+  }
+
+  .auth-imagee {
     max-width: 100%;
-    height: 250px;
-    border-radius: 0;
+    height: 200px;
   }
 }

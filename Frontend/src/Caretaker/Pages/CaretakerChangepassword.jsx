@@ -62,7 +62,7 @@ const CaretakerChangepassword = () => {
   return (
     <div>
       <CaretakerSidebar />
-      <div className="change-password-container">
+      <div className="change-password-containerr">
         <h2>Change Password</h2>
         <form onSubmit={passwordChange}>
           <label>Current Password</label>

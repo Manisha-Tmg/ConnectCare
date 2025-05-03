@@ -56,8 +56,8 @@ const AdminLogin = () => {
   return (
     <div>
       <Header />
-      <div className="auth-container">
-        <div className="auth-box">
+      <div className="admin-auth-container">
+        <div className="admin-auth-box">
           <h2>Welcome Back</h2>
           <p>Please log in to your account</p>
           <InputField
@@ -72,14 +72,13 @@ const AdminLogin = () => {
             type="password"
             placeholder="Enter your password"
           />
-          <Link to="/forgot-password" className="forgot-link">
-            Forgot password?
-          </Link>
-          <button className="auth-button" onClick={handleLogin}>
+          {/* <Link to="/forgot-password" className="forgot-link">
+            Forgot password? */}
+          {/* </Link> */}
+          <button className="admin-auth-button" onClick={handleLogin}>
             Log In
           </button>
         </div>
-        <div className="auth-img1 login-imageee"></div>
       </div>
       <Footer />
     </div>

@@ -57,8 +57,8 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <div className="auth-container">
-        <div className="auth-box">
+      <div className="user-auth-container">
+        <div className="user-auth-box">
           <h2>Welcome Back</h2>
           <p>Please log in to your account</p>
           <InputField
@@ -76,7 +76,7 @@ const Login = () => {
           <Link to="/forgot-password" className="forgot-link">
             Forgot password?
           </Link>
-          <button className="auth-button" onClick={handleLogin}>
+          <button className="user-auth-button" onClick={handleLogin}>
             Log In
           </button>
           <p>
@@ -86,7 +86,6 @@ const Login = () => {
             </Link>
           </p>
         </div>
-        <div className="auth-imagee login-imagee"></div>
       </div>
       <Footer />
     </div>

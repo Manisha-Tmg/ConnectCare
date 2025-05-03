@@ -196,10 +196,10 @@ const CaretakerBookingPortal = () => {
                 <div className="booking-footer-new">
                   <div className="estimated-price">
                     <div className="price-label text-sm text-gray-500">
-                      Estimated Price (USD)
+                      Estimated Price
                     </div>
                     <div className="price-amount text-lg font-semibold text-blue-600">
-                      ${request.price || "118"}
+                      Rs.{request.price || "118"}
                     </div>
                   </div>
                 </div>

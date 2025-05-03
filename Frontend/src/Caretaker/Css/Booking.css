@@ -1,6 +1,7 @@
 .bookings-container {
   display: flex;
   width: 100%;
+  text-transform: capitalize;
 }
 
 .booking-content {

@@ -393,7 +393,7 @@ class RequestPasswordResetView(APIView):
             send_mail(
                 subject="Reset Your Password",
                 message=f"Click the link to reset your password: {reset_url}",
-                from_email=settings.DEFAULT_FROM_EMAIL,
+                from_email=f'ConnectCare<{settings.DEFAULT_FROM_EMAIL}>',
                 recipient_list=[user.email],
                 html_message=html_message,
             )
@@ -494,7 +494,7 @@ class ResetNewPassword(APIView):
                     </div>
                     <div class="content">
                         <p>Hi {user.name},</p>
-                        <p>This is a confirmation that your password was successfully changed. If this wasn’t you, please contact our support team immediately.</p>
+                        # <p>This is a confirmation that your password was successfully changed. If this wasn’t you, please contact our support team immediately.</p>
                         <p>If you did change your password, no further action is needed.</p>
                     </div>
                     <div class="footer">
@@ -508,7 +508,7 @@ class ResetNewPassword(APIView):
             send_mail(
                 subject="Your Password Was Successfully Changed",
                 message=message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
+                from_email=f'ConnectCare<{settings.DEFAULT_FROM_EMAIL}>',
                 recipient_list=[user.email],
                 html_message=html_message,
                 fail_silently=False
