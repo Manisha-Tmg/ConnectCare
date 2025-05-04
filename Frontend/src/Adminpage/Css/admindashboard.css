@@ -5,12 +5,17 @@
 }
 .dashboard-containerr {
   padding: 24px;
-  margin-left: 20px;
+  margin-left: 270px;
+  margin-top: 20px;
   background-color: #f8fafc;
   min-height: 100vh;
   flex: 1;
 }
-
+@media only screen and (max-width: 768px) {
+  .admin-layout > .dashboard-containerr {
+    margin-left: 70px !important;
+  }
+}
 /* Dashboard Header */
 .dashboard-header {
   display: flex;
@@ -109,7 +114,7 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .dashboard-container {
     margin-left: 70px;
     padding: 16px;
@@ -118,4 +123,4 @@
   .overview {
     grid-template-columns: 1fr;
   }
-}
+} */

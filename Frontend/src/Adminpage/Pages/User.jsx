@@ -93,7 +93,7 @@ const UserPanel = () => {
     ct.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   return (
-    <div>
+    <div className="userContainer">
       <Sidebar />
       <div className="user-panel">
         <div className="panel-header">
