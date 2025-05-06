@@ -11,6 +11,8 @@ import {
   FaHome,
   FaBookmark,
 } from "react-icons/fa";
+import toast from "react-hot-toast";
+
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 import Logos from "../../Caretaker/Components/Logo";
@@ -115,10 +117,12 @@ const Sidebar = () => {
       </div>
 
       <div className="sidebar-footer">
-        <button onClick={handleLogout} className="logout-button">
-          <FaSignOutAlt className="menu-icon" />
-          <span className="logout-text">Log Out</span>
-        </button>
+        <Link to={"/admin/login/"} style={{ textDecoration: "none" }}>
+          <button onClick={handleLogout} className="logout-button">
+            <FaSignOutAlt className="menu-icon" />
+            <span className="logout-text">Log Out</span>
+          </button>
+        </Link>
       </div>
     </div>
   );

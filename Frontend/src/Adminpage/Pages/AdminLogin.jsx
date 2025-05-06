@@ -6,6 +6,7 @@ import { API } from "../../env";
 import InputField from "../../User/components/Input";
 import Header from "../../User/components/Header";
 import Footer from "../../User/components/Footer";
+import toast from "react-hot-toast";
 
 const AdminLogin = () => {
   const [email, setemail] = useState("");
@@ -45,11 +46,11 @@ const AdminLogin = () => {
         }
       } else {
         console.log("Login failed:", data.error || "Invalid credentials");
-        alert(data.error || "Invalid credentials");
+        toast.error(data.error || "Invalid credentials");
       }
     } catch (error) {
       console.error("Error logging in:", error);
-      alert("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
