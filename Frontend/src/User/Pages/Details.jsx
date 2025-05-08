@@ -72,7 +72,7 @@ const Details = () => {
           <p>
             <strong>
               Specialty:
-              <strong className="specialty"> {caretaker.specialty}</strong>
+              <strong className="specialtyyy"> {caretaker.specialty}</strong>
             </strong>
           </p>
           <p className="Details-about-text">{caretaker.bio}</p>
