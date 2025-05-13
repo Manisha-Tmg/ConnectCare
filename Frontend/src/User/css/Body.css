@@ -153,3 +153,88 @@ p {
   font-size: 16px;
   color: #4a5568;
 }
+
+/* ======= RESPONSIVE DESIGN ======= */
+
+/* For tablets and small laptops */
+@media screen and (max-width: 1024px) {
+  .highlight {
+    font-size: 2.2rem;
+    margin: 20px 20px 10px 40px;
+  }
+
+  .text {
+    margin: 1rem 5rem 2rem 5rem;
+  }
+
+  .get-started {
+    margin: 1rem 5rem 2rem 5rem;
+    width: auto;
+  }
+}
+
+/* For tablets and large phones */
+@media screen and (max-width: 768px) {
+  .highlight {
+    font-size: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 20px 20px 10px 20px;
+  }
+
+  .text {
+    margin: 1rem 2rem 2rem 2rem;
+  }
+
+  .get-started {
+    margin: 1rem 2rem 2rem 2rem;
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+
+  .hero-section {
+    background-size: cover;
+    background-position: center;
+  }
+
+  .main-image {
+    height: auto;
+    max-height: 250px;
+  }
+}
+
+/* For mobile devices */
+@media screen and (max-width: 480px) {
+  .highlight {
+    font-size: 1.7rem;
+    margin: 20px;
+    text-align: left;
+  }
+
+  .text {
+    margin: 1rem 1rem 2rem 1rem;
+    font-size: 0.95rem;
+    color: black;
+  }
+
+  .get-started {
+    /* margin: 1rem; */
+    margin-left: 6.5rem;
+
+    width: 100%;
+    font-size: 0.9rem;
+    max-width: fit-content;
+  }
+
+  .about-heading {
+    font-size: 1.8rem;
+  }
+
+  .about-description {
+    font-size: 1rem;
+  }
+
+  .feature-item {
+    width: 100%;
+  }
+}
