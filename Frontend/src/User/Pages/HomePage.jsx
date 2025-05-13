@@ -3,15 +3,15 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Contact from "./Contact";
 import HomePage from "./Home";
-import Blog from "./Blog";
 import "../css/AboutUs.css";
+import Caretakers from "./Caretaker";
 
 const Home = () => {
   return (
     <div className="main-div">
       <Header />
       <HomePage />
-      {/* <Blog /> */}
+      <Caretakers />
       <Contact />
       <Footer />
     </div>
