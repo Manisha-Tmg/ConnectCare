@@ -229,7 +229,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'name', 'profile_picture', 'profile_picture_url']
+        fields = ['username', 'address','phone','name', 'profile_picture', 'profile_picture_url']
 
     def get_profile_picture_url(self, obj):
         return self.get_cloudinary_url(obj.profile_picture)

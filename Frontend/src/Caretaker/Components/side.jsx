@@ -27,7 +27,9 @@ const CaretakerSidebar = () => {
         const res = await fetch(`${API}api/caretakers/${id}`);
         const data = await res.json();
         setData(data);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
     fetchcaretakerdata();
   }, []);
@@ -41,7 +43,6 @@ const CaretakerSidebar = () => {
             onClick={() => {
               toast.dismiss(t.id);
 
-              // Logout logic here
               Cookies.remove("accessToken", { path: "/" }); // to remove the cookies data that is saved
               Cookies.remove("role", { path: "/" });
               Cookies.remove("caretaker_id", { path: "/" });

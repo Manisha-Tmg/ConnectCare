@@ -196,6 +196,16 @@ const CaretakerSignup = () => {
             ></textarea>
           </div>
           <div className="form-group">
+            <label>Email:</label>
+            <input
+              type="text"
+              required
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
             <label>Profile Picture :</label>
             <input
               type="file"

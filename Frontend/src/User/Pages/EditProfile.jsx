@@ -12,6 +12,8 @@ const EditProfile = () => {
   const [formData, setFormData] = useState({
     name: "",
     username: "",
+    location: "",
+    number: "",
     profile_picture: "",
   });
 
@@ -94,15 +96,15 @@ const EditProfile = () => {
             onChange={handleChange}
             disabled
           />
-          {/* 
+
           <label>Phone:</label>
           <input
             type="text"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            disabled
-          /> */}
+            // disabled
+          />
           <label>Gender:</label>
           <select
             name="gender"
@@ -114,14 +116,14 @@ const EditProfile = () => {
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-          {/* 
+
           <label>Address:</label>
           <input
             type="text"
             name="address"
             value={formData.address}
             onChange={handleChange}
-          /> */}
+          />
           <label>Profile Picture:</label>
           <input
             type="file"
