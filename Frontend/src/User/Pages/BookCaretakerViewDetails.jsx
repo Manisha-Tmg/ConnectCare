@@ -52,9 +52,9 @@ const BookCaretakerdetails = () => {
                   </div>
                   <div className="caretaker-stats">
                     <span>
-                      {caretaker.experience || "0"} years experience |
-                      <span className="star-rating">★</span>
-                      {caretaker.rating || "4.0"}
+                      {caretaker.experience || "0"} years experience
+                      {/* <span className="star-rating">★</span>
+                      {caretaker.rating || "4.0"} */}
                     </span>
                     <span>{caretaker.hourly_rate || "Rs. 300"}/hr</span>
                   </div>
