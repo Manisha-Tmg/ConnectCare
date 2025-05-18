@@ -1,20 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import "../css/Details.css";
+import Cookies from "js-cookie";
+
 import Header from "../components/Header";
 import { API } from "../../env";
 
 import { MdEmail, MdLanguage } from "react-icons/md";
-import { FaPhone, FaRegCalendarDays } from "react-icons/fa6";
-import { FaStar, FaMapMarkerAlt, FaClock } from "react-icons/fa";
+import { FaPhone } from "react-icons/fa6";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoDocumentAttachSharp } from "react-icons/io5";
 
 import { MdVerified } from "react-icons/md";
 import { ImCross } from "react-icons/im";
+import toast from "react-hot-toast";
 
 const Details = () => {
   const { id } = useParams();
   const [caretaker, setCaretaker] = useState(null);
+  const navigate = useNavigate();
+
+  const bookLogin = () => {
+    const token = Cookies.get("accessToken");
+    if (!token) {
+      toast.error("Please Login First");
+      // toast.error("Please login First")
+      // navigate("/login");
+    } else {
+      navigate(`/BookCaretaker/${id}`);
+    }
+  };
 
   useEffect(() => {
     const fetchCaretaker = async () => {
@@ -80,11 +95,11 @@ const Details = () => {
 
         {/* Right Side - Booking & Details */}
         <div className="Details-caretaker-sidebar">
-          <Link to={`/BookCaretaker/${id}`}>
-            <button className="Details-book-button">
-              Create a new booking
-            </button>
-          </Link>
+          {/* <Link to={`/BookCaretaker/${id}`}> */}
+          <button className="Details-book-button" onClick={bookLogin}>
+            Create a new booking
+          </button>
+          {/* </Link> */}
           <div className="Details-info-card">
             <h3>Available Areas</h3>
             <p>

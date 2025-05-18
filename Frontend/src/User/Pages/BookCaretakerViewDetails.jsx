@@ -1,33 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../css/BookCaretaker.css";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { API } from "../../env";
-import Cookies from "js-cookie";
-import { Link, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-import Previous from "../components/Previous";
+import { Link } from "react-router-dom";
+// import Previous from "../components/Previous";
 
 const BookCaretakerdetails = () => {
   const [caretakers, setCaretakers] = useState([]);
-  const navigate = useNavigate();
-
-  const bookLogin = () => {
-    const token = Cookies.get("accessToken");
-    if (!token) {
-      toast.error("Please Login First");
-      navigate("/login");
-    } else {
-      navigate("/bookcaretaker");
-    }
-  };
-
-  // const toggleFavorite = (id) => {
-  //   setFavorites((prev) => ({
-  //     ...prev,
-  //     [id]: !prev[id],
-  //   }));
-  // };
 
   useEffect(() => {
     const fetchCaretakers = async () => {
