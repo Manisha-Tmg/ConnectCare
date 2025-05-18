@@ -37,10 +37,6 @@ const BookingFormPreview = () => {
     fetchCaretaker();
   }, [id]);
 
-  // if (!token) {
-  //   toast.error("no token found");
-  // }
-
   useEffect(() => {
     const fetchUser = async () => {
       try {
