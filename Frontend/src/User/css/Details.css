@@ -189,7 +189,7 @@
 
 @media (max-width: 600px) {
   .Details-caretaker-container {
-    /* margin: 40px auto; */
+    margin: 65px auto;
     padding: 1rem;
     gap: 1rem;
   }
@@ -229,7 +229,7 @@
 
 @media (max-width: 480px) {
   .Details-caretaker-container {
-    margin: 30px auto;
+    /* margin: 0px auto; */
     padding: 0.75rem;
   }
 
@@ -282,5 +282,5 @@
     gap: 6px;
   }
 }
-@media (max-width: 480px) {
-}
+/* @media (max-width: 250px) {
+} */
