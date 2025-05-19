@@ -1,9 +1,8 @@
-/* BookingFormPreview.css */
-
-.bookh2 {
+.headh2 {
   text-align: center;
   font-size: 2rem;
   margin: 20px 0;
+  margin-top: 5.5rem;
   color: #2c3e50;
   font-weight: 600;
 }

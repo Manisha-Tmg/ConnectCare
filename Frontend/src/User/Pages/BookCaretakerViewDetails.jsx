@@ -10,7 +10,6 @@ import Previous from "../components/Previous";
 
 const BookCaretakerdetails = () => {
   const [caretakers, setCaretakers] = useState([]);
-  const [favorites, setFavorites] = useState({});
   const navigate = useNavigate();
 
   const bookLogin = () => {
@@ -23,12 +22,12 @@ const BookCaretakerdetails = () => {
     }
   };
 
-  const toggleFavorite = (id) => {
-    setFavorites((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
+  // const toggleFavorite = (id) => {
+  //   setFavorites((prev) => ({
+  //     ...prev,
+  //     [id]: !prev[id],
+  //   }));
+  // };
 
   useEffect(() => {
     const fetchCaretakers = async () => {

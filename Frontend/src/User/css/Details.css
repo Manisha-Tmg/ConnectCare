@@ -149,7 +149,7 @@
 @media (max-width: 1200px) {
   .Details-caretaker-container {
     padding: 1.5rem;
-    margin: 50px auto;
+    margin: 60px auto;
     gap: 1.5rem;
   }
 }
@@ -189,7 +189,7 @@
 
 @media (max-width: 600px) {
   .Details-caretaker-container {
-    margin: 40px auto;
+    /* margin: 40px auto; */
     padding: 1rem;
     gap: 1rem;
   }
@@ -281,4 +281,6 @@
     font-size: 0.8rem;
     gap: 6px;
   }
+}
+@media (max-width: 480px) {
 }

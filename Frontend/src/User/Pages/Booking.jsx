@@ -17,6 +17,7 @@ const BookingFormPreview = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
+  const token = Cookies.get("accessToken");
 
   useEffect(() => {
     const fetchCaretaker = async () => {
@@ -35,6 +36,10 @@ const BookingFormPreview = () => {
 
     fetchCaretaker();
   }, [id]);
+
+  if (!token) {
+    toast.error("no token found");
+  }
 
   useEffect(() => {
     const fetchUser = async () => {

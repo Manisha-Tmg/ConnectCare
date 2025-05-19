@@ -1,6 +1,6 @@
 import React from "react";
 import "../css/footer.css"; // Import the CSS file
-import Logo from "./Logo";
+// import Logo from "./Logo";
 
 const Footer = () => {
   return (
@@ -8,9 +8,9 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-grid">
           <div className="footer-section">
-            {/* <h3>
-              <Logo />
-            </h3> */}
+            {/* <h3> */}
+            {/* <Logo /> */}
+            {/* </h3> */}
             <p>
               Specialized transportation services for caregiving needs,
               providing comfort and accessibility for all.
@@ -70,17 +70,17 @@ const Footer = () => {
             <h3>Services</h3>
             <ul className="footer-links">
               <li>
-                <a href="#">Medical Transportation</a>
+                <a>Medical Transportation</a>
               </li>
               <li>
-                <a href="#">Elder Care</a>
+                <a>Elder Care</a>
               </li>
               <li>
-                <a href="#">Wheelchair Accessibility</a>
+                <a>Wheelchair Accessibility</a>
               </li>
 
               <li>
-                <a href="#">24/7 Support</a>
+                <a>24/7 Support</a>
               </li>
             </ul>
           </div>
