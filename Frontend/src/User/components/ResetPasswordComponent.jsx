@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./css/ResetPassword.css";
 import { API } from "../../env";
+import { Navigate } from "react-router-dom";
 
 const ResetPasswordComponent = () => {
   const [password, setPassword] = useState("");
@@ -29,7 +30,7 @@ const ResetPasswordComponent = () => {
       });
       const data = await response.json();
       if (data.success) {
-        setSuccess(data.message || "Password changed successfully");
+        setSuccess(data.message || "Password changed successfully. ");
         setPassword("");
         setConfirmPassword("");
       } else if (data.success === false) {

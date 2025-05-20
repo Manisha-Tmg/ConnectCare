@@ -49,13 +49,16 @@ const ChangePassword = () => {
 
       if (res.ok) {
         toast.success("Password changed successfully");
-        Cookies.remove("AccessToken");
+        // Cookies.remove("AccessToken");
+        Cookies.remove("accessToken");
+        Cookies.remove("role");
+        Cookies.remove("user_id");
         navigate("/login");
       } else {
         toast.error(data.detail || "Error changing password");
       }
     } catch (error) {
-      toast.error("Server error, please try again");
+      toast.error(error, "Server error, please try again");
     }
   }
 

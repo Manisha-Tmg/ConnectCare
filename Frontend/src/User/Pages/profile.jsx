@@ -78,17 +78,20 @@ const Profile = () => {
             <div className="p-section">
               <h3>Personal Information</h3>
               <div className="p-info">
+                <strong>Username:</strong> {data.username}
+              </div>
+              <div className="p-info">
                 <strong>Gender:</strong> {data.gender}
               </div>
               <div className="p-info">
                 <strong>Email:</strong> {data.email}
               </div>
-              {/* <div className="p-info">
+              <div className="p-info">
                 <strong>Phone:</strong> {data.phone}
               </div>
               <div className="p-info">
                 <strong>Address:</strong> {data.address}
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

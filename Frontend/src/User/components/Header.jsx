@@ -10,7 +10,9 @@ import toast from "react-hot-toast";
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const mobileMenuRef = useRef(null);
   const [data, setData] = useState("");
 
   const navigate = useNavigate();
@@ -57,6 +59,28 @@ const Header = () => {
     // fetchProfile();
   }, []);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target) &&
+        !event.target.classList.contains("hamburger-icon") &&
+        !event.target.closest(".hamburger-icon")
+      ) {
+        setIsMobileMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleLogout = () => {
     toast((t) => (
       <span className="flex flex-col space-y-2">
@@ -74,6 +98,7 @@ const Header = () => {
 
               setIsLoggedIn(false);
               setIsDropdownOpen(false);
+              setIsMobileMenuOpen(false);
               navigate("/"); // Redirect to home
 
               toast.success("You have been logged out.");
@@ -97,12 +122,87 @@ const Header = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
     <header className="header">
-      <div>
+      <div className="logo-container">
         <Logo />
       </div>
-      <Li />
+
+      {/* Hamburger Menu Icon */}
+      <div className="hamburger-icon" onClick={toggleMobileMenu}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      {/* Desktop Navigation */}
+      <div className="desktop-nav">
+        <Li />
+      </div>
+
+      {/* Mobile Navigation */}
+      {isMobileMenuOpen && (
+        <div className="mobile-menu" ref={mobileMenuRef}>
+          <nav className="caretaker-nav">
+            <ul>
+              <li>
+                <Link to="/" className="nav-link">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/find-caretaker" className="nav-link">
+                  Find Caretaker
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="nav-link">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/blog" className="nav-link">
+                  Blog
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          {isLoggedIn ? (
+            <div className="mobile-profile-section">
+              {/* <div className="mobile-avatar-container"></div> */}
+              <div className="mobile-dropdown-links">
+                <Link to="/profile" className="mobile-dropdown-item">
+                  My Profile
+                </Link>
+                <Link to="/change-password" className="mobile-dropdown-item">
+                  Change Password
+                </Link>
+                <Link
+                  to={`/booking-details/${data.id}`}
+                  className="mobile-dropdown-item"
+                >
+                  Booking Details
+                </Link>
+                <p onClick={handleLogout} className="mobile-dropdown-item">
+                  Log Out
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="mobile-login-btn-container">
+              <Link to="/login" className="mobile-login-link">
+                <button className="btn-login mobile-login-btn">Log In</button>
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Desktop Profile Section */}
       <div className="nav-profile-section">
         {isLoggedIn ? (
           <div className="nav-avatar-container relative" ref={dropdownRef}>

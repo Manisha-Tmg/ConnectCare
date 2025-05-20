@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import "../css/caretakerboook.css";
 import Cookies from "js-cookie";
@@ -17,7 +17,6 @@ const BookingFormPreview = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
-  // const token = Cookies.get("accessToken");
 
   useEffect(() => {
     const fetchCaretaker = async () => {
