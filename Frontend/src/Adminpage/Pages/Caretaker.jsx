@@ -151,7 +151,7 @@ const CaretakerPanel = () => {
                     </button>
                     <button
                       className={`status-btnn ${
-                        caretaker.is_approved ? "verify" : "Reject"
+                        caretaker.is_approved ? "Verify" : "Reject"
                       }`}
                       onClick={() =>
                         handleStatusChange(caretaker.id, caretaker.is_approved)

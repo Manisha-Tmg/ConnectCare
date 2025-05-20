@@ -157,11 +157,13 @@
 .status-badge.verified {
   background-color: #e8f8f5;
   color: var(--success-color);
+  width: fit-content;
 }
 
 .status-badge.Rejected {
   background-color: #fef5e7;
   color: var(--warning-color);
+  width: fit-content;
 }
 
 /* Action Buttons */
@@ -212,20 +214,19 @@
   padding: 6px 12px;
   background-color: #087f46;
   color: var(--text-color1);
-  width: 10rem;
+  /* width: 10rem; */
   border-radius: 4px;
   cursor: pointer;
-  font-size: 12px;
+  width: fit-content;
   margin-right: 5px;
 }
 
-.status-btnn.verify {
+.status-btnn.Verify {
   padding: 6px 12px;
-  width: 10rem;
+  width: fit-content;
   color: var(--text-color1);
   background-color: #941b09;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 12px;
   margin-right: 5px;
 }

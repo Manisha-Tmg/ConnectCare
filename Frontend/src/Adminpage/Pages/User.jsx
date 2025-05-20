@@ -125,8 +125,12 @@ const UserPanel = () => {
                     </span>
                   </td>
                   <td>
-                    <span className={`status-badge ${user.is_approved}`}>
-                      {user.is_approved ? "Verified" : "Rejected"}
+                    <span
+                      className={`status-badge ${
+                        user.is_approved ? "verified" : "Rejected"
+                      }`}
+                    >
+                      {user.is_approved ? "verified" : "Rejected"}
                     </span>
                   </td>
                   <td>{user.username}</td>
@@ -146,7 +150,7 @@ const UserPanel = () => {
 
                     <button
                       className={`status-btnn ${
-                        user.is_approved ? "verify" : "Reject"
+                        user.is_approved ? "Verify" : "Reject"
                       }`}
                       onClick={() =>
                         handleStatusChange(user.id, user.is_approved)
